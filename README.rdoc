@@ -33,6 +33,10 @@ Read the API documentation at http://benedikt.github.com/mongoid_tree and take a
 
 See http://github.com/benedikt/mongoid_tree/issues
 
+== Repository
+
+See http://github.com/benedikt/mongoid_tree and feel free to fork it!
+
 == Copyright
 
 Copyright (c) 2010 Benedikt Deicke. See LICENSE for details.
