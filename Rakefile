@@ -1,6 +1,5 @@
 require 'rspec/core/rake_task'
 require 'hanna/rdoctask'
-require 'grancher/task'
 
 spec = Gem::Specification.load("mongoid_tree.gemspec")
 
@@ -24,10 +23,4 @@ end
 desc "Push the .gem file to rubygems.org"
 task :release => :build do
   system "gem push #{spec.name}-#{spec.version}.gem"
-end
-
-Grancher::Task.new(:publish => :rdoc) do |g|
-  g.branch = 'gh-pages'
-  g.push_to = 'origin'
-  g.directory 'doc'
 end
