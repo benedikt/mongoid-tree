@@ -22,7 +22,7 @@ Finally, run
 
 == Usage
 
-Read the API documentation at http://rdoc.info/projects/benedikt/mongoid_tree
+Read the API documentation at http://benedikt.github.com/mongoid_tree and take a look at the Mongoid::Tree module
 
   class Node
     include Mongoid::Document
