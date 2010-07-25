@@ -8,10 +8,6 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 == Install
 
-To install mongoid_tree, simply add it to your Gemfile:
-
-  gem "mongoid_tree"
-  
 In order to get the latest development version of mongoid_tree:
 
   gem "mongoid_tree", :git => "git://github.com/benedikt/mongoid_tree"
