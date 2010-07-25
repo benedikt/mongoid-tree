@@ -1,0 +1,38 @@
+= mongoid_tree
+
+A tree structure for Mongoid documents using the materialized path pattern
+
+== Requirements
+
+* mongoid (>= 2.0.0.beta9)
+
+== Install
+
+To install mongoid_tree, simply add it to your Gemfile:
+
+  gem "mongoid_tree"
+  
+In order to get the latest development version of mongoid_tree:
+
+  gem "mongoid_tree", :git => "git://github.com/benedikt/mongoid_tree"
+  
+Finally, run
+
+  bundle install
+
+== Usage
+
+Read the API documentation at http://rdoc.info/projects/benedikt/mongoid_tree
+
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+  end
+
+== Known issues
+
+See http://github.com/benedikt/mongoid_tree/issues
+
+== Copyright
+
+Copyright (c) 2010 Benedikt Deicke. See LICENSE for details.
