@@ -1,7 +1,7 @@
 require 'rspec/core/rake_task'
 require 'hanna/rdoctask'
 
-spec = Gem::Specification.load("mongoid_tree.gemspec")
+spec = Gem::Specification.load("mongoid-tree.gemspec")
 
 RSpec::Core::RakeTask.new(:spec)
 

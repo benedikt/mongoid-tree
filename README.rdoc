@@ -1,4 +1,4 @@
-= mongoid_tree
+= mongoid-tree
 
 A tree structure for Mongoid documents using the materialized path pattern
 
@@ -8,17 +8,21 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 == Install
 
-In order to get the latest development version of mongoid_tree:
+To install mongoid_tree, simply add it to your Gemfile:
 
-  gem "mongoid_tree", :git => "git://github.com/benedikt/mongoid_tree"
+  gem "mongoid-tree"
+
+In order to get the latest development version of mongoid-tree:
+
+  gem "mongoid-tree" :git => "git://github.com/benedikt/mongoid-tree"
   
-Finally, run
+You might want to add the <tt>:require => 'mongoid/tree'</tt> option as well and finally run
 
   bundle install
 
 == Usage
 
-Read the API documentation at http://benedikt.github.com/mongoid_tree and take a look at the Mongoid::Tree module
+Read the API documentation at http://benedikt.github.com/mongoid-tree and take a look at the Mongoid::Tree module
 
   require 'mongoid/tree'
 
@@ -29,11 +33,11 @@ Read the API documentation at http://benedikt.github.com/mongoid_tree and take a
 
 == Known issues
 
-See http://github.com/benedikt/mongoid_tree/issues
+See http://github.com/benedikt/mongoid-tree/issues
 
 == Repository
 
-See http://github.com/benedikt/mongoid_tree and feel free to fork it!
+See http://github.com/benedikt/mongoid-tree and feel free to fork it!
 
 == Copyright
 
