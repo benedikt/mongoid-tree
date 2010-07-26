@@ -20,6 +20,8 @@ Finally, run
 
 Read the API documentation at http://benedikt.github.com/mongoid_tree and take a look at the Mongoid::Tree module
 
+  require 'mongoid/tree'
+
   class Node
     include Mongoid::Document
     include Mongoid::Tree
