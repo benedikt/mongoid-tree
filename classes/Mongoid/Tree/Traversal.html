@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: Mongoid::Tree::Traversal [mongoid_tree 0.1]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <div class='name'>
+          <span class='type'>Module</span>
+          Mongoid::Tree::Traversal
+        </div>
+        <ol class='paths'>
+          <li>
+            <a href="../../../files/lib/mongoid/tree/traversal_rb.html">lib/mongoid/tree/traversal.rb</a>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <h1><a href="Traversal.html">Mongoid::Tree::Traversal</a></h1>
+            <p>
+            <a href="../Tree.html">Mongoid::Tree</a> provides a <a
+            href="Traversal.html#M000017">traverse</a> method to walk through the tree.
+            It supports these traversal methods:
+            </p>
+            <ul>
+            <li>depth_first
+            
+            </li>
+            <li>breadth_first
+            
+            </li>
+            </ul>
+            <h2>Depth First <a href="Traversal.html">Traversal</a></h2>
+            <p>
+            See <a
+            href="http://en.wikipedia.org/wiki/Depth-first_search">en.wikipedia.org/wiki/Depth-first_search</a>
+            for a proper description.
+            </p>
+            <p>
+            Given a tree like:
+            </p>
+            <pre>node1:&#x000A; - node2:&#x000A;   - node3&#x000A; - node4:&#x000A;   - node5&#x000A;   - node6&#x000A; - node7</pre>
+            <p>
+            Traversing the tree using depth first traversal would visit each node in
+            this order:
+            </p>
+            <pre>node1, node2, node3, node4, node5, node6, node7</pre>
+            <h2>Breadth First <a href="Traversal.html">Traversal</a></h2>
+            <p>
+            See <a
+            href="http://en.wikipedia.org/wiki/Breadth-first_search">en.wikipedia.org/wiki/Breadth-first_search</a>
+            for a proper description.
+            </p>
+            <p>
+            Given a tree like:
+            </p>
+            <pre>node1:&#x000A;  - node2:&#x000A;    - node5&#x000A;  - node3:&#x000A;    - node6&#x000A;    - node7&#x000A;  - node4</pre>
+            <p>
+            Traversing the tree using breadth first traversal would visit each node in
+            this order:
+            </p>
+            <pre>node1, node2, node3, node4, node5, node6, node7</pre>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000017">traverse</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public instance methods</h2>
+              <div class='method public-instance' id='method-M000017'>
+                <a name='M000017'></a>
+                <div class='synopsis'>
+                  <span class='name'>traverse</span>
+                  <span class='arguments'>(type = :depth_first, &amp;block)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Traverses the tree using the given traversal method (Default is
+                  :depth_first) and passes each document node to the block.
+                  </p>
+                  <p>
+                  See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
+                  traversal methods.
+                  </p>
+                  <p>
+                  Example:
+                  </p>
+                  <pre>results = []&#x000A;root.traverse(:depth_first) do |node|&#x000A;  results &lt;&lt; node&#x000A;end</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 62</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) &#x000A;      <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
