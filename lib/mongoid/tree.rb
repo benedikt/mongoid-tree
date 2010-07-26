@@ -1,3 +1,5 @@
+require 'mongoid/tree/traversal'
+
 module Mongoid # :nodoc:
   ##
   # = Mongoid::Tree
@@ -30,6 +32,8 @@ module Mongoid # :nodoc:
   # 
   module Tree
     extend ActiveSupport::Concern
+
+    include Traversal
   
     included do
       reference_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent
@@ -137,7 +141,7 @@ module Mongoid # :nodoc:
     private
   
     def rearrange
-      if parent_id
+      if self.parent_id
         self.parent_ids = self.class.find(self.parent_id).parent_ids + [self.parent_id]
       end
     
