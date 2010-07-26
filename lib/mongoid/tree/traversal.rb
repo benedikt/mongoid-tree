@@ -12,8 +12,8 @@ module Mongoid # :nodoc:
     # == Depth First Traversal
     #
     # See http://en.wikipedia.org/wiki/Depth-first_search for a proper description.
-    # 
-    # Given a tree like: 
+    #
+    # Given a tree like:
     #
     #   node1:
     #    - node2:
@@ -46,7 +46,7 @@ module Mongoid # :nodoc:
     #   node1, node2, node3, node4, node5, node6, node7
     #
     module Traversal
-      
+
       ##
       # Traverses the tree using the given traversal method (Default is :depth_first)
       # and passes each document node to the block.
@@ -61,16 +61,16 @@ module Mongoid # :nodoc:
       #   end
       def traverse(type = :depth_first, &block)
         raise "No block given" unless block_given?
-        send("#{type}_traversal", &block) 
-      end      
-      
+        send("#{type}_traversal", &block)
+      end
+
       private
-      
+
       def depth_first_traversal(&block)
         block.call(self)
         self.children.each { |c| c.send(:depth_first_traversal, &block) }
       end
-      
+
       def breadth_first_traversal(&block)
         queue = [self]
         while queue.any? do
@@ -79,7 +79,7 @@ module Mongoid # :nodoc:
           queue += node.children
         end
       end
-      
+
     end
   end
 end
