@@ -72,6 +72,8 @@ module Mongoid # :nodoc:
         run_callbacks(:rearrange) { rearrange }
       end
 
+      validate :position_in_tree
+
       define_model_callbacks :rearrange, :only => [:before, :after]
     end
 
@@ -242,5 +244,10 @@ module Mongoid # :nodoc:
       @rearrange_children = false
       self.children.find(:all).each { |c| c.save }
     end
+
+    def position_in_tree
+      errors.add(:parent_id, :invalid) if self.parent_ids.include?(self.id)
+    end
+
   end
 end

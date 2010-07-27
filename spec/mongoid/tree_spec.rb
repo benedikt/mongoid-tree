@@ -79,6 +79,13 @@ describe Mongoid::Tree do
       root.save
     end
 
+    it "should prevent cycles" do
+      child = node(:child)
+      child.parent = node(:subchild)
+      child.should_not be_valid
+      child.errors[:parent_id].should_not be_nil
+    end
+
   end
 
   describe 'utility methods' do
