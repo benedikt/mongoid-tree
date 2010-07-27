@@ -76,23 +76,29 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # All methods in this Module are available as singleton methods on your document
+    # :singleton-method: root
+    # Returns the first root document
+
+    ##
+    # :singleton-method: roots
+    # Returns all root documents
+
+    ##
+    # :singleton-method: leaves
+    # Returns all leaves (be careful, currently involves two queries)
+
+    ##
+    # This module includes those methods documented above
     module ClassMethods # :nodoc:
 
-      ##
-      # Returns the first root document
       def root
         first(:conditions => { :parent_id => nil })
       end
 
-      ##
-      # Returns all root documents
       def roots
         where(:parent_id => nil)
       end
 
-      ##
-      # Returns all leaves (be careful, currently involves two queries)
       def leaves
         where(:_id.nin => only(:parent_id).collect(&:parent_id))
       end
