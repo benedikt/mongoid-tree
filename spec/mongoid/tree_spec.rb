@@ -202,7 +202,7 @@ describe Mongoid::Tree do
 
     describe '#leaves' do
       it "should return this documents leaves" do
-        node(:root).leaves.should.to_a =~ [node(:other_child), node(:subchild)]
+        node(:root).leaves.to_a.should =~ [node(:other_child), node(:subchild)]
       end
     end
 

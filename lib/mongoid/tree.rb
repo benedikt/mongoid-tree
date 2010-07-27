@@ -199,7 +199,7 @@ module Mongoid # :nodoc:
     ##
     # Returns all leaves of this document (be careful, currently involves two queries)
     def leaves
-      self.class.where(:_id.nin => self.class.only(:parent_id).where(:parent_ids => self.id).collect(&:parent_id))
+      self.class.where(:_id.nin => self.class.only(:parent_id).collect(&:parent_id)).and(:parent_ids => self.id)
     end
 
     ##
