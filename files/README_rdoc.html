@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: README.rdoc [mongoid-tree 0.1]</title>
+    <title>File: README.rdoc [mongoid-tree 0.2.0]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Jul 26 20:58:35 +0200 2010</span>
+          <span class='datetime'>Tue Jul 27 19:47:40 +0200 2010</span>
         </div>
       </div>
       <div id='content'>
@@ -51,11 +51,11 @@
             <p>
             To install mongoid_tree, simply add it to your Gemfile:
             </p>
-            <pre>gem &quot;mongoid-tree&quot;</pre>
+            <pre>gem 'mongoid-tree'</pre>
             <p>
             In order to get the latest development version of mongoid-tree:
             </p>
-            <pre>gem &quot;mongoid-tree&quot; :git =&gt; &quot;git://github.com/benedikt/mongoid-tree&quot;</pre>
+            <pre>gem 'mongoid-tree' :git =&gt; 'git://github.com/benedikt/mongoid-tree'</pre>
             <p>
             You might want to add the <tt>:require =&gt; 'mongoid/tree'</tt> option as
             well and finally run
@@ -69,6 +69,36 @@
             href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> module
             </p>
             <pre>require 'mongoid/tree'&#x000A;&#x000A;class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;end</pre>
+            <h3>Utility methods</h3>
+            <p>
+            There are several utility methods that help getting to other related
+            documents in the tree:
+            </p>
+            <pre>Node.root&#x000A;Node.roots&#x000A;Node.leaves&#x000A;&#x000A;node.root&#x000A;node.parent&#x000A;node.children&#x000A;node.ancestors&#x000A;node.ancestors_and_self&#x000A;node.descendants&#x000A;node.descendants_and_self&#x000A;node.siblings&#x000A;node.siblings_and_self&#x000A;node.leaves</pre>
+            <p>
+            In addition it&#8217;s possible to check certain aspects of the documents
+            position in the tree:
+            </p>
+            <pre>node.root?&#x000A;node.leaf?&#x000A;node.depth&#x000A;node.ancestor_of?(other)&#x000A;node.descendant_of?(other)</pre>
+            <p>
+            See <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for more
+            information on these methods.
+            </p>
+            <h3>Traversal</h3>
+            <p>
+            It&#8217;s possible to traverse the tree using different traversal methods.
+            See <a
+            href="../classes/Mongoid/Tree/Traversal.html">Mongoid::Tree::Traversal</a>
+            for details
+            </p>
+            <pre>node.traverse(:breadth_first) do |n|&#x000A;  # Do something with Node n&#x000A;end</pre>
+            <h3>Callbacks</h3>
+            <p>
+            There are two callbacks that are called before and after the rearranging
+            process. This enables you to do additional computations after the documents
+            position in the tree is updated. See <a
+            href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for details.
+            </p>
             <h2>Known issues</h2>
             <p>
             See <a

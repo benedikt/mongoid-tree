@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>Methods [mongoid-tree 0.1]</title>
+    <title>Methods [mongoid-tree 0.2.0]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <base target='docwin'>
@@ -4331,23 +4331,31 @@
         
         Element.addMethods();
         var search_index = [
-          { method: 'ancestor_of?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000009"><span class="method_name">ancestor_of?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'ancestors', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000007"><span class="method_name">ancestors</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'ancestors_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000008"><span class="method_name">ancestors_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'children', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000001"><span class="method_name">children</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'descendant_of?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000012"><span class="method_name">descendant_of?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'descendants', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000010"><span class="method_name">descendants</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'descendants_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000011"><span class="method_name">descendants_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'leaf?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000005"><span class="method_name">leaf?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'parent', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000002"><span class="method_name">parent</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'parent_ids', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000003"><span class="method_name">parent_ids</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'rearrange_children!', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000015"><span class="method_name">rearrange_children!</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'rearrange_children?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000016"><span class="method_name">rearrange_children?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'root', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000006"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'root?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000004"><span class="method_name">root?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'siblings', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000013"><span class="method_name">siblings</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'siblings_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000014"><span class="method_name">siblings_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
-          { method: 'traverse', module: 'mongoid::tree::traversal', html: '<a href="classes/Mongoid/Tree/Traversal.html#M000017"><span class="method_name">traverse</span> <span class="module_name">(Mongoid::Tree::Traversal)</span></a>' },
+          { method: 'after_rearrange', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000005"><span class="method_name">after_rearrange</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'ancestor_of?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000016"><span class="method_name">ancestor_of?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'ancestors', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000014"><span class="method_name">ancestors</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'ancestors_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000015"><span class="method_name">ancestors_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'before_rearrange', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000004"><span class="method_name">before_rearrange</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'children', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000006"><span class="method_name">children</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'depth', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000012"><span class="method_name">depth</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'descendant_of?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000019"><span class="method_name">descendant_of?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'descendants', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000017"><span class="method_name">descendants</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'descendants_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000018"><span class="method_name">descendants_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'leaf?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000011"><span class="method_name">leaf?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'leaves', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000022"><span class="method_name">leaves</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'leaves', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000003"><span class="method_name">leaves</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'parent', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000007"><span class="method_name">parent</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'parent=', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000008"><span class="method_name">parent=</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'parent_ids', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000009"><span class="method_name">parent_ids</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'rearrange_children!', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000023"><span class="method_name">rearrange_children!</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'rearrange_children?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000024"><span class="method_name">rearrange_children?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'root', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000001"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'root', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000013"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'root?', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000010"><span class="method_name">root?</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'roots', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000002"><span class="method_name">roots</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'siblings', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000020"><span class="method_name">siblings</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'siblings_and_self', module: 'mongoid::tree', html: '<a href="classes/Mongoid/Tree.html#M000021"><span class="method_name">siblings_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a>' },
+          { method: 'traverse', module: 'mongoid::tree::traversal', html: '<a href="classes/Mongoid/Tree/Traversal.html#M000025"><span class="method_name">traverse</span> <span class="module_name">(Mongoid::Tree::Traversal)</span></a>' },
         ]
         $(document).observe('dom:loaded', function() {
         	// Setup search-during-typing.
@@ -4418,23 +4426,31 @@
       </form>
       <ol class='methods' id='search-results' style='display: none'></ol>
       <ol class='methods' id='index-entries'>
-        <li><a href="classes/Mongoid/Tree.html#M000009"><span class="method_name">ancestor_of?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000007"><span class="method_name">ancestors</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000008"><span class="method_name">ancestors_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000001"><span class="method_name">children</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000012"><span class="method_name">descendant_of?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000010"><span class="method_name">descendants</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000011"><span class="method_name">descendants_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000005"><span class="method_name">leaf?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000002"><span class="method_name">parent</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000003"><span class="method_name">parent_ids</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000015"><span class="method_name">rearrange_children!</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000016"><span class="method_name">rearrange_children?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000006"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000004"><span class="method_name">root?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000013"><span class="method_name">siblings</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree.html#M000014"><span class="method_name">siblings_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
-        <li><a href="classes/Mongoid/Tree/Traversal.html#M000017"><span class="method_name">traverse</span> <span class="module_name">(Mongoid::Tree::Traversal)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000005"><span class="method_name">after_rearrange</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000016"><span class="method_name">ancestor_of?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000014"><span class="method_name">ancestors</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000015"><span class="method_name">ancestors_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000004"><span class="method_name">before_rearrange</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000006"><span class="method_name">children</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000012"><span class="method_name">depth</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000019"><span class="method_name">descendant_of?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000017"><span class="method_name">descendants</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000018"><span class="method_name">descendants_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000011"><span class="method_name">leaf?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000022"><span class="method_name">leaves</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000003"><span class="method_name">leaves</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000007"><span class="method_name">parent</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000008"><span class="method_name">parent=</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000009"><span class="method_name">parent_ids</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000023"><span class="method_name">rearrange_children!</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000024"><span class="method_name">rearrange_children?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000001"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000013"><span class="method_name">root</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000010"><span class="method_name">root?</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000002"><span class="method_name">roots</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000020"><span class="method_name">siblings</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree.html#M000021"><span class="method_name">siblings_and_self</span> <span class="module_name">(Mongoid::Tree)</span></a></li>
+        <li><a href="classes/Mongoid/Tree/Traversal.html#M000025"><span class="method_name">traverse</span> <span class="module_name">(Mongoid::Tree::Traversal)</span></a></li>
       </ol>
     </div>
   </body>
