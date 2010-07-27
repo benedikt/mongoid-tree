@@ -175,4 +175,43 @@ describe Mongoid::Tree do
 
   end
 
+  describe 'callbacks' do
+
+    after(:each) do
+      Node.reset_callbacks(:rearrange)
+    end
+
+    it "should provide a before_rearrange callback" do
+      Node.should respond_to :before_rearrange
+    end
+
+    it "should provida an after_rearrange callback" do
+      Node.should respond_to :after_rearrange
+    end
+
+    describe 'before rearrange callback' do
+
+      it "should be called before the document is rearranged" do
+        Node.before_rearrange :callback
+        node = Node.new
+        node.should_receive(:callback).ordered
+        node.should_receive(:rearrange).ordered
+        node.save
+      end
+
+    end
+
+    describe 'after rearrange callback' do
+
+      it "should be called after the document is rearranged" do
+        Node.after_rearrange :callback
+        node = Node.new
+        node.should_receive(:rearrange).ordered
+        node.should_receive(:callback).ordered
+        node.save
+      end
+
+    end
+
+  end
 end
