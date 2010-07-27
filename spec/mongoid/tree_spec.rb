@@ -85,14 +85,33 @@ describe Mongoid::Tree do
 
     before(:each) do
       setup_tree <<-ENDTREE
-        root:
-          - child:
-            - subchild
-          - other_child
+        - root:
+           - child:
+             - subchild
+           - other_child
+        - other_root
       ENDTREE
     end
 
-    describe '.root?' do
+    describe '.root' do
+      it "should return the first root document" do
+        Node.root.should == node(:root)
+      end
+    end
+
+    describe '.roots' do
+      it "should return all root documents" do
+        Node.roots.to_a.should == [node(:root), node(:other_root)]
+      end
+    end
+
+    describe '.leaves' do
+      it "should return all leaf documents" do
+        Node.leaves.to_a.should =~ [node(:subchild), node(:other_child), node(:other_root)]
+      end
+    end
+
+    describe '#root?' do
       it "should return true for root documents" do
         node(:root).should be_root
       end
@@ -102,7 +121,7 @@ describe Mongoid::Tree do
       end
     end
 
-    describe '.leaf?' do
+    describe '#leaf?' do
       it "should return true for leaf documents" do
         node(:subchild).should be_leaf
         node(:other_child).should be_leaf
@@ -115,22 +134,30 @@ describe Mongoid::Tree do
       end
     end
 
-    describe '.root' do
+    describe '#depth' do
+      it "should return the depth of this document" do
+        node(:root).depth.should == 0
+        node(:child).depth.should == 1
+        node(:subchild).depth.should == 2
+      end
+    end
+
+    describe '#root' do
       it "should return the root for this document" do
         node(:subchild).root.should == node(:root)
       end
     end
 
     describe 'ancestors' do
-      it ".ancestors should return the documents ancestors" do
+      it "#ancestors should return the documents ancestors" do
         node(:subchild).ancestors.to_a.should == [node(:root), node(:child)]
       end
 
-      it ".ancestors_and_self should return the documents ancestors and itself" do
+      it "#ancestors_and_self should return the documents ancestors and itself" do
         node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
       end
 
-      describe '.ancestor_of?' do
+      describe '#ancestor_of?' do
         it "should return true for ancestors" do
           node(:child).should be_ancestor_of(node(:subchild))
         end
@@ -142,15 +169,15 @@ describe Mongoid::Tree do
     end
 
     describe 'descendants' do
-      it ".descendants should return the documents descendants" do
+      it "#descendants should return the documents descendants" do
         node(:root).descendants.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
       end
 
-      it ".descendants_and_self should return the documents descendants and itself" do
+      it "#descendants_and_self should return the documents descendants and itself" do
         node(:root).descendants_and_self.to_a.should =~ [node(:root), node(:child), node(:other_child), node(:subchild)]
       end
 
-      describe '.descendant_of?' do
+      describe '#descendant_of?' do
         it "should return true for descendants" do
           subchild = node(:subchild)
           subchild.should be_descendant_of(node(:child))
@@ -164,12 +191,18 @@ describe Mongoid::Tree do
     end
 
     describe 'siblings' do
-      it ".siblings should return the documents siblings" do
+      it "#siblings should return the documents siblings" do
         node(:child).siblings.to_a.should == [node(:other_child)]
       end
 
-      it ".siblings_and_self should return the documents siblings and itself" do
+      it "#siblings_and_self should return the documents siblings and itself" do
         node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
+      end
+    end
+
+    describe '#leaves' do
+      it "should return this documents leaves" do
+        node(:root).leaves.should.to_a =~ [node(:other_child), node(:subchild)]
       end
     end
 

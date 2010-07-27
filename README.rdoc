@@ -35,6 +35,10 @@ Read the API documentation at http://benedikt.github.com/mongoid-tree and take a
 
 There are several utility methods that help getting to other related documents in the tree:
 
+  Node.root
+  Node.roots
+  Node.leaves
+
   node.root
   node.parent
   node.children
@@ -44,11 +48,13 @@ There are several utility methods that help getting to other related documents i
   node.descendants_and_self
   node.siblings
   node.siblings_and_self
+  node.leaves
 
 In addition it's possible to check certain aspects of the documents position in the tree:
 
   node.root?
   node.leaf?
+  node.depth
   node.ancestor_of?(other)
   node.descendant_of?(other)
 
