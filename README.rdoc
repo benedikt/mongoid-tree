@@ -15,7 +15,7 @@ To install mongoid_tree, simply add it to your Gemfile:
 In order to get the latest development version of mongoid-tree:
 
   gem 'mongoid-tree' :git => 'git://github.com/benedikt/mongoid-tree'
-  
+
 You might want to add the <tt>:require => 'mongoid/tree'</tt> option as well and finally run
 
   bundle install
@@ -30,6 +30,41 @@ Read the API documentation at http://benedikt.github.com/mongoid-tree and take a
     include Mongoid::Document
     include Mongoid::Tree
   end
+
+=== Utility methods
+
+There are several utility methods that help getting to other related documents in the tree:
+
+  node.root
+  node.parent
+  node.children
+  node.ancestors
+  node.ancestors_and_self
+  node.descendants
+  node.descendants_and_self
+  node.siblings
+  node.siblings_and_self
+
+In addition it's possible to check certain aspects of the documents position in the tree:
+
+  node.root?
+  node.leaf?
+  node.ancestor_of?(other)
+  node.descendant_of?(other)
+
+See Mongoid::Tree for more information on these methods.
+
+=== Traversal
+
+It's possible to traverse the tree using different traversal methods. See Mongoid::Tree::Traversal for details
+
+  node.traverse(:breadth_first) do |n|
+    # Do something with Node n
+  end
+
+=== Callbacks
+
+There are two callbacks that are called before and after the rearranging process. This enables you to do additional computations after the documents position in the tree is updated. See Mongoid::Tree for details.
 
 == Known issues
 
