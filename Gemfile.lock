@@ -2,16 +2,16 @@ PATH
   remote: .
   specs:
     mongoid-tree (0.2.0)
-      mongoid (>= 2.0.0.beta9)
+      mongoid (>= 2.0.0.beta.14)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.0.0.beta4)
-      activesupport (= 3.0.0.beta4)
+    activemodel (3.0.0.rc)
+      activesupport (= 3.0.0.rc)
       builder (~> 2.1.2)
       i18n (~> 0.4.1)
-    activesupport (3.0.0.beta4)
+    activesupport (3.0.0.rc)
     autotest (4.3.2)
     bson (1.0.4)
     bson_ext (1.0.4)
@@ -23,13 +23,13 @@ GEM
       rake (~> 0.8.2)
       rdoc (~> 2.3.0)
     i18n (0.4.1)
-    mongo (1.0.5)
+    mongo (1.0.6)
       bson (>= 1.0.4)
-    mongoid (2.0.0.beta9)
-      activemodel (~> 3.0.0.beta)
-      bson (~> 1.0.3)
-      mongo (~> 1.0.3)
-      tzinfo (~> 0.3.22)
+    mongoid (2.0.0.beta.14)
+      activemodel (= 3.0.0.rc)
+      bson (= 1.0.4)
+      mongo (= 1.0.6)
+      tzinfo (= 0.3.22)
       will_paginate (~> 3.0.pre)
     rake (0.8.7)
     rdoc (2.3.0)
@@ -42,7 +42,7 @@ GEM
       diff-lcs (>= 1.1.2)
     rspec-mocks (2.0.0.beta.19)
     tzinfo (0.3.22)
-    will_paginate (3.0.pre)
+    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
@@ -51,6 +51,6 @@ DEPENDENCIES
   autotest (>= 4.3.2)
   bson_ext (>= 1.0.4)
   hanna (>= 0.1.12)
-  mongoid (>= 2.0.0.beta9)
+  mongoid (>= 2.0.0.beta.14)
   mongoid-tree!
   rspec (>= 2.0.0.beta.18)
