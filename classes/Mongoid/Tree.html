@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>: Mongoid::Tree [mongoid-tree 0.2.0]</title>
+    <title>: Mongoid::Tree [mongoid-tree 0.2.1]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -141,7 +141,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 118</span>&#x000A;    </pre>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 121</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000004'>
@@ -160,7 +160,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 113</span>&#x000A;    </pre>
+                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 116</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000003'>
@@ -178,7 +178,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 90</span>&#x000A;    </pre>
+                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 93</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000001'>
@@ -196,7 +196,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 82</span>&#x000A;    </pre>
+                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 85</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000002'>
@@ -214,7 +214,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 86</span>&#x000A;    </pre>
+                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 89</span>&#x000A;    </pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
@@ -233,7 +233,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 179</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestor_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 182</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestor_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000014'>
@@ -251,7 +251,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 167</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">parent_ids</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 170</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">parent_ids</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000015'>
@@ -269,7 +269,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 173</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors_and_self</span>&#x000A;      <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">self</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 176</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors_and_self</span>&#x000A;      <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">self</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000006'>
@@ -288,7 +288,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 123</span>&#x000A;    </pre>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 126</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000012'>
@@ -306,7 +306,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 155</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">depth</span>&#x000A;      <span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">count</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 158</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">depth</span>&#x000A;      <span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">count</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000019'>
@@ -324,7 +324,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 197</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendant_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 200</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendant_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000017'>
@@ -342,7 +342,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 185</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 188</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000018'>
@@ -360,7 +360,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 191</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants_and_self</span>&#x000A;      [<span class="ruby-keyword kw">self</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">descendants</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 194</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants_and_self</span>&#x000A;      [<span class="ruby-keyword kw">self</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">descendants</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000011'>
@@ -378,7 +378,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 149</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaf?</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 152</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaf?</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000022'>
@@ -397,7 +397,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 215</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaves</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">nin</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">only</span>(<span class="ruby-identifier">:parent_id</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:parent_id</span>)).<span class="ruby-identifier">and</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 218</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaves</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">nin</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">only</span>(<span class="ruby-identifier">:parent_id</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:parent_id</span>)).<span class="ruby-identifier">and</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000007'>
@@ -416,7 +416,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 128</span>&#x000A;    </pre>
+                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 131</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000008'>
@@ -433,7 +433,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 136</span>&#x000A;    </pre>
+                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 139</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000009'>
@@ -453,7 +453,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 141</span>&#x000A;    </pre>
+                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 144</span>&#x000A;    </pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000023'>
@@ -471,7 +471,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 221</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children!</span>&#x000A;      <span class="ruby-ivar">@rearrange_children</span> = <span class="ruby-keyword kw">true</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 224</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children!</span>&#x000A;      <span class="ruby-ivar">@rearrange_children</span> = <span class="ruby-keyword kw">true</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000024'>
@@ -489,7 +489,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 227</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children?</span>&#x000A;      <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@rearrange_children</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 230</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children?</span>&#x000A;      <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@rearrange_children</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000013'>
@@ -507,7 +507,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 161</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">first</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 164</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">first</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000010'>
@@ -525,7 +525,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 143</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root?</span>&#x000A;      <span class="ruby-identifier">parent_id</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 146</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root?</span>&#x000A;      <span class="ruby-identifier">parent_id</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000020'>
@@ -543,7 +543,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 203</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings</span>&#x000A;      <span class="ruby-identifier">siblings_and_self</span> <span class="ruby-operator">-</span> [<span class="ruby-keyword kw">self</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 206</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings</span>&#x000A;      <span class="ruby-identifier">siblings_and_self</span> <span class="ruby-operator">-</span> [<span class="ruby-keyword kw">self</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000021'>
@@ -561,7 +561,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 209</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings_and_self</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 212</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings_and_self</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
