@@ -63,9 +63,10 @@ module Mongoid # :nodoc:
 
     included do
       references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent
-      referenced_in :parent, :class_name => self.name, :inverse_of => :children
+      referenced_in :parent, :class_name => self.name, :inverse_of => :children, :index => true
 
       field :parent_ids, :type => Array, :default => []
+      index :parent_ids
 
       set_callback :save, :after, :rearrange_children, :if => :rearrange_children?
       set_callback :validation, :before do
