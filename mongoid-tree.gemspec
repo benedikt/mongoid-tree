@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.rdoc_options  = ['--main', 'README.rdoc', '--charset=UTF-8']
   s.extra_rdoc_files = ['README.rdoc', 'LICENSE']
 
-  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.rdoc Rakefile Gemfile .rspec)
+  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.rdoc Rakefile Gemfile Gemfile.lock .rspec)
 
   s.add_runtime_dependency('mongoid', ['>= 2.0.0.beta.14'])
   s.add_development_dependency('rspec', ['>= 2.0.0.beta.18'])
