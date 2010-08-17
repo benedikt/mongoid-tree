@@ -162,13 +162,13 @@ module Mongoid # :nodoc:
     ##
     # Returns this document's root node
     def root
-      self.class.find(parent_ids.first)
+      base_class.find(parent_ids.first)
     end
 
     ##
     # Returns this document's ancestors
     def ancestors
-      self.class.where(:_id.in => parent_ids)
+      base_class.where(:_id.in => parent_ids)
     end
 
     ##
@@ -186,7 +186,7 @@ module Mongoid # :nodoc:
     ##
     # Returns this document's descendants
     def descendants
-      self.class.where(:parent_ids => self.id)
+      base_class.where(:parent_ids => self.id)
     end
 
     ##
@@ -210,13 +210,13 @@ module Mongoid # :nodoc:
     ##
     # Returns this document's siblings and itself
     def siblings_and_self
-      self.class.where(:parent_id => self.parent_id)
+      base_class.where(:parent_id => self.parent_id)
     end
 
     ##
     # Returns all leaves of this document (be careful, currently involves two queries)
     def leaves
-      self.class.where(:_id.nin => self.class.only(:parent_id).collect(&:parent_id)).and(:parent_ids => self.id)
+      base_class.where(:_id.nin => base_class.only(:parent_id).collect(&:parent_id)).and(:parent_ids => self.id)
     end
 
     ##
@@ -232,6 +232,13 @@ module Mongoid # :nodoc:
     end
 
     private
+    
+    def base_class
+      @base_class ||= begin 
+        parent_classes = self.class.ancestors.select{|c| !c.name[/^Mongoid|ActiveModel|ActiveSupport/i]}
+        parent_classes[parent_classes.index(Object) - 1]
+      end
+    end
 
     def rearrange
       if self.parent_id
