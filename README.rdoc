@@ -68,6 +68,26 @@ It's possible to traverse the tree using different traversal methods. See Mongoi
     # Do something with Node n
   end
 
+=== Destroying
+
+Mongoid::Tree does not handle destroying of nodes by default. However it provides several strategies that help you to deal with children of deleted documents. You can simply add them as <tt>before_destroy</tt> callbacks.
+
+Available strategies are:
+
+* :nullify_children -- Sets the children's parent_id to null
+* :move_children_to_parent -- Moves the children to the current document's parent
+* :destroy_children -- Destroys all children by calling their #destroy method (invokes callbacks)
+* :delete_children -- Deletes all children using a database query (doesn't invoke callbacks)
+
+Example:
+
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+
+    before_destroy :nullify_children
+  end
+
 === Callbacks
 
 There are two callbacks that are called before and after the rearranging process. This enables you to do additional computations after the documents position in the tree is updated. See Mongoid::Tree for details.

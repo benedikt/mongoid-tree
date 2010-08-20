@@ -30,6 +30,28 @@ module Mongoid # :nodoc:
   #   node.children.create
   #   node.children.first.parent # => node
   #
+  # === Destroying
+  #
+  # Mongoid::Tree does not handle destroying of nodes by default. However it provides
+  # several strategies that help you to deal with children of deleted documents. You can
+  # simply add them as <tt>before_destroy</tt> callbacks.
+  #
+  # Available strategies are:
+  #
+  # * :nullify_children -- Sets the children's parent_id to null
+  # * :move_children_to_parent -- Moves the children to the current document's parent
+  # * :destroy_children -- Destroys all children by calling their #destroy method (invokes callbacks)
+  # * :delete_children -- Deletes all children using a database query (doesn't invoke callbacks)
+  #
+  # Example:
+  #
+  #   class Node
+  #     include Mongoid::Document
+  #     include Mongoid::Tree
+  #
+  #     before_destroy :nullify_children
+  #   end
+  #
   # === Callbacks
   #
   # Mongoid::Tree offers callbacks for its rearranging process. This enables you to
@@ -231,6 +253,30 @@ module Mongoid # :nodoc:
       !!@rearrange_children
     end
 
+    ##
+    # Nullifies all children's parent_id
+    def nullify_children
+      children.each { |c| c.parent = nil; c.save }
+    end
+
+    ##
+    # Moves all children to this documents parent
+    def move_children_to_parent
+      children.each { |c| c.update_attributes(:parent_id => self.parent_id) }
+    end
+
+    ##
+    # Deletes all children using the database (doesn't invoke callbacks)
+    def delete_children
+      children.delete_all
+    end
+
+    ##
+    # Destroys all children by calling their (does invoke callbacks)
+    def destroy_children
+      children.destroy_all
+    end
+
     private
 
     def base_class
@@ -243,6 +289,8 @@ module Mongoid # :nodoc:
     def rearrange
       if self.parent_id
         self.parent_ids = base_class.find(self.parent_id).parent_ids + [self.parent_id]
+      else
+        self.parent_ids = []
       end
 
       rearrange_children! if self.parent_ids_changed?

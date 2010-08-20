@@ -75,6 +75,11 @@ describe Mongoid::Tree do
       subsubchild.parent_ids.should == [node(:other_root).id, other_child.id, subchild.id]
     end
 
+    it "should rebuild its children's parent_ids when its own parent_id is removed" do
+      node(:child).update_attributes(:parent_id => nil)
+      node(:subchild).parent_ids.should == [node(:child).id]
+    end
+
     it "should not rebuild its children's parent_ids when it's not required" do
       root = node(:root)
       root.should_not_receive(:rearrange_children)
@@ -106,6 +111,52 @@ describe Mongoid::Tree do
       subclassed = SubclassedNode.create!(:name => 'subclassed_subchild')
       node(:child).children << subclassed
       subclassed.root.should == node(:root)
+    end
+
+  end
+
+  describe 'destroy strategies' do
+
+    before(:each) do
+      setup_tree <<-ENDTREE
+        - root:
+           - child:
+             - subchild
+           - other_child
+        - other_root
+      ENDTREE
+    end
+
+    describe ':nullify_children' do
+      it "should set its children's parent_id to null" do
+        node(:root).nullify_children
+        node(:child).should be_root
+        node(:subchild).reload.should_not be_descendant_of node(:root)
+      end
+    end
+
+    describe ':move_children_to_parent' do
+      it "should set its childen's parent_id to the documents parent_id" do
+        node(:child).move_children_to_parent
+        node(:child).should be_leaf
+        node(:root).children.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+      end
+    end
+
+    describe ':destroy_children' do
+      it "should destroy all children" do
+        root = node(:root)
+        root.children.should_receive(:destroy_all)
+        root.destroy_children
+      end
+    end
+
+    describe ':delete_children' do
+      it "should delete all children" do
+        root = node(:root)
+        root.children.should_receive(:delete_all)
+        root.delete_children
+      end
     end
 
   end
