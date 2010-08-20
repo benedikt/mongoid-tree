@@ -5,3 +5,6 @@ class Node
   field :name
 end
 
+class SubclassedNode < Node
+end
+

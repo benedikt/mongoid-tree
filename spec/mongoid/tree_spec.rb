@@ -90,6 +90,26 @@ describe Mongoid::Tree do
 
   end
 
+  describe 'when subclassed' do
+
+    before(:each) do
+      setup_tree <<-ENDTREE
+        - root:
+           - child:
+             - subchild
+           - other_child
+        - other_root
+      ENDTREE
+    end
+
+    it "should allow to store any subclass within the tree" do
+      subclassed = SubclassedNode.create!(:name => 'subclassed_subchild')
+      node(:child).children << subclassed
+      subclassed.root.should == node(:root)
+    end
+
+  end
+
   describe 'utility methods' do
 
     before(:each) do

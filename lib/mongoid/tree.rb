@@ -232,9 +232,9 @@ module Mongoid # :nodoc:
     end
 
     private
-    
+
     def base_class
-      @base_class ||= begin 
+      @base_class ||= begin
         parent_classes = self.class.ancestors.select{|c| !c.name[/^Mongoid|ActiveModel|ActiveSupport/i]}
         parent_classes[parent_classes.index(Object) - 1]
       end
@@ -242,7 +242,7 @@ module Mongoid # :nodoc:
 
     def rearrange
       if self.parent_id
-        self.parent_ids = self.class.find(self.parent_id).parent_ids + [self.parent_id]
+        self.parent_ids = base_class.find(self.parent_id).parent_ids + [self.parent_id]
       end
 
       rearrange_children! if self.parent_ids_changed?
