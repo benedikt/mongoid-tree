@@ -151,11 +151,11 @@ describe Mongoid::Tree do
       end
     end
 
-    describe ':delete_children' do
-      it "should delete all children" do
+    describe ':delete_descendants' do
+      it "should delete all descendants" do
         root = node(:root)
         Node.should_receive(:delete_all).with(:conditions => { :parent_ids => root.id })
-        root.delete_children
+        root.delete_descendants
       end
     end
 

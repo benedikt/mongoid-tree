@@ -77,7 +77,7 @@ Available strategies are:
 * :nullify_children -- Sets the children's parent_id to null
 * :move_children_to_parent -- Moves the children to the current document's parent
 * :destroy_children -- Destroys all children by calling their #destroy method (invokes callbacks)
-* :delete_children -- Deletes all children using a database query (doesn't invoke callbacks)
+* :delete_descendants -- Deletes all children using a database query (doesn't invoke callbacks)
 
 Example:
 

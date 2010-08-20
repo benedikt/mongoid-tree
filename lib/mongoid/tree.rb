@@ -41,7 +41,7 @@ module Mongoid # :nodoc:
   # * :nullify_children -- Sets the children's parent_id to null
   # * :move_children_to_parent -- Moves the children to the current document's parent
   # * :destroy_children -- Destroys all children by calling their #destroy method (invokes callbacks)
-  # * :delete_children -- Deletes all children using a database query (doesn't invoke callbacks)
+  # * :delete_descendants -- Deletes all descendants using a database query (doesn't invoke callbacks)
   #
   # Example:
   #
@@ -267,7 +267,7 @@ module Mongoid # :nodoc:
 
     ##
     # Deletes all children using the database (doesn't invoke callbacks)
-    def delete_children
+    def delete_descendants
       base_class.delete_all(:conditions => { :parent_ids => self.id })
     end
 
