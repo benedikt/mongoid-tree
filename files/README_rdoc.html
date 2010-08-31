@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: README.rdoc [mongoid-tree 0.2.1]</title>
+    <title>File: README.rdoc [mongoid-tree 0.3.0]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Jul 28 10:23:41 +0200 2010</span>
+          <span class='datetime'>Tue Aug 31 20:36:06 +0200 2010</span>
         </div>
       </div>
       <div id='content'>
@@ -43,7 +43,7 @@
             </p>
             <h2>Requirements</h2>
             <ul>
-            <li>mongoid (>= 2.0.0.beta.14)
+            <li>mongoid (>= 2.0.0.beta.17)
             
             </li>
             </ul>
@@ -55,7 +55,7 @@
             <p>
             In order to get the latest development version of mongoid-tree:
             </p>
-            <pre>gem 'mongoid-tree' :git =&gt; 'git://github.com/benedikt/mongoid-tree'</pre>
+            <pre>gem 'mongoid-tree', :git =&gt; 'git://github.com/benedikt/mongoid-tree'</pre>
             <p>
             You might want to add the <tt>:require =&gt; 'mongoid/tree'</tt> option as
             well and finally run
@@ -92,6 +92,37 @@
             for details
             </p>
             <pre>node.traverse(:breadth_first) do |n|&#x000A;  # Do something with Node n&#x000A;end</pre>
+            <h3>Destroying</h3>
+            <p>
+            <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> does not handle
+            destroying of nodes by default. However it provides several strategies that
+            help you to deal with children of deleted documents. You can simply add
+            them as <tt>before_destroy</tt> callbacks.
+            </p>
+            <p>
+            Available strategies are:
+            </p>
+            <ul>
+            <li>:nullify_children &#8212; Sets the children&#8217;s parent_id to null
+            
+            </li>
+            <li>:move_children_to_parent &#8212; Moves the children to the current
+            document&#8217;s parent
+            
+            </li>
+            <li>:destroy_children &#8212; Destroys all children by calling their destroy
+            method (invokes callbacks)
+            
+            </li>
+            <li>:delete_descendants &#8212; Deletes all descendants using a database query
+            (doesn&#8217;t invoke callbacks)
+            
+            </li>
+            </ul>
+            <p>
+            Example:
+            </p>
+            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  before_destroy :nullify_children&#x000A;end</pre>
             <h3>Callbacks</h3>
             <p>
             There are two callbacks that are called before and after the rearranging

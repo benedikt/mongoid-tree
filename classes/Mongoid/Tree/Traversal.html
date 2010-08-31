@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>: Mongoid::Tree::Traversal [mongoid-tree 0.2.1]</title>
+    <title>: Mongoid::Tree::Traversal [mongoid-tree 0.3.0]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -41,7 +41,7 @@
             <h1><a href="Traversal.html">Mongoid::Tree::Traversal</a></h1>
             <p>
             <a href="../Tree.html">Mongoid::Tree</a> provides a <a
-            href="Traversal.html#M000025">traverse</a> method to walk through the tree.
+            href="Traversal.html#M000029">traverse</a> method to walk through the tree.
             It supports these traversal methods:
             </p>
             <ul>
@@ -87,14 +87,14 @@
             <h2>Methods</h2>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000025">traverse</a></li>
+              <li><a href="#M000029">traverse</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000025'>
-                <a name='M000025'></a>
+              <div class='method public-instance' id='method-M000029'>
+                <a name='M000029'></a>
                 <div class='synopsis'>
                   <span class='name'>traverse</span>
                   <span class='arguments'>(type = :depth_first, &amp;block)</span>
@@ -114,10 +114,10 @@
                   <pre>results = []&#x000A;root.traverse(:depth_first) do |node|&#x000A;  results &lt;&lt; node&#x000A;end</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000025-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 62</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;      <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 62</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;      <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
