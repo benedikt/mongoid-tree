@@ -92,6 +92,24 @@ Example:
 
 There are two callbacks that are called before and after the rearranging process. This enables you to do additional computations after the documents position in the tree is updated. See Mongoid::Tree for details.
 
+Example:
+
+  class Page
+    include Mongoid::Document
+    include Mongoid::Tree
+
+    after_rearrange :rebuild_path
+
+    field :slug
+    field :path
+
+    private
+
+    def rebuild_path
+      self.path = self.ancestors_and_self.collect(&:slug).join('/')
+    end
+  end
+
 == Known issues
 
 See http://github.com/benedikt/mongoid-tree/issues
