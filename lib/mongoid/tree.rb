@@ -266,7 +266,7 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # Deletes all children using the database (doesn't invoke callbacks)
+    # Deletes all descendants using the database (doesn't invoke callbacks)
     def delete_descendants
       base_class.delete_all(:conditions => { :parent_ids => self.id })
     end
