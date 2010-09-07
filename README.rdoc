@@ -10,11 +10,11 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 To install mongoid_tree, simply add it to your Gemfile:
 
-  gem 'mongoid-tree'
+  gem 'mongoid-tree', :require => 'mongoid/tree'
 
 In order to get the latest development version of mongoid-tree:
 
-  gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree'
+  gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree', :require => 'mongoid/tree'
 
 You might want to add the <tt>:require => 'mongoid/tree'</tt> option as well and finally run
 
