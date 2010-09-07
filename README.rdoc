@@ -16,7 +16,7 @@ In order to get the latest development version of mongoid-tree:
 
   gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree', :require => 'mongoid/tree'
 
-You might want to add the <tt>:require => 'mongoid/tree'</tt> option as well and finally run
+You might want to remove the <tt>:require => 'mongoid/tree'</tt> option and explicitly <tt>require 'mongoid/tree'</tt> where needed and finally run
 
   bundle install
 
