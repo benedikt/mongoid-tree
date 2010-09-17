@@ -281,8 +281,7 @@ module Mongoid # :nodoc:
 
     def base_class
       @base_class ||= begin
-        parent_classes = self.class.ancestors.select{|c| !c.name[/^Mongoid|ActiveModel|ActiveSupport/i]}
-        parent_classes[parent_classes.index(Object) - 1]
+        self.class.ancestors.select{|c| c.ancestors.include?(Mongoid::Document) && c != Mongoid::Document}.last
       end
     end
 
@@ -307,3 +306,4 @@ module Mongoid # :nodoc:
 
   end
 end
+
