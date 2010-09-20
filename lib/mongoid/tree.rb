@@ -98,6 +98,8 @@ module Mongoid # :nodoc:
       validate :position_in_tree
 
       define_model_callbacks :rearrange, :only => [:before, :after]
+
+      class_eval "def base_class; #{self.name}; end"
     end
 
     ##
@@ -278,13 +280,6 @@ module Mongoid # :nodoc:
     end
 
     private
-
-    def base_class
-      @base_class ||= begin
-        parent_classes = self.class.ancestors.select{|c| !c.name[/^Mongoid|ActiveModel|ActiveSupport/i]}
-        parent_classes[parent_classes.index(Object) - 1]
-      end
-    end
 
     def rearrange
       if self.parent_id
