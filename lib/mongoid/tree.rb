@@ -90,6 +90,8 @@ module Mongoid # :nodoc:
       field :parent_ids, :type => Array, :default => []
       index :parent_ids
 
+      field :position, :type => Integer
+
       set_callback :save, :after, :rearrange_children, :if => :rearrange_children?
       set_callback :validation, :before do
         run_callbacks(:rearrange) { rearrange }
@@ -98,6 +100,8 @@ module Mongoid # :nodoc:
       validate :position_in_tree
 
       define_model_callbacks :rearrange, :only => [:before, :after]
+
+      after_rearrange :assign_default_position
 
       class_eval "def base_class; #{self.name}; end"
     end
@@ -228,7 +232,7 @@ module Mongoid # :nodoc:
     ##
     # Returns this document's siblings
     def siblings
-      siblings_and_self - [self]
+      siblings_and_self.excludes(:id => self.id)
     end
 
     ##
@@ -279,7 +283,106 @@ module Mongoid # :nodoc:
       children.destroy_all
     end
 
-    private
+    def lower_items
+      self.siblings.where(:position.gte => self.position)
+    end
+
+    def higher_items
+      self.siblings.where(:position.lte => self.position)
+    end
+
+    def last_item_in_list
+      siblings_and_self.asc(:position).last
+    end
+
+    def first_item_in_list
+      siblings_and_self.asc(:position).first
+    end
+
+    def at_top?
+      higher_items.empty?
+    end
+
+    def at_bottom?
+      lower_items.empty?
+    end
+
+    def move_to_top
+      return true if at_top?
+      move_above(first_item_in_list)
+    end
+
+    def move_to_bottom
+      return true if at_bottom?
+      move_below(last_item_in_list)
+    end
+
+    # TODO: Refactor the following two methods out into some utility methods
+    # that can be reused
+    def move_above(other_item)
+      if other_item.parent_id != parent_id
+        lower_items.each do |item|
+          item.inc(:position, -1)
+        end
+        self.parent_id = other_item.parent_id
+        self.save! # So that the rearrange callback happens
+        self.move_above(other_item)
+      else
+        if other_item.position < self.position
+          new_position = other_item.position
+          other_item.lower_items.where(:position.lt => self.position).each do |item|
+            item.inc(:position, 1)
+          end
+          other_item.inc(:position, 1)
+          self.update_attributes!(:position => new_position)
+        else
+          new_position = other_item.position - 1
+          other_item.higher_items.where(:position.gt => self.position).each do |item|
+            item.inc(:position, -1)
+          end
+          self.update_attributes!(:position => new_position)
+        end
+      end
+    end
+
+    def move_below(other_item)
+      if other_item.parent_id != parent_id
+        lower_items.each do |item|
+          item.inc(:position, -1)
+        end
+        self.parent_id = other_item.parent_id
+        self.save! # So that the rearrange callback happens
+        self.move_below(other_item)
+      else
+        if other_item.position < self.position
+          new_position = other_item.position + 1
+          other_item.lower_items.where(:position.lt => self.position).each do |item|
+            item.inc(:position, 1)
+          end
+          self.update_attributes!(:position => new_position)
+        else
+          new_position = other_item.position
+          other_item.higher_items.where(:position.gt => self.position).each do |item|
+            item.inc(:position, -1)
+          end
+          other_item.inc(:position, -1)
+          self.update_attributes!(:position => new_position)
+        end
+      end
+    end
+
+  private
+    def assign_default_position
+      self.position = nil if self.parent_ids_changed?
+      
+      if self.position.nil?
+        if self.siblings.empty?
+          self.position = 0
+        else
+          self.position = self.siblings.collect(&:position).max + 1
+        end
+      end
+    end
 
     def rearrange
       if self.parent_id
