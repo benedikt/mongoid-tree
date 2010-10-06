@@ -67,6 +67,28 @@ describe Mongoid::Tree::Traversal do
       result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
     end
 
+    describe 'with reordered nodes' do
+      before do
+        setup_tree <<-ENDTREE
+          node1:
+            - node2:
+              - node3
+            - node4:
+              - node6
+              - node5
+            - node7
+        ENDTREE
+        node(:node5).move_above(node(:node6))
+      end
+      
+      it 'should return the nodes in the correct order' do
+        result = []
+        node(:node1).traverse(:depth_first) { |node| result << node }
+        result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      end
+      
+    end
+
   end
 
   describe 'breadth first traversal' do

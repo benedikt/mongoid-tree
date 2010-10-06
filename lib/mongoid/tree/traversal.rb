@@ -68,7 +68,7 @@ module Mongoid # :nodoc:
 
       def depth_first_traversal(&block)
         block.call(self)
-        self.children.each { |c| c.send(:depth_first_traversal, &block) }
+        self.children.ordered.each { |c| c.send(:depth_first_traversal, &block) }
       end
 
       def breadth_first_traversal(&block)
