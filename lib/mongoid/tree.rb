@@ -378,7 +378,7 @@ module Mongoid # :nodoc:
       self.position = nil if self.parent_ids_changed?
       
       if self.position.nil?
-        if self.siblings.empty? || (self.siblings.collect(&:position).uniq! == [nil])
+        if self.siblings.empty? || (self.siblings.collect(&:position).uniq == [nil])
           self.position = 0
         else
           self.position = self.siblings.collect(&:position).reject {|p| p.nil?}.max + 1
@@ -388,7 +388,12 @@ module Mongoid # :nodoc:
 
     def rearrange
       if self.parent_id
-        self.parent_ids = base_class.find(self.parent_id).parent_ids + [self.parent_id]
+        parent_ids_of_parent = base_class.find(self.parent_id).parent_ids
+        if parent_ids_of_parent.nil?
+          self.parent_ids = [self.parent_id]
+        else
+          self.parent_ids = base_class.find(self.parent_id).parent_ids + [self.parent_id]
+        end
       else
         self.parent_ids = []
       end
