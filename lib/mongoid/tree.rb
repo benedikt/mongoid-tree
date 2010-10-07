@@ -378,7 +378,7 @@ module Mongoid # :nodoc:
       self.position = nil if self.parent_ids_changed?
       
       if self.position.nil?
-        if self.siblings.empty?
+        if self.siblings.empty? || (self.siblings.collect(&:position).uniq! == [nil])
           self.position = 0
         else
           self.position = self.siblings.collect(&:position).reject {|p| p.nil?}.max + 1
