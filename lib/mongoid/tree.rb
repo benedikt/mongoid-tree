@@ -381,7 +381,7 @@ module Mongoid # :nodoc:
         if self.siblings.empty?
           self.position = 0
         else
-          self.position = self.siblings.collect(&:position).max + 1
+          self.position = self.siblings.collect(&:position).reject {|p| p.nil?}.max + 1
         end
       end
     end
