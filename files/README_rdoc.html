@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: README.rdoc [mongoid-tree 0.3.0]</title>
+    <title>File: README.rdoc [mongoid-tree 0.3.1]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Tue Aug 31 20:36:06 +0200 2010</span>
+          <span class='datetime'>Tue Sep 07 20:09:22 +0200 2010</span>
         </div>
       </div>
       <div id='content'>
@@ -51,14 +51,14 @@
             <p>
             To install mongoid_tree, simply add it to your Gemfile:
             </p>
-            <pre>gem 'mongoid-tree'</pre>
+            <pre>gem 'mongoid-tree', :require =&gt; 'mongoid/tree'</pre>
             <p>
             In order to get the latest development version of mongoid-tree:
             </p>
-            <pre>gem 'mongoid-tree', :git =&gt; 'git://github.com/benedikt/mongoid-tree'</pre>
+            <pre>gem 'mongoid-tree', :git =&gt; 'git://github.com/benedikt/mongoid-tree', :require =&gt; 'mongoid/tree'</pre>
             <p>
-            You might want to add the <tt>:require =&gt; 'mongoid/tree'</tt> option as
-            well and finally run
+            You might want to remove the <tt>:require =&gt; 'mongoid/tree'</tt> option
+            and explicitly <tt>require 'mongoid/tree'</tt> where needed and finally run
             </p>
             <pre>bundle install</pre>
             <h2>Usage</h2>
@@ -130,6 +130,10 @@
             position in the tree is updated. See <a
             href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for details.
             </p>
+            <p>
+            Example:
+            </p>
+            <pre>class Page&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  after_rearrange :rebuild_path&#x000A;&#x000A;  field :slug&#x000A;  field :path&#x000A;&#x000A;  private&#x000A;&#x000A;  def rebuild_path&#x000A;    self.path = self.ancestors_and_self.collect(&amp;:slug).join('/')&#x000A;  end&#x000A;end</pre>
             <h2>Known issues</h2>
             <p>
             See <a
