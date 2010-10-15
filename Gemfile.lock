@@ -1,19 +1,28 @@
+GIT
+  remote: http://github.com/mongoid/mongoid.git
+  revision: b1080cda54d32d3bc18e008867b33b82d64fb55b
+  specs:
+    mongoid (2.0.0.beta.19)
+      activemodel (~> 3.0)
+      mongo (~> 1.1)
+      tzinfo (~> 0.3.22)
+      will_paginate (~> 3.0.pre)
+
 PATH
   remote: .
   specs:
     mongoid-tree (0.3.0)
-      mongoid (>= 2.0.0.beta.17)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.0.0)
-      activesupport (= 3.0.0)
+    activemodel (3.0.1)
+      activesupport (= 3.0.1)
       builder (~> 2.1.2)
       i18n (~> 0.4.1)
-    activesupport (3.0.0)
+    activesupport (3.0.1)
     autotest (4.3.2)
-    bson (1.0.4)
+    bson (1.1.1)
     bson_ext (1.0.7)
     builder (2.1.2)
     diff-lcs (1.1.2)
@@ -23,14 +32,8 @@ GEM
       rake (~> 0.8.2)
       rdoc (~> 2.3.0)
     i18n (0.4.1)
-    mongo (1.0.7)
-      bson (>= 1.0.4)
-    mongoid (2.0.0.beta.17)
-      activemodel (~> 3.0.0)
-      bson (= 1.0.4)
-      mongo (= 1.0.7)
-      tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
+    mongo (1.1.1)
+      bson (>= 1.1.1)
     rake (0.8.7)
     rdoc (2.3.0)
     rspec (2.0.0.beta.20)
@@ -51,6 +54,6 @@ DEPENDENCIES
   autotest (>= 4.3.2)
   bson_ext (>= 1.0.4)
   hanna (>= 0.1.12)
-  mongoid (>= 2.0.0.beta.17)
+  mongoid!
   mongoid-tree!
   rspec (>= 2.0.0.beta.18)
