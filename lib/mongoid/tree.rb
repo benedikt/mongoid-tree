@@ -266,7 +266,7 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # Moves all children to this documents parent
+    # Moves all children to this document's parent
     def move_children_to_parent
       children.each { |c| c.update_attributes(:parent_id => self.parent_id) }
     end
@@ -278,7 +278,7 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # Destroys all children by calling their (does invoke callbacks)
+    # Destroys all children by calling their #destroy method (does invoke callbacks)
     def destroy_children
       children.destroy_all
     end
