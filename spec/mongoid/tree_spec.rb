@@ -166,7 +166,7 @@ describe Mongoid::Tree do
       it "should set its childen's parent_id to the documents parent_id" do
         node(:child).move_children_to_parent
         node(:child).should be_leaf
-        node(:root).children.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+        node(:root).children.to_a.should == [node(:child), node(:other_child), node(:subchild)]
       end
     end
 
