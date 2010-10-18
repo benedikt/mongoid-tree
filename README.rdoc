@@ -49,14 +49,28 @@ There are several utility methods that help getting to other related documents i
   node.siblings
   node.siblings_and_self
   node.leaves
+  node.lower_items (siblings)
+  node.higher_items (siblings)
+  node.first_item_in_list (first sibling)
+  node.last_item_in_list (last sibling)
 
-In addition it's possible to check certain aspects of the documents position in the tree:
+Siblings are ordered, and there are a few utility methods for managing their
+position in the list:
+
+  node.move_above(other)
+  node.move_below(other)
+  node.move_to_top
+  node.mode_to_bottom
+
+In addition it's possible to check certain aspects of the document's position in the tree:
 
   node.root?
   node.leaf?
   node.depth
   node.ancestor_of?(other)
   node.descendant_of?(other)
+  node.at_top?
+  node.at_bottom?
 
 See Mongoid::Tree for more information on these methods.
 

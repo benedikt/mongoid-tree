@@ -283,42 +283,58 @@ module Mongoid # :nodoc:
       children.destroy_all
     end
 
+    ##
+    # Returns lower siblings
     def lower_items
       self.siblings.where(:position.gt => self.position)
     end
 
+    ##
+    # Returns higher siblings
     def higher_items
       self.siblings.where(:position.lt => self.position)
     end
 
+    ##
+    # Returns the lowest sibling (could be self)
     def last_item_in_list
       siblings_and_self.asc(:position).last
     end
 
+    ##
+    # Returns the highest sibling (could be self)
     def first_item_in_list
       siblings_and_self.asc(:position).first
     end
 
+    ##
+    # Is this the highest sibling?
     def at_top?
       higher_items.empty?
     end
 
+    ##
+    # Is this the lowest sibling?
     def at_bottom?
       lower_items.empty?
     end
 
+    ##
+    # Move this node above all its siblings
     def move_to_top
       return true if at_top?
       move_above(first_item_in_list)
     end
 
+    ##
+    # Move this node below all its siblings
     def move_to_bottom
       return true if at_bottom?
       move_below(last_item_in_list)
     end
 
-    # TODO: Refactor the following two methods out into some utility methods
-    # that can be reused
+    ##
+    # Move this node above the specified node
     def move_above(other_item)
       if parent_id != other_item.parent_id
         move_lower_items_up
@@ -343,6 +359,8 @@ module Mongoid # :nodoc:
       end
     end
 
+    ##
+    # Move this node below the specified node
     def move_below(other_item)
       if parent_id != other_item.parent_id
         move_lower_items_up
