@@ -284,11 +284,11 @@ module Mongoid # :nodoc:
     end
 
     def lower_items
-      self.siblings.where(:position.gte => self.position)
+      self.siblings.where(:position.gt => self.position)
     end
 
     def higher_items
-      self.siblings.where(:position.lte => self.position)
+      self.siblings.where(:position.lt => self.position)
     end
 
     def last_item_in_list
@@ -320,15 +320,13 @@ module Mongoid # :nodoc:
     # TODO: Refactor the following two methods out into some utility methods
     # that can be reused
     def move_above(other_item)
-      if other_item.parent_id != parent_id
-        lower_items.each do |item|
-          item.inc(:position, -1)
-        end
+      if parent_id != other_item.parent_id
+        move_lower_items_up
         self.parent_id = other_item.parent_id
         self.save! # So that the rearrange callback happens
         self.move_above(other_item)
       else
-        if other_item.position < self.position
+        if position > other_item.position
           new_position = other_item.position
           other_item.lower_items.where(:position.lt => self.position).each do |item|
             item.inc(:position, 1)
@@ -346,15 +344,13 @@ module Mongoid # :nodoc:
     end
 
     def move_below(other_item)
-      if other_item.parent_id != parent_id
-        lower_items.each do |item|
-          item.inc(:position, -1)
-        end
+      if parent_id != other_item.parent_id
+        move_lower_items_up
         self.parent_id = other_item.parent_id
         self.save! # So that the rearrange callback happens
         self.move_below(other_item)
       else
-        if other_item.position < self.position
+        if position > other_item.position
           new_position = other_item.position + 1
           other_item.lower_items.where(:position.lt => self.position).each do |item|
             item.inc(:position, 1)
@@ -372,9 +368,15 @@ module Mongoid # :nodoc:
     end
 
   private
+    def move_lower_items_up
+      lower_items.each do |item|
+        item.inc(:position, -1)
+      end
+    end
+
     def assign_default_position
       self.position = nil if self.parent_ids_changed?
-      
+
       if self.position.nil?
         if self.siblings.empty? || (self.siblings.collect(&:position).uniq == [nil])
           self.position = 0
@@ -407,6 +409,5 @@ module Mongoid # :nodoc:
     def position_in_tree
       errors.add(:parent_id, :invalid) if self.parent_ids.include?(self.id)
     end
-
-  end
-end
+  end # Tree
+end # Mongoid
