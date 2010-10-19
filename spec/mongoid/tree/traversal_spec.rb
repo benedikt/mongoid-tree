@@ -69,7 +69,7 @@ describe Mongoid::Tree::Traversal do
 
     describe 'with reordered nodes' do
       before do
-        setup_tree <<-ENDTREE
+        setup_ordered_tree <<-ENDTREE
           node1:
             - node2:
               - node3

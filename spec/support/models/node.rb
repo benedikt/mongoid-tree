@@ -8,3 +8,6 @@ end
 class SubclassedNode < Node
 end
 
+class OrderedNode < Node
+  include Mongoid::Tree::Ordering
+end
