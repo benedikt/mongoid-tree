@@ -80,13 +80,13 @@ describe Mongoid::Tree::Traversal do
         ENDTREE
         node(:node5).move_above(node(:node6))
       end
-      
+
       it 'should return the nodes in the correct order' do
         result = []
         node(:node1).traverse(:depth_first) { |node| result << node }
         result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
       end
-      
+
     end
 
   end
