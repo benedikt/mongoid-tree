@@ -64,70 +64,51 @@ module Mongoid
       ##
       # Move this node above the specified node
       def move_above(other)
-        if parent_id != other.parent_id
-          move_lower_siblings_up
-          self.parent_id = other.parent_id
-          self.save! # So that the rearrange callback happens
-          self.move_above(other)
+        move_to_parent_of(other) unless sibling_of?(other)
+
+        if position > other.position
+          new_position = other.position
+          other.lower_siblings.each { |s| s.inc(:position, 1) }
+          other.inc(:position, 1)
+          update_attributes!(:position => new_position)
         else
-          if position > other.position
-            new_position = other.position
-            other.lower_siblings.each do |sibling|
-              sibling.inc(:position, 1)
-            end
-            other.inc(:position, 1)
-            self.update_attributes!(:position => new_position)
-          else
-            new_position = other.position - 1
-            other.higher_siblings.each do |sibling|
-              sibling.inc(:position, -1)
-            end
-            self.update_attributes!(:position => new_position)
-          end
+          new_position = other.position - 1
+          other.higher_siblings.each { |s| s.inc(:position, -1) }
+          update_attributes!(:position => new_position)
         end
       end
 
       ##
       # Move this node below the specified node
       def move_below(other)
-        if parent_id != other.parent_id
-          move_lower_siblings_up
-          self.parent_id = other.parent_id
-          self.save! # So that the rearrange callback happens
-          self.move_below(other)
+        move_to_parent_of(other) unless sibling_of?(other)
+
+        if position > other.position
+          new_position = other.position + 1
+          other.lower_siblings.each { |s| s.inc(:position, 1) }
+          update_attributes!(:position => new_position)
         else
-          if position > other.position
-            new_position = other.position + 1
-            other.lower_siblings.each do |sibling|
-              sibling.inc(:position, 1)
-            end
-            self.update_attributes!(:position => new_position)
-          else
-            new_position = other.position
-            other.higher_siblings.each do |sibling|
-              sibling.inc(:position, -1)
-            end
-            other.inc(:position, -1)
-            self.update_attributes!(:position => new_position)
-          end
+          new_position = other.position
+          other.higher_siblings.each { |s| s.inc(:position, -1) }
+          other.inc(:position, -1)
+          update_attributes!(:position => new_position)
         end
       end
 
     private
-      def move_lower_siblings_up
-        lower_siblings.each do |sibling|
-          sibling.inc(:position, -1)
-        end
+      def move_to_parent_of(other)
+        lower_siblings.each { |s| s.inc(:position, -1) }
+        update_attributes!(:parent_id => other.parent_id)
       end
 
       def assign_default_position
         self.position = nil if self.parent_ids_changed?
 
         if self.position.nil?
-          if self.siblings.empty? || (self.siblings.collect(&:position).uniq == [nil])
+          if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
             self.position = 0
           else
-            self.position = self.siblings.collect(&:position).reject {|p| p.nil?}.max + 1
+            self.position = self.siblings.collect(&:position).compact.max + 1
           end
         end
       end
