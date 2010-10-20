@@ -72,14 +72,14 @@ module Mongoid
         else
           if position > other.position
             new_position = other.position
-            other.lower_siblings.where(:position.lt => self.position).each do |sibling|
+            other.lower_siblings.each do |sibling|
               sibling.inc(:position, 1)
             end
             other.inc(:position, 1)
             self.update_attributes!(:position => new_position)
           else
             new_position = other.position - 1
-            other.higher_siblings.where(:position.gt => self.position).each do |sibling|
+            other.higher_siblings.each do |sibling|
               sibling.inc(:position, -1)
             end
             self.update_attributes!(:position => new_position)
@@ -98,13 +98,13 @@ module Mongoid
         else
           if position > other.position
             new_position = other.position + 1
-            other.lower_siblings.where(:position.lt => self.position).each do |sibling|
+            other.lower_siblings.each do |sibling|
               sibling.inc(:position, 1)
             end
             self.update_attributes!(:position => new_position)
           else
             new_position = other.position
-            other.higher_siblings.where(:position.gt => self.position).each do |sibling|
+            other.higher_siblings.each do |sibling|
               sibling.inc(:position, -1)
             end
             other.inc(:position, -1)
