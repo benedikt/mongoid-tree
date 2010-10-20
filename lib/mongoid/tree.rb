@@ -239,6 +239,12 @@ module Mongoid # :nodoc:
     end
 
     ##
+    # Is this document a sibling of the other document?
+    def sibling_of?(other)
+      self.parent_id == other.parent_id
+    end
+
+    ##
     # Returns all leaves of this document (be careful, currently involves two queries)
     def leaves
       base_class.where(:_id.nin => base_class.only(:parent_id).collect(&:parent_id)).and(:parent_ids => self.id)

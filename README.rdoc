@@ -55,6 +55,7 @@ In addition it's possible to check certain aspects of the document's position in
   node.depth
   node.ancestor_of?(other)
   node.descendant_of?(other)
+  node.sibling_of?(other)
 
 See Mongoid::Tree for more information on these methods.
 

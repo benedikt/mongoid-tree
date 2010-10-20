@@ -278,6 +278,16 @@ describe Mongoid::Tree do
         node(:child).siblings_and_self.is_a?(Mongoid::Criteria).should == true
         node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
       end
+
+      describe '#sibling_of?' do
+        it "should return true for siblings" do
+          node(:child).should be_sibling_of(node(:other_child))
+        end
+
+        it "should return false for non-siblings" do
+          node(:root).should_not be_sibling_of(node(:other_child))
+        end
+      end
     end
 
     describe '#leaves' do
