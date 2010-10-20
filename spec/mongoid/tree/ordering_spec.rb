@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Mongoid::Tree::Ordering do
+
+  it "should store position as an Integer with a default of nil" do
+    f = OrderedNode.fields['position']
+    f.should_not be_nil
+    f.options[:type].should == Integer
+    f.options[:default].should == nil
+  end
+
   describe 'when saved' do
     before(:each) do
       setup_ordered_tree <<-ENDTREE

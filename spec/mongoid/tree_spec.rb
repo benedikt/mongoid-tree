@@ -28,13 +28,6 @@ describe Mongoid::Tree do
     Node.index_options.should have_key(:parent_ids)
   end
 
-  it "should store position as an Integer with a default of nil" do
-    f = Node.fields['position']
-    f.should_not be_nil
-    f.options[:type].should == Integer
-    f.options[:default].should == nil
-  end
-
   describe 'when saved' do
 
     before(:each) do

@@ -4,6 +4,10 @@ module Mongoid
       extend ActiveSupport::Concern
 
       included do
+        references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent, :default_order => :position.asc
+
+        field :position, :type => Integer
+
         after_rearrange :assign_default_position
       end
 
