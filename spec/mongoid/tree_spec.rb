@@ -28,6 +28,14 @@ describe Mongoid::Tree do
     Node.index_options.should have_key(:parent_ids)
   end
 
+  describe 'when new' do
+    it "should not require a saved parent when adding children" do
+      root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
+      expect { root.children << child; root.save! }.to_not raise_error(Mongoid::Errors::DocumentNotFound)
+      child.should be_persisted
+    end
+  end
+
   describe 'when saved' do
 
     before(:each) do

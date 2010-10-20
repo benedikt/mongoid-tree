@@ -85,7 +85,12 @@ module Mongoid # :nodoc:
     include Traversal
 
     included do
-      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent
+      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
+        def <<(*objects)
+          super; objects.each { |c| c.parent = @parent }
+        end
+      end
+
       referenced_in :parent, :class_name => self.name, :inverse_of => :children, :index => true
 
       field :parent_ids, :type => Array, :default => []
@@ -289,12 +294,7 @@ module Mongoid # :nodoc:
   private
     def rearrange
       if self.parent_id
-        parent_ids_of_parent = base_class.find(self.parent_id).parent_ids
-        if parent_ids_of_parent.nil?
-          self.parent_ids = [self.parent_id]
-        else
-          self.parent_ids = base_class.find(self.parent_id).parent_ids + [self.parent_id]
-        end
+        self.parent_ids = parent.parent_ids + [self.parent_id]
       else
         self.parent_ids = []
       end
