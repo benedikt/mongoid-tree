@@ -46,9 +46,9 @@ describe Mongoid::Tree::Ordering do
     before(:each) do
       setup_ordered_tree <<-ENDTREE
         - root:
-           - child:
-             - subchild
-           - other_child
+          - child:
+            - subchild
+          - other_child
         - other_root
       ENDTREE
     end
@@ -66,8 +66,8 @@ describe Mongoid::Tree::Ordering do
     before(:each) do
       setup_ordered_tree <<-ENDTREE
         - first_root:
-           - first_child_of_first_root
-           - second_child_of_first_root
+          - first_child_of_first_root
+          - second_child_of_first_root
         - second_root
         - third_root
       ENDTREE
@@ -140,11 +140,14 @@ describe Mongoid::Tree::Ordering do
     before(:each) do
       setup_ordered_tree <<-ENDTREE
         - first_root:
-           - first_child_of_first_root
-           - second_child_of_first_root
+          - first_child_of_first_root
+          - second_child_of_first_root
         - second_root:
-           - first_child_of_second_root
-        - third_root
+          - first_child_of_second_root
+        - third_root:
+          - first_child_of_third_root
+          - second_child_of_third_root
+          - third_child_of_third_root
       ENDTREE
     end
 
@@ -263,6 +266,24 @@ describe Mongoid::Tree::Ordering do
         middle_node.should be_at_top
         first_node.lower_siblings.to_a.should == []
         last_node.higher_siblings.to_a.should == [middle_node]
+      end
+    end
+
+    describe "#move_up" do
+      it "should correctly move nodes up" do
+        node(:third_child_of_third_root).move_up
+        node(:third_root).children.should == [node(:first_child_of_third_root), 
+                                              node(:third_child_of_third_root),
+                                              node(:second_child_of_third_root)]
+      end
+    end
+
+    describe "#move_down" do
+      it "should correctly move nodes down" do
+        node(:first_child_of_third_root).move_down
+        node(:third_root).children.should == [node(:second_child_of_third_root), 
+                                              node(:first_child_of_third_root),
+                                              node(:third_child_of_third_root)]
       end
     end
   end # moving nodes around

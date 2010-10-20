@@ -1,5 +1,7 @@
 module Mongoid
   module Tree
+    ##
+    # TODO: Write a little documentation.
     module Ordering
       extend ActiveSupport::Concern
 
@@ -62,6 +64,22 @@ module Mongoid
       end
 
       ##
+      # Move this node one position up
+      def move_up
+        return if at_top?
+        siblings.where(:position => self.position - 1).first.inc(:position, 1)
+        inc(:position, -1)
+      end
+
+      ##
+      # Move this node one position down
+      def move_down
+        return if at_bottom?
+        siblings.where(:position => self.position + 1).first.inc(:position, -1)
+        inc(:position, 1)
+      end
+
+      ##
       # Move this node above the specified node
       def move_above(other)
         move_to_parent_of(other) unless sibling_of?(other)
@@ -107,7 +125,7 @@ module Mongoid
         if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
           self.position = 0
         else
-          self.position = self.siblings.collect(&:position).compact.max + 1
+          self.position = self.siblings.max(:position) + 1
         end
       end
     end # Ordering
