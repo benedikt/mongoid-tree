@@ -63,10 +63,10 @@ See Mongoid::Tree for more information on these methods.
 
 Mongoid::Tree doesn't order children by default. To enable ordering of tree nodes include the Mongoid::Tree::Ordering module. This will add a <tt>position</tt> field to your document and provide additional utility methods:
 
-  node.lower_items (siblings)
-  node.higher_items (siblings)
-  node.first_item_in_list (first sibling)
-  node.last_item_in_list (last sibling)
+  node.lower_siblings
+  node.higher_siblings
+  node.first_sibling_in_list
+  node.last_sibling_in_list
 
   node.move_above(other)
   node.move_below(other)

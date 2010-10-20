@@ -73,23 +73,23 @@ describe Mongoid::Tree::Ordering do
       ENDTREE
     end
 
-    describe '#lower_items' do
-      it "should return a collection of items lower on the list" do
-        node(:first_root).lower_items.to_a.should == [node(:second_root), node(:third_root)]
-        node(:second_root).lower_items.to_a.should == [node(:third_root)]
-        node(:third_root).lower_items.to_a.should == []
-        node(:first_child_of_first_root).lower_items.to_a.should == [node(:second_child_of_first_root)]
-        node(:second_child_of_first_root).lower_items.to_a.should == []
+    describe '#lower_siblings' do
+      it "should return a collection of siblings lower on the list" do
+        node(:first_root).lower_siblings.to_a.should == [node(:second_root), node(:third_root)]
+        node(:second_root).lower_siblings.to_a.should == [node(:third_root)]
+        node(:third_root).lower_siblings.to_a.should == []
+        node(:first_child_of_first_root).lower_siblings.to_a.should == [node(:second_child_of_first_root)]
+        node(:second_child_of_first_root).lower_siblings.to_a.should == []
       end
     end
 
-    describe '#higher_items' do
-      it "should return a collection of items lower on the list" do
-        node(:first_root).higher_items.to_a.should == []
-        node(:second_root).higher_items.to_a.should == [node(:first_root)]
-        node(:third_root).higher_items.to_a.should == [node(:first_root), node(:second_root)]
-        node(:first_child_of_first_root).higher_items.to_a.should == []
-        node(:second_child_of_first_root).higher_items.to_a.should == [node(:first_child_of_first_root)]
+    describe '#higher_siblings' do
+      it "should return a collection of siblings lower on the list" do
+        node(:first_root).higher_siblings.to_a.should == []
+        node(:second_root).higher_siblings.to_a.should == [node(:first_root)]
+        node(:third_root).higher_siblings.to_a.should == [node(:first_root), node(:second_root)]
+        node(:first_child_of_first_root).higher_siblings.to_a.should == []
+        node(:second_child_of_first_root).higher_siblings.to_a.should == [node(:first_child_of_first_root)]
       end
     end
 
@@ -119,19 +119,19 @@ describe Mongoid::Tree::Ordering do
       end
     end
 
-    describe '#last_item_in_list' do
-      it "should return the last item in the list containing the current item" do
-        node(:first_root).last_item_in_list.should == node(:third_root)
-        node(:second_root).last_item_in_list.should == node(:third_root)
-        node(:third_root).last_item_in_list.should == node(:third_root)
+    describe '#last_sibling_in_list' do
+      it "should return the last sibling in the list containing the current sibling" do
+        node(:first_root).last_sibling_in_list.should == node(:third_root)
+        node(:second_root).last_sibling_in_list.should == node(:third_root)
+        node(:third_root).last_sibling_in_list.should == node(:third_root)
       end
     end
 
-    describe '#first_item_in_list' do
-      it "should return the first item in the list containing the current item" do
-        node(:first_root).first_item_in_list.should == node(:first_root)
-        node(:second_root).first_item_in_list.should == node(:first_root)
-        node(:third_root).first_item_in_list.should == node(:first_root)
+    describe '#first_sibling_in_list' do
+      it "should return the first sibling in the list containing the current sibling" do
+        node(:first_root).first_sibling_in_list.should == node(:first_root)
+        node(:second_root).first_sibling_in_list.should == node(:first_root)
+        node(:third_root).first_sibling_in_list.should == node(:first_root)
       end
     end
   end
@@ -149,7 +149,7 @@ describe Mongoid::Tree::Ordering do
     end
 
     describe '#move_below' do
-      it 'should fix positions within the current list when moving an item away from its current parent' do
+      it 'should fix positions within the current list when moving an sibling away from its current parent' do
         node_to_move = node(:first_child_of_first_root)
         new_parent = node(:second_root)
         node_to_move.move_below(node(:first_child_of_second_root))
@@ -172,7 +172,7 @@ describe Mongoid::Tree::Ordering do
         first_node.reload
         second_node.reload
         second_node.should be_at_top
-        first_node.higher_items.to_a.should == [second_node]
+        first_node.higher_siblings.to_a.should == [second_node]
       end
 
       it 'should be able to move the last node below the first node' do
@@ -183,12 +183,12 @@ describe Mongoid::Tree::Ordering do
         last_node.reload
         last_node.should_not be_at_bottom
         node(:second_root).should be_at_bottom
-        last_node.higher_items.to_a.should == [first_node]
+        last_node.higher_siblings.to_a.should == [first_node]
       end
     end
 
     describe '#move_above' do
-      it 'should fix positions within the current list when moving an item away from its current parent' do
+      it 'should fix positions within the current list when moving an sibling away from its current parent' do
         node_to_move = node(:first_child_of_first_root)
         new_parent = node(:second_root)
         node_to_move.move_above(node(:first_child_of_second_root))
@@ -211,7 +211,7 @@ describe Mongoid::Tree::Ordering do
         last_node.reload
         second_node.reload
         second_node.should be_at_bottom
-        last_node.higher_items.to_a.should == [node(:first_root)]
+        last_node.higher_siblings.to_a.should == [node(:first_root)]
       end
 
       it 'should be able to move the first node above the last node' do
@@ -221,35 +221,35 @@ describe Mongoid::Tree::Ordering do
         first_node.reload
         last_node.reload
         node(:second_root).should be_at_top
-        first_node.higher_items.to_a.should == [node(:second_root)]
+        first_node.higher_siblings.to_a.should == [node(:second_root)]
       end
     end
 
     describe "#move_to_top" do
-      it "should return true when attempting to move the first item" do
+      it "should return true when attempting to move the first sibling" do
         node(:first_root).move_to_top.should == true
         node(:first_child_of_first_root).move_to_top.should == true
       end
 
-      it "should be able to move the last item to the top" do
+      it "should be able to move the last sibling to the top" do
         first_node = node(:first_root)
         last_node = node(:third_root)
         last_node.move_to_top
         first_node.reload
         last_node.should be_at_top
         first_node.should_not be_at_top
-        first_node.higher_items.to_a.should == [last_node]
-        last_node.lower_items.to_a.should == [first_node, node(:second_root)]
+        first_node.higher_siblings.to_a.should == [last_node]
+        last_node.lower_siblings.to_a.should == [first_node, node(:second_root)]
       end
     end
 
     describe "#move_to_bottom" do
-      it "should return true when attempting to move the last item" do
+      it "should return true when attempting to move the last sibling" do
         node(:third_root).move_to_bottom.should == true
         node(:second_child_of_first_root).move_to_bottom.should == true
       end
 
-      it "should be able to move the first item to the bottom" do
+      it "should be able to move the first sibling to the bottom" do
         first_node = node(:first_root)
         middle_node = node(:second_root)
         last_node = node(:third_root)
@@ -261,8 +261,8 @@ describe Mongoid::Tree::Ordering do
         last_node.should_not be_at_bottom
         last_node.should_not be_at_top
         middle_node.should be_at_top
-        first_node.lower_items.to_a.should == []
-        last_node.higher_items.to_a.should == [middle_node]
+        first_node.lower_siblings.to_a.should == []
+        last_node.higher_siblings.to_a.should == [middle_node]
       end
     end
   end # moving nodes around
