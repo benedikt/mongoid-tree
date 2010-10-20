@@ -102,14 +102,12 @@ module Mongoid
       end
 
       def assign_default_position
-        self.position = nil if self.parent_ids_changed?
+        return unless self.position.nil? || self.parent_id_changed?
 
-        if self.position.nil?
-          if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
-            self.position = 0
-          else
-            self.position = self.siblings.collect(&:position).compact.max + 1
-          end
+        if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
+          self.position = 0
+        else
+          self.position = self.siblings.collect(&:position).compact.max + 1
         end
       end
     end # Ordering
