@@ -24,8 +24,6 @@ You might want to remove the <tt>:require => 'mongoid/tree'</tt> option and expl
 
 Read the API documentation at http://benedikt.github.com/mongoid-tree and take a look at the Mongoid::Tree module
 
-  require 'mongoid/tree'
-
   class Node
     include Mongoid::Document
     include Mongoid::Tree
@@ -49,18 +47,6 @@ There are several utility methods that help getting to other related documents i
   node.siblings
   node.siblings_and_self
   node.leaves
-  node.lower_items (siblings)
-  node.higher_items (siblings)
-  node.first_item_in_list (first sibling)
-  node.last_item_in_list (last sibling)
-
-Siblings are ordered, and there are a few utility methods for managing their
-position in the list:
-
-  node.move_above(other)
-  node.move_below(other)
-  node.move_to_top
-  node.mode_to_bottom
 
 In addition it's possible to check certain aspects of the document's position in the tree:
 
@@ -69,10 +55,37 @@ In addition it's possible to check certain aspects of the document's position in
   node.depth
   node.ancestor_of?(other)
   node.descendant_of?(other)
+
+See Mongoid::Tree for more information on these methods.
+
+
+=== Ordering
+
+Mongoid::Tree doesn't order children by default. To enable ordering of tree nodes include the Mongoid::Tree::Ordering module. This will add a <tt>position</tt> field to your document and provide additional utility methods:
+
+  node.lower_items (siblings)
+  node.higher_items (siblings)
+  node.first_item_in_list (first sibling)
+  node.last_item_in_list (last sibling)
+
+  node.move_above(other)
+  node.move_below(other)
+  node.move_to_top
+  node.mode_to_bottom
+
   node.at_top?
   node.at_bottom?
 
-See Mongoid::Tree for more information on these methods.
+See Mongoid::Tree::Ordering for more information on these methods.
+
+Example:
+
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+    include Mongoid::Tree::Ordering
+  end
+
 
 === Traversal
 
