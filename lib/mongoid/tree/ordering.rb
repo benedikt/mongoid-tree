@@ -14,13 +14,15 @@ module Mongoid
       end
 
       ##
-      # Returns lower siblings
+      # Returns siblings below the current document.
+      # Siblings with a position greater than this documents's position.
       def lower_siblings
         self.siblings.where(:position.gt => self.position)
       end
 
       ##
-      # Returns higher siblings
+      # Returns siblings above the current document.
+      # Siblings with a position lower than this documents's position.
       def higher_siblings
         self.siblings.where(:position.lt => self.position)
       end
@@ -81,6 +83,8 @@ module Mongoid
 
       ##
       # Move this node above the specified node
+      #
+      # This method changes the node's parent if nescessary.
       def move_above(other)
         move_to_parent_of(other) unless sibling_of?(other)
 
@@ -98,6 +102,8 @@ module Mongoid
 
       ##
       # Move this node below the specified node
+      #
+      # This method changes the node's parent if nescessary.
       def move_below(other)
         move_to_parent_of(other) unless sibling_of?(other)
 

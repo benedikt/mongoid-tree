@@ -2,9 +2,11 @@
 
 A tree structure for Mongoid documents using the materialized path pattern
 
+
 == Requirements
 
 * mongoid (>= 2.0.0.beta.17)
+
 
 == Install
 
@@ -20,6 +22,7 @@ You might want to remove the <tt>:require => 'mongoid/tree'</tt> option and expl
 
   bundle install
 
+
 == Usage
 
 Read the API documentation at http://benedikt.github.com/mongoid-tree and take a look at the Mongoid::Tree module
@@ -28,6 +31,7 @@ Read the API documentation at http://benedikt.github.com/mongoid-tree and take a
     include Mongoid::Document
     include Mongoid::Tree
   end
+
 
 === Utility methods
 
@@ -69,25 +73,17 @@ Mongoid::Tree doesn't order children by default. To enable ordering of tree node
   node.first_sibling_in_list
   node.last_sibling_in_list
 
-  node.move_above(other)
-  node.move_below(other)
   node.move_up
   node.move_down
   node.move_to_top
-  node.mode_to_bottom
+  node.move_to_bottom
+  node.move_above(other)
+  node.move_below(other)
 
   node.at_top?
   node.at_bottom?
 
 See Mongoid::Tree::Ordering for more information on these methods.
-
-Example:
-
-  class Node
-    include Mongoid::Document
-    include Mongoid::Tree
-    include Mongoid::Tree::Ordering
-  end
 
 
 === Traversal
@@ -97,6 +93,7 @@ It's possible to traverse the tree using different traversal methods. See Mongoi
   node.traverse(:breadth_first) do |n|
     # Do something with Node n
   end
+
 
 === Destroying
 
@@ -117,6 +114,7 @@ Example:
 
     before_destroy :nullify_children
   end
+
 
 === Callbacks
 
@@ -140,13 +138,16 @@ Example:
     end
   end
 
+
 == Known issues
 
 See http://github.com/benedikt/mongoid-tree/issues
 
+
 == Repository
 
 See http://github.com/benedikt/mongoid-tree and feel free to fork it!
+
 
 == Copyright
 
