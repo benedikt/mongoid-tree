@@ -18,6 +18,7 @@ describe Mongoid::Tree::Ordering do
               - subsubchild
         - other_root:
           - other_child
+          - another_child
       ENDTREE
     end
 
@@ -30,6 +31,8 @@ describe Mongoid::Tree::Ordering do
     it "should place siblings at the end of the list by default" do
       node(:root).position.should == 0
       node(:other_root).position.should == 1
+      node(:other_child).position.should == 0
+      node(:another_child).position.should == 1
     end
 
     it "should move a node to the end of a list when it is moved to a new parent" do
@@ -38,7 +41,24 @@ describe Mongoid::Tree::Ordering do
       child.position.should == 0
       other_root.children << child
       child.reload
-      child.position.should == 1
+      child.position.should == 2
+    end
+
+    it "should correctly reposition siblings when one of them is removed" do
+      node(:other_child).destroy
+      node(:another_child).position.should == 0
+    end
+
+    it "should correctly reposition siblings when one of them is added to another parent" do
+      node(:root).children << node(:other_child)
+      node(:another_child).position.should == 0
+    end
+
+    it "should correctly reposition siblings when the parent is changed" do
+      other_child = node(:other_child)
+      other_child.parent = node(:root)
+      other_child.save!
+      node(:another_child).position.should == 0
     end
   end
 
@@ -75,6 +95,7 @@ describe Mongoid::Tree::Ordering do
 
     describe '#lower_siblings' do
       it "should return a collection of siblings lower on the list" do
+        node(:second_child_of_first_root).reload
         node(:first_root).lower_siblings.to_a.should == [node(:second_root), node(:third_root)]
         node(:second_root).lower_siblings.to_a.should == [node(:third_root)]
         node(:third_root).lower_siblings.to_a.should == []
@@ -145,9 +166,9 @@ describe Mongoid::Tree::Ordering do
         - second_root:
           - first_child_of_second_root
         - third_root:
-          - first_child_of_third_root
-          - second_child_of_third_root
-          - third_child_of_third_root
+          - first
+          - second
+          - third
       ENDTREE
     end
 
@@ -271,19 +292,15 @@ describe Mongoid::Tree::Ordering do
 
     describe "#move_up" do
       it "should correctly move nodes up" do
-        node(:third_child_of_third_root).move_up
-        node(:third_root).children.should == [node(:first_child_of_third_root), 
-                                              node(:third_child_of_third_root),
-                                              node(:second_child_of_third_root)]
+        node(:third).move_up
+        node(:third_root).children.should == [node(:first), node(:third), node(:second)]
       end
     end
 
     describe "#move_down" do
       it "should correctly move nodes down" do
-        node(:first_child_of_third_root).move_down
-        node(:third_root).children.should == [node(:second_child_of_third_root), 
-                                              node(:first_child_of_third_root),
-                                              node(:third_child_of_third_root)]
+        node(:first).move_down
+        node(:third_root).children.should == [node(:second), node(:first), node(:third)]
       end
     end
   end # moving nodes around

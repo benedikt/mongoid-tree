@@ -10,7 +10,9 @@ module Mongoid
 
         field :position, :type => Integer
 
-        after_rearrange :assign_default_position
+        before_save :assign_default_position
+        before_save :reposition_former_siblings, :if => :parent_id_changed?
+        after_destroy :move_lower_siblings_up
       end
 
       ##
@@ -86,16 +88,16 @@ module Mongoid
       #
       # This method changes the node's parent if nescessary.
       def move_above(other)
-        move_to_parent_of(other) unless sibling_of?(other)
+        update_attributes!(:parent_id => other.parent_id) unless sibling_of?(other)
 
         if position > other.position
           new_position = other.position
-          other.lower_siblings.each { |s| s.inc(:position, 1) }
+          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
           other.inc(:position, 1)
           update_attributes!(:position => new_position)
         else
           new_position = other.position - 1
-          other.higher_siblings.each { |s| s.inc(:position, -1) }
+          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
           update_attributes!(:position => new_position)
         end
       end
@@ -105,24 +107,31 @@ module Mongoid
       #
       # This method changes the node's parent if nescessary.
       def move_below(other)
-        move_to_parent_of(other) unless sibling_of?(other)
+        update_attributes!(:parent_id => other.parent_id) unless sibling_of?(other)
 
         if position > other.position
           new_position = other.position + 1
-          other.lower_siblings.each { |s| s.inc(:position, 1) }
+          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
           update_attributes!(:position => new_position)
         else
           new_position = other.position
-          other.higher_siblings.each { |s| s.inc(:position, -1) }
+          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
           other.inc(:position, -1)
           update_attributes!(:position => new_position)
         end
       end
 
     private
-      def move_to_parent_of(other)
+
+      def move_lower_siblings_up
         lower_siblings.each { |s| s.inc(:position, -1) }
-        update_attributes!(:parent_id => other.parent_id)
+      end
+
+      def reposition_former_siblings
+        former_siblings = base_class.where(:parent_id => attribute_was('parent_id'),
+                                           :position.gt => (attribute_was('position') || 0)).
+                                           excludes(:id => self.id)
+        former_siblings.each { |s| s.inc(:position,  -1) }
       end
 
       def assign_default_position

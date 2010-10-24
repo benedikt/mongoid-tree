@@ -14,14 +14,14 @@ module Mongoid::Tree::TreeMacros
     @nodes[name].reload
   end
 
-  def print_tree(node, print_ids = false, depth = 0)
+  def print_tree(node, inspect = false, depth = 0)
     print '  ' * depth
     print '- ' unless depth == 0
     print node.name
-    print " (#{node.id})" if print_ids
+    print " (#{node.inspect})" if inspect
     print ':' if node.children.any?
     print "\n"
-    node.children.each { |c| print_tree(c, print_ids, depth + 1) }
+    node.children.each { |c| print_tree(c, inspect, depth + 1) }
   end
 
 private
