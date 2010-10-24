@@ -128,9 +128,9 @@ module Mongoid
       end
 
       def reposition_former_siblings
-        former_siblings = base_class.where(:parent_id => attribute_was('parent_id'),
-                                           :position.gt => (attribute_was('position') || 0)).
-                                           excludes(:id => self.id)
+        former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
+                                     and(:position.gt => (attribute_was('position') || 0)).
+                                     excludes(:id => self.id)
         former_siblings.each { |s| s.inc(:position,  -1) }
       end
 
