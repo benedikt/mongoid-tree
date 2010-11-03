@@ -1,17 +1,8 @@
-GIT
-  remote: http://github.com/mongoid/mongoid.git
-  revision: b1080cda54d32d3bc18e008867b33b82d64fb55b
-  specs:
-    mongoid (2.0.0.beta.19)
-      activemodel (~> 3.0)
-      mongo (~> 1.1)
-      tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
-
 PATH
   remote: .
   specs:
     mongoid-tree (0.3.1)
+      mongoid (>= 2.0.0.beta.20)
 
 GEM
   remote: http://rubygems.org/
@@ -21,7 +12,7 @@ GEM
       builder (~> 2.1.2)
       i18n (~> 0.4.1)
     activesupport (3.0.1)
-    autotest (4.4.1)
+    autotest (4.4.2)
     bson (1.1.1)
     bson_ext (1.1.1)
     builder (2.1.2)
@@ -31,21 +22,26 @@ GEM
       haml (~> 2.2.8)
       rake (~> 0.8.2)
       rdoc (~> 2.3.0)
-    i18n (0.4.1)
+    i18n (0.4.2)
     mongo (1.1.1)
       bson (>= 1.1.1)
+    mongoid (2.0.0.beta.20)
+      activemodel (~> 3.0)
+      mongo (~> 1.1)
+      tzinfo (~> 0.3.22)
+      will_paginate (~> 3.0.pre)
     rake (0.8.7)
     rdoc (2.3.0)
-    rspec (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
-      rspec-mocks (= 2.0.0)
-    rspec-core (2.0.0)
-    rspec-expectations (2.0.0)
+    rspec (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+      rspec-mocks (~> 2.0.1)
+    rspec-core (2.0.1)
+    rspec-expectations (2.0.1)
       diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
+    rspec-mocks (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
     tzinfo (0.3.23)
     will_paginate (3.0.pre2)
 
@@ -56,6 +52,6 @@ DEPENDENCIES
   autotest (>= 4.3.2)
   bson_ext (>= 1.0.4)
   hanna (>= 0.1.12)
-  mongoid!
+  mongoid (>= 2.0.0.beta.20)
   mongoid-tree!
-  rspec (>= 2.0.0.beta.18)
+  rspec (~> 2.0)
