@@ -82,8 +82,6 @@ module Mongoid # :nodoc:
   module Tree
     extend ActiveSupport::Concern
 
-    include Traversal
-
     included do
       references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
         def <<(*objects)

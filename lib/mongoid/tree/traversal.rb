@@ -3,7 +3,7 @@ module Mongoid # :nodoc:
     ##
     # = Mongoid::Tree::Traversal
     #
-    # Mongoid::Tree provides a #traverse method to walk through the tree.
+    # Mongoid::Tree::Traversal provides a #traverse method to walk through the tree.
     # It supports these traversal methods:
     #
     # * depth_first

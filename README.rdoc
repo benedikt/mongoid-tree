@@ -83,12 +83,27 @@ Mongoid::Tree doesn't order children by default. To enable ordering of tree node
   node.at_top?
   node.at_bottom?
 
-See Mongoid::Tree::Ordering for more information on these methods.
+Example:
 
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+    include Mongoid::Tree::Ordering
+  end
+
+See Mongoid::Tree::Ordering for more information on these methods.
 
 === Traversal
 
-It's possible to traverse the tree using different traversal methods. See Mongoid::Tree::Traversal for details
+It's possible to traverse the tree using different traversal methods using the Mongoid::Tree::Traversal module.
+
+Example:
+
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+    include Mongoid::Tree::Traversal
+  end
 
   node.traverse(:breadth_first) do |n|
     # Do something with Node n
