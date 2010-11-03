@@ -1,6 +1,3 @@
-require 'mongoid/tree/ordering'
-require 'mongoid/tree/traversal'
-
 module Mongoid # :nodoc:
   ##
   # = Mongoid::Tree
@@ -81,6 +78,9 @@ module Mongoid # :nodoc:
   #
   module Tree
     extend ActiveSupport::Concern
+
+    autoload :Ordering, 'mongoid/tree/ordering'
+    autoload :Traversal, 'mongoid/tree/traversal'
 
     included do
       references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
