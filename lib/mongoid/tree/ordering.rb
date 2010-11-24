@@ -115,17 +115,22 @@ module Mongoid
       #
       # This method changes the node's parent if nescessary.
       def move_above(other)
-        update_attributes!(:parent_id => other.parent_id) unless sibling_of?(other)
+        unless sibling_of?(other)
+          parent_id = other.parent_id
+          save!
+        end
 
         if position > other.position
           new_position = other.position
           other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
           other.inc(:position, 1)
-          update_attributes!(:position => new_position)
+          position = new_position
+          save!
         else
           new_position = other.position - 1
           other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
-          update_attributes!(:position => new_position)
+          position = new_position
+          save!
         end
       end
 
