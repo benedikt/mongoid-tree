@@ -274,7 +274,10 @@ module Mongoid # :nodoc:
     ##
     # Moves all children to this document's parent
     def move_children_to_parent
-      children.each { |c| c.update_attributes(:parent_id => self.parent_id) }
+      children.each do |c|
+        c.parent_id = self.parent_id
+        c.save
+      end
     end
 
     ##
