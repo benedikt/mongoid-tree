@@ -27,9 +27,9 @@ module Mongoid::Tree::TreeMacros
 private
   def create_tree(object, opts={})
     case object
-      when String: return create_node(object, opts)
-      when Array: object.each { |tree| create_tree(tree, opts) }
-      when Hash:
+      when String then return create_node(object, opts)
+      when Array then object.each { |tree| create_tree(tree, opts) }
+      when Hash then
         name, children = object.first
         node = create_node(name, opts)
         children.each { |c| node.children << create_tree(c, opts) }
