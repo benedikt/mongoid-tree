@@ -175,7 +175,6 @@ describe Mongoid::Tree::Ordering do
     describe '#move_below' do
       it 'should fix positions within the current list when moving an sibling away from its current parent' do
         node_to_move = node(:first_child_of_first_root)
-        new_parent = node(:second_root)
         node_to_move.move_below(node(:first_child_of_second_root))
         node(:second_child_of_first_root).position.should == 0
       end

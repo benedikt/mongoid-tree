@@ -140,7 +140,7 @@ module Mongoid
       # This method changes the node's parent if nescessary.
       def move_below(other)
         unless sibling_of?(other)
-          parent_id = other.parent_id
+          self.parent_id = other.parent_id
           save!
         end
 
