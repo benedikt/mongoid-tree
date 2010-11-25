@@ -124,12 +124,12 @@ module Mongoid
           new_position = other.position
           other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
           other.inc(:position, 1)
-          position = new_position
+          self.position = new_position
           save!
         else
           new_position = other.position - 1
           other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
-          position = new_position
+          self.position = new_position
           save!
         end
       end
