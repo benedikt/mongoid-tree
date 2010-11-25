@@ -84,8 +84,9 @@ describe Mongoid::Tree do
     end
 
     it "should rebuild its children's parent_ids when its own parent_id is removed" do
-      node(:child).parent_id = nil
-      node(:child).save
+      c = node(:child)
+      c.parent_id = nil
+      c.save
       node(:subchild).parent_ids.should == [node(:child).id]
     end
 
