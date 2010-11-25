@@ -85,7 +85,11 @@ module Mongoid # :nodoc:
     included do
       references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
         def <<(*objects)
-          super; objects.each { |c| c.parent = @parent }
+          super
+          objects.each do |c|
+            c.parent = @parent
+            c.save
+          end
         end
       end
 
