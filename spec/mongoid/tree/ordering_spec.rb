@@ -62,6 +62,13 @@ describe Mongoid::Tree::Ordering do
       other_child.save!
       node(:another_child).position.should == 0
     end
+
+    it "should not reposition siblings when it's not yet saved" do
+      new_node = OrderedNode.new(:name => 'new')
+      new_node.parent = node(:root)
+      new_node.should_not_receive(:reposition_former_siblings)
+      new_node.save
+    end
   end
 
   describe 'destroy strategies' do
