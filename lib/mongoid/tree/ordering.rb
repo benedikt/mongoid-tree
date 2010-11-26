@@ -43,6 +43,18 @@ module Mongoid
       end
 
       ##
+      # :singleton-method: roots
+      # Returns all root documents ordered by position
+
+      module ClassMethods # :nodoc:
+
+        def roots
+          super.order_by(:position.asc)
+        end
+
+      end
+
+      ##
       # Returns siblings below the current document.
       # Siblings with a position greater than this documents's position.
       def lower_siblings
