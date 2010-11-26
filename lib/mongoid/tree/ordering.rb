@@ -165,6 +165,7 @@ module Mongoid
       end
 
       def reposition_former_siblings
+        return unless persisted?
         former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
                                      and(:position.gt => (attribute_was('position') || 0)).
                                      excludes(:id => self.id)
