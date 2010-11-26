@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name          = 'mongoid-tree'
-  s.version       = '0.4.0'
+  s.version       = '0.4.1'
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Benedikt Deicke']
   s.email         = ['benedikt@synatic.net']
-  s.homepage      = 'http://github.com/benedikt/mongoid-tree'
+  s.homepage      = 'https://github.com/benedikt/mongoid-tree'
   s.summary       = 'A tree structure for Mongoid documents'
   s.description   = 'A tree structure for Mongoid documents using the materialized path pattern'
 
