@@ -12,7 +12,7 @@ describe Mongoid::Tree::Traversal do
       expect { subject.traverse }.to raise_error(/No block given/)
     end
 
-    [:depth_first].each do |method|
+    [:depth_first, :breadth_first].each do |method|
       it "should support #{method} traversal" do
         expect { subject.traverse(method) {} }.to_not raise_error
       end
