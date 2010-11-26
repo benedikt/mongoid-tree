@@ -38,7 +38,7 @@ module Mongoid
         field :position, :type => Integer
 
         before_save :assign_default_position
-        before_save :reposition_former_siblings, :if => :parent_id_changed?
+        before_save :reposition_former_siblings, :if => :sibling_reposition_required?
         after_destroy :move_lower_siblings_up
       end
 
@@ -177,11 +177,14 @@ module Mongoid
       end
 
       def reposition_former_siblings
-        return unless persisted?
         former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
                                      and(:position.gt => (attribute_was('position') || 0)).
                                      excludes(:id => self.id)
         former_siblings.each { |s| s.inc(:position,  -1) }
+      end
+
+      def sibling_reposition_required?
+        parent_id_changed? && persisted?
       end
 
       def assign_default_position
