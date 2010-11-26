@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Mongoid::Tree do
 
+  subject { Node }
+
   it "should reference many children as inverse of parent with index" do
     a = Node.associations['children']
     a.should_not be_nil

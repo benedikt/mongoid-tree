@@ -3,11 +3,7 @@ require 'yaml'
 module Mongoid::Tree::TreeMacros
 
   def setup_tree(tree)
-    create_tree(YAML.load(tree), {:ordered => false})
-  end
-
-  def setup_ordered_tree(tree)
-    create_tree(YAML.load(tree), {:ordered => true})
+    create_tree(YAML.load(tree))
   end
 
   def node(name)
@@ -25,22 +21,21 @@ module Mongoid::Tree::TreeMacros
   end
 
 private
-  def create_tree(object, opts={})
+  def create_tree(object)
     case object
-      when String then return create_node(object, opts)
-      when Array then object.each { |tree| create_tree(tree, opts) }
+      when String then return create_node(object)
+      when Array then object.each { |tree| create_tree(tree) }
       when Hash then
         name, children = object.first
-        node = create_node(name, opts)
-        children.each { |c| node.children << create_tree(c, opts) }
+        node = create_node(name)
+        children.each { |c| node.children << create_tree(c) }
         return node
     end
   end
 
-  def create_node(name, opts={})
-    node_class = opts[:ordered] ? OrderedNode : Node
+  def create_node(name)
     @nodes ||= HashWithIndifferentAccess.new
-    @nodes[name] = node_class.create(:name => name)
+    @nodes[name] = subject.create(:name => name)
   end
 end
 

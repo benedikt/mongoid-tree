@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Mongoid::Tree::Ordering do
 
+  subject { OrderedNode }
+
   it "should store position as an Integer with a default of nil" do
     f = OrderedNode.fields['position']
     f.should_not be_nil
@@ -11,7 +13,7 @@ describe Mongoid::Tree::Ordering do
 
   describe 'when saved' do
     before(:each) do
-      setup_ordered_tree <<-ENDTREE
+      setup_tree <<-ENDTREE
         - root:
           - child:
             - subchild:
@@ -64,7 +66,7 @@ describe Mongoid::Tree::Ordering do
 
   describe 'destroy strategies' do
     before(:each) do
-      setup_ordered_tree <<-ENDTREE
+      setup_tree <<-ENDTREE
         - root:
           - child:
             - subchild
@@ -84,7 +86,7 @@ describe Mongoid::Tree::Ordering do
 
   describe 'utility methods' do
     before(:each) do
-      setup_ordered_tree <<-ENDTREE
+      setup_tree <<-ENDTREE
         - first_root:
           - first_child_of_first_root
           - second_child_of_first_root
@@ -159,7 +161,7 @@ describe Mongoid::Tree::Ordering do
 
   describe 'moving nodes around', :focus => true do
     before(:each) do
-      setup_ordered_tree <<-ENDTREE
+      setup_tree <<-ENDTREE
         - first_root:
           - first_child_of_first_root
           - second_child_of_first_root
