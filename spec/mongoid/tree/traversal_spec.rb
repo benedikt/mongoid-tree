@@ -116,4 +116,60 @@ describe Mongoid::Tree::Traversal do
 
   end
 
+  describe '.traverse' do
+
+    describe 'when not given a block' do
+
+      it 'raises an error' do
+        expect {Node.traverse}.to raise_error ArgumentError, 'No block given'
+      end
+    end
+
+    before :each do
+      setup_tree <<-ENDTREE
+        - root1
+        - root2
+      ENDTREE
+
+      @block = Proc.new {}
+      @root1 = node(:root1)
+      @root2 = node(:root2)
+
+      Node.stub(:roots).and_return [@root1, @root2]
+    end
+
+    it 'grabs each root' do
+      Node.should_receive(:roots).and_return []
+
+      Node.traverse &@block
+    end
+
+    it 'defaults the "type" arg to :depth_first' do
+      @root1.should_receive(:traverse).with(:depth_first)
+      @root2.should_receive(:traverse).with(:depth_first)
+
+      Node.traverse &@block
+    end
+
+    it 'traverses each root' do
+      @root1.should_receive(:traverse)
+      @root2.should_receive(:traverse)
+
+      Node.traverse &@block
+    end
+
+    describe 'when the "type" arg is :breadth_first' do
+
+      it 'traverses breadth-first' do
+        @root1.should_receive(:traverse).with(:breadth_first)
+        @root2.should_receive(:traverse).with(:breadth_first)
+
+        Node.traverse :breadth_first, &@block
+      end
+    end
+
+    it 'returns nil' do
+      Node.traverse(&@block).should be nil
+    end
+  end
 end

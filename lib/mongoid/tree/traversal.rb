@@ -48,6 +48,13 @@ module Mongoid # :nodoc:
     module Traversal
 
       ##
+      # Extend ClassMethods into the class that's including Traversal.
+      #
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      ##
       # Traverses the tree using the given traversal method (Default is :depth_first)
       # and passes each document node to the block.
       #
@@ -80,6 +87,43 @@ module Mongoid # :nodoc:
         end
       end
 
+      ##
+      # The methods in this module are class-level methods.
+      # They're extended into the base class automatically.
+      #
+      module ClassMethods
+
+        ##
+        # Traverses the entire tree, one root at a time, using the given traversal
+        # method (Default is :depth_first).
+        #
+        # See Mongoid::Tree::Traversal for available traversal methods.
+        #
+        # Example:
+        #
+        #   # Say we have the following tree, and want to print its hierarchy:
+        #   #   root_1
+        #   #     child_1_a
+        #   #   root_2
+        #   #     child_2_a
+        #   #       child_2_a_1
+        #
+        #   Node.traverse(:depth_first) do |node|
+        #     indentation = '  ' * node.depth
+        #
+        #     puts "#{indentation}#{node.name}"
+        #   end
+        #
+        def traverse(type = :depth_first, &block)
+          raise ArgumentError, "No block given" unless block_given?
+
+          roots.each do |root|
+            root.traverse type, &block
+          end
+
+          nil
+        end
+      end
     end
   end
 end
