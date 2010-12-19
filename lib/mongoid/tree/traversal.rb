@@ -46,13 +46,7 @@ module Mongoid # :nodoc:
     #   node1, node2, node3, node4, node5, node6, node7
     #
     module Traversal
-
-      ##
-      # Extend ClassMethods into the class that's including Traversal.
-      #
-      def self.included(base)
-        base.extend ClassMethods
-      end
+      extend ActiveSupport::Concern
 
       ##
       # Traverses the tree using the given traversal method (Default is :depth_first)
