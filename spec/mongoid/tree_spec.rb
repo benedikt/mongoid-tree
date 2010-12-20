@@ -5,28 +5,28 @@ describe Mongoid::Tree do
   subject { Node }
 
   it "should reference many children as inverse of parent with index" do
-    a = Node.associations['children']
-    a.should_not be_nil
-    a.association.should == Mongoid::Associations::ReferencesMany
-    a.options.class_name.should == 'Node'
-    a.options.foreign_key.should == 'parent_id'
+    a = Node.reflect_on_association(:children)
+    a.should be
+    a.association.should eql(Mongoid::Associations::ReferencesMany)
+    a.options.class_name.should eql('Node')
+    a.options.foreign_key.should eql('parent_id')
     Node.index_options.should have_key('parent_id')
   end
 
   it "should be referenced in one parent as inverse of children" do
-    a = Node.associations['parent']
-    a.should_not be_nil
-    a.association.should == Mongoid::Associations::ReferencedIn
-    a.options.class_name.should == 'Node'
-    a.options.inverse_of.should == :children
+    a = Node.reflect_on_association(:parent)
+    a.should be
+    a.association.should eql(Mongoid::Associations::ReferencedIn)
+    a.options.class_name.should eql('Node')
+    a.options.inverse_of.should eql(:children)
     a.options.index.should be_true
   end
 
   it "should store parent_ids as Array with [] as default with index" do
     f = Node.fields['parent_ids']
-    f.should_not be_nil
-    f.options[:type].should == Array
-    f.options[:default].should == []
+    f.should be
+    f.options[:type].should eql(Array)
+    f.options[:default].should eql([])
     Node.index_options.should have_key(:parent_ids)
   end
 
