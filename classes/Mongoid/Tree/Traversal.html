@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>: Mongoid::Tree::Traversal [mongoid-tree 0.4.0]</title>
+    <title>: Mongoid::Tree::Traversal [mongoid-tree 0.5.0]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
     <link href='../../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -41,7 +41,7 @@
             <h1><a href="Traversal.html">Mongoid::Tree::Traversal</a></h1>
             <p>
             <a href="Traversal.html">Mongoid::Tree::Traversal</a> provides a <a
-            href="Traversal.html#M000031">traverse</a> method to walk through the tree.
+            href="Traversal.html#M000030">traverse</a> method to walk through the tree.
             It supports these traversal methods:
             </p>
             <ul>
@@ -85,6 +85,10 @@
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000030">traverse</a></li>
+            </ol>
             <h3>public instance</h3>
             <ol>
               <li><a href="#M000031">traverse</a></li>
@@ -92,6 +96,34 @@
           </div>
           <div id='section'>
             <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='method public-class' id='method-M000030'>
+                <a name='M000030'></a>
+                <div class='synopsis'>
+                  <span class='name'>traverse</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Traverses the entire tree, one root at a time, using the given traversal
+                  method (Default is :depth_first).
+                  </p>
+                  <p>
+                  See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
+                  traversal methods.
+                  </p>
+                  <p>
+                  Example:
+                  </p>
+                  <pre># Say we have the following tree, and want to print its hierarchy:&#x000A;#   root_1&#x000A;#     child_1_a&#x000A;#   root_2&#x000A;#     child_2_a&#x000A;#       child_2_a_1&#x000A;&#x000A;Node.traverse(:depth_first) do |node|&#x000A;  indentation = '  ' * node.depth&#x000A;&#x000A;  puts &quot;#{indentation}#{node.name}&quot;&#x000A;end</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000030-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 74</span>&#x000A;      </pre>
+                </div>
+              </div>
               <h2>Public instance methods</h2>
               <div class='method public-instance' id='method-M000031'>
                 <a name='M000031'></a>
@@ -117,7 +149,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 62</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;      <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 97</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;      <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
