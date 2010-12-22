@@ -88,6 +88,7 @@ module Mongoid # :nodoc:
           super
           objects.each do |c|
             c.parent = @parent
+            c.save unless @parent.new_record?
           end
         end
       end

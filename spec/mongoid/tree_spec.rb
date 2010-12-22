@@ -120,8 +120,8 @@ describe Mongoid::Tree do
 
     it "should save its children when added" do
       new_child = Node.new(:name => 'new_child')
-      new_child.should_receive(:save)
       node(:root).children << new_child
+      new_child.should be_persisted
     end
   end
 
