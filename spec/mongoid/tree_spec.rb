@@ -256,6 +256,18 @@ describe Mongoid::Tree do
       it "should return the root for this document" do
         node(:subchild).root.should == node(:root)
       end
+
+      it "should return itself when there is no root" do
+        new_node = Node.new
+        new_node.root.should be(new_node)
+      end
+
+      it "should return it root when it's not saved yet" do
+        root = Node.new(:name => 'root')
+        new_node = Node.new(:name => 'child')
+        new_node.parent = root
+        new_node.root.should be(root)
+      end
     end
 
     describe 'ancestors' do

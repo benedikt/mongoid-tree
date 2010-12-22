@@ -193,7 +193,11 @@ module Mongoid # :nodoc:
     ##
     # Returns this document's root node
     def root
-      base_class.find(parent_ids.first)
+      if parent_ids.present?
+        return base_class.find(parent_ids.first)
+      else
+        return self.parent ? self.parent.root : self
+      end
     end
 
     ##
