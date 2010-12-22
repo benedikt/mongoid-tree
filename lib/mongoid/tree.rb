@@ -197,7 +197,7 @@ module Mongoid # :nodoc:
       if parent_ids.present?
         return base_class.find(parent_ids.first)
       else
-        return self.parent ? self.parent.root : self
+        return self.root? ? self : self.parent.root
       end
     end
 
