@@ -84,11 +84,12 @@ module Mongoid # :nodoc:
 
     included do
       references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
+        # TODO: This shouldn't be nescessary at all, should it?
         def <<(*objects) # :nodoc:
           super
           objects.each do |c|
-            c.parent = @parent
-            c.save unless @parent.new_record?
+            c.parent = base
+            c.save if base.persisted?
           end
         end
       end
@@ -276,7 +277,9 @@ module Mongoid # :nodoc:
     ##
     # Nullifies all children's parent_id
     def nullify_children
-      children.each { |c| c.parent = nil; c.save }
+      # TODO: Figure out why this doesn't work like expected.
+      # children.nullify_all
+      children.each { |c| c.parent = nil; c.parent_id = nil; c.save }
     end
 
     ##

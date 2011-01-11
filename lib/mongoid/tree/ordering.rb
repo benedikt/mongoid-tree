@@ -33,9 +33,10 @@ module Mongoid
       extend ActiveSupport::Concern
 
       included do
-        reflect_on_association(:children).options[:default_order] = :position.asc
-
         field :position, :type => Integer
+
+        # TODO: Figure out why this doesn't work at all
+        default_scope order_by(:position)
 
         before_save :assign_default_position
         before_save :reposition_former_siblings, :if => :sibling_reposition_required?

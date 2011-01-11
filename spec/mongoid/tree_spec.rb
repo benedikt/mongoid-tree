@@ -7,19 +7,18 @@ describe Mongoid::Tree do
   it "should reference many children as inverse of parent with index" do
     a = Node.reflect_on_association(:children)
     a.should be
-    a.association.should eql(Mongoid::Associations::ReferencesMany)
-    a.options.class_name.should eql('Node')
-    a.options.foreign_key.should eql('parent_id')
+    a.macro.should eql(:references_many)
+    a.class_name.should eql('Node')
+    a.foreign_key.should eql(:parent_id)
     Node.index_options.should have_key('parent_id')
   end
 
   it "should be referenced in one parent as inverse of children" do
     a = Node.reflect_on_association(:parent)
     a.should be
-    a.association.should eql(Mongoid::Associations::ReferencedIn)
-    a.options.class_name.should eql('Node')
-    a.options.inverse_of.should eql(:children)
-    a.options.index.should be_true
+    a.macro.should eql(:referenced_in)
+    a.class_name.should eql('Node')
+    a.inverse_of.should eql(:children)
   end
 
   it "should store parent_ids as Array with [] as default with index" do
