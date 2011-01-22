@@ -83,16 +83,7 @@ module Mongoid # :nodoc:
     autoload :Traversal, 'mongoid/tree/traversal'
 
     included do
-      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent do
-        # TODO: This shouldn't be nescessary at all, should it?
-        def <<(*objects) # :nodoc:
-          super
-          objects.each do |c|
-            c.parent = base
-            c.save if base.persisted?
-          end
-        end
-      end
+      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent, :autosave => true
 
       referenced_in :parent, :class_name => self.name, :inverse_of => :children, :index => true
 
@@ -320,5 +311,5 @@ module Mongoid # :nodoc:
     def position_in_tree
       errors.add(:parent_id, :invalid) if self.parent_ids.include?(self.id)
     end
-  end # Tree
-end # Mongoid
+  end
+end
