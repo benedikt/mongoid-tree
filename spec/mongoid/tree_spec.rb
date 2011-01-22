@@ -9,7 +9,7 @@ describe Mongoid::Tree do
     a.should be
     a.macro.should eql(:references_many)
     a.class_name.should eql('Node')
-    a.foreign_key.should eql(:parent_id)
+    a.foreign_key.should eql('parent_id')
     Node.index_options.should have_key('parent_id')
   end
 
