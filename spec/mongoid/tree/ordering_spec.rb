@@ -166,7 +166,7 @@ describe Mongoid::Tree::Ordering do
     end
   end
 
-  describe 'moving nodes around', :focus => true do
+  describe 'moving nodes around' do
     before(:each) do
       setup_tree <<-ENDTREE
         - first_root:
