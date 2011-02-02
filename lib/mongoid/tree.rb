@@ -83,9 +83,9 @@ module Mongoid # :nodoc:
     autoload :Traversal, 'mongoid/tree/traversal'
 
     included do
-      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent, :autosave => true
+      references_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent, :autosave => true, :validate => false
 
-      referenced_in :parent, :class_name => self.name, :inverse_of => :children, :index => true
+      referenced_in :parent, :class_name => self.name, :inverse_of => :children, :index => true, :validate => false
 
       field :parent_ids, :type => Array, :default => []
       index :parent_ids
