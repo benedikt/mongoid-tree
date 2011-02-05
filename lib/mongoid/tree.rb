@@ -305,7 +305,7 @@ module Mongoid # :nodoc:
 
     def rearrange_children
       @rearrange_children = false
-      self.children.find(:all).each { |c| c.save }
+      self.children.each { |c| c.save }
     end
 
     def position_in_tree
