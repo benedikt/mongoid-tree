@@ -300,7 +300,7 @@ module Mongoid # :nodoc:
         self.parent_ids = []
       end
 
-      rearrange_children! if self.parent_ids_changed?
+      rearrange_children! if self.persisted? && self.parent_ids_changed?
     end
 
     def rearrange_children
