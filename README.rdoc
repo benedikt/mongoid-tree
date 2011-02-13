@@ -154,6 +154,20 @@ Example:
   end
 
 
+=== Validations
+
+Mongoid::Tree currently does not validate the document's children or parent associations by default. To explicitly enable validation for children and parent documents it's required to add a <tt>validates_associated</tt> validation.
+
+Example
+
+  class Node
+    include Mongoid::Document
+    include Mongoid::Tree
+
+    validates_associated :parent, :children
+  end
+
+
 == Known issues
 
 See https://github.com/benedikt/mongoid-tree/issues
