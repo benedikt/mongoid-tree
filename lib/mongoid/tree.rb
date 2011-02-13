@@ -194,13 +194,13 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # Returns this document's ancestors
+    # Returns a chainable criteria for this document's ancestors
     def ancestors
       base_class.where(:_id.in => parent_ids)
     end
 
     ##
-    # Returns this document's ancestors and itself
+    # Returns an array of this document's ancestors and itself
     def ancestors_and_self
       ancestors + [self]
     end
@@ -212,13 +212,13 @@ module Mongoid # :nodoc:
     end
 
     ##
-    # Returns this document's descendants
+    # Returns a chainable criteria for this document's descendants
     def descendants
       base_class.where(:parent_ids => self.id)
     end
 
     ##
-    # Returns this document's descendants and itself
+    # Returns and array of this document's descendants and itself
     def descendants_and_self
       [self] + descendants
     end
