@@ -75,9 +75,9 @@ module Mongoid # :nodoc:
       # The methods in this module are class-level methods documented above.
       # They're extended into the base class automatically.
       module ClassMethods # :nodoc:
-        def traverse(type = :depth_first, &block)
+        def traverse(type = :depth_first, order = :asc, &block)
           raise ArgumentError, "No block given" unless block_given?
-          roots.each { |root| root.traverse(type, &block) }
+          roots.send(order, :position).each { |root| root.traverse(type, order, &block) }
           nil
         end
       end
@@ -94,24 +94,24 @@ module Mongoid # :nodoc:
       #   root.traverse(:depth_first) do |node|
       #     results << node
       #   end
-      def traverse(type = :depth_first, &block)
+      def traverse(type = :depth_first, order = :asc, &block)
         raise ArgumentError, "No block given" unless block_given?
-        send("#{type}_traversal", &block)
+        send("#{type}_traversal", order, &block)
       end
 
       private
 
-      def depth_first_traversal(&block)
+      def depth_first_traversal(order, &block)
         block.call(self)
-        self.children.each { |c| c.send(:depth_first_traversal, &block) }
+        self.children.send(order, :position).each { |c| c.send(:depth_first_traversal, order, &block) }
       end
 
-      def breadth_first_traversal(&block)
+      def breadth_first_traversal(order, &block)
         queue = [self]
         while queue.any? do
           node = queue.shift
           block.call(node)
-          queue += node.children
+          queue += node.children.send(order, :position)
         end
       end
     end
