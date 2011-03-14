@@ -185,4 +185,4 @@ See a list of all contributors at https://github.com/benedikt/mongoid-tree/contr
 
 == Copyright
 
-Copyright (c) 2010 Benedikt Deicke. See LICENSE for details.
+Copyright (c) 2010-2011 Benedikt Deicke. See LICENSE for details.
