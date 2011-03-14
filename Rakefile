@@ -1,5 +1,5 @@
 require 'rspec/core/rake_task'
-require 'hanna/rdoctask'
+require 'rdoc/task'
 
 spec = Gem::Specification.load("mongoid-tree.gemspec")
 
@@ -8,6 +8,7 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 Rake::RDocTask.new do |rdoc|
+  rdoc.generator = 'hanna'
   rdoc.rdoc_dir = 'doc'
   rdoc.title = "#{spec.name} #{spec.version}"
   rdoc.options += spec.rdoc_options
