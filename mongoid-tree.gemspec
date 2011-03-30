@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.rdoc Rakefile Gemfile .rspec)
 
-  # s.add_runtime_dependency('mongoid', ['~> 2.0.0'])
+  s.add_runtime_dependency('mongoid', ['~> 2.0.0'])
   s.add_development_dependency('rspec', ['~> 2.3'])
   s.add_development_dependency('autotest', ['>= 4.3.2'])
   s.add_development_dependency('hanna-nouveau', ['>= 0.2.2'])
