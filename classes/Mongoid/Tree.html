@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>: Mongoid::Tree [mongoid-tree 0.5.0]</title>
+    <title>Mongoid::Tree</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -26,666 +26,645 @@
     <div class='class' id='wrapper'>
       <div class='header'>
         <div class='name'>
-          <span class='type'>Module</span>
+          <span class='type'>module</span>
           Mongoid::Tree
         </div>
         <ol class='paths'>
           <li>
-            <a href="../../files/lib/mongoid/tree/ordering_rb.html">lib/mongoid/tree/ordering.rb</a>
+            <a target="docwin" href="../../files/lib/mongoid/tree/ordering_rb.html">lib/mongoid/tree/ordering.rb</a>
           </li>
           <li class='other'>
-            <a href="../../files/lib/mongoid/tree/traversal_rb.html">lib/mongoid/tree/traversal.rb</a>
+            <a target="docwin" href="../../files/lib/mongoid/tree/traversal_rb.html">lib/mongoid/tree/traversal.rb</a>
           </li>
           <li class='other'>
-            <a href="../../files/lib/mongoid/tree_rb.html">lib/mongoid/tree.rb</a>
+            <a target="docwin" href="../../files/lib/mongoid/tree_rb.html">lib/mongoid/tree.rb</a>
           </li>
           <li>
             <a class='show' href='#' onclick='this.parentNode.parentNode.className += " expanded"; this.parentNode.removeChild(this); return false'>show all</a>
           </li>
         </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a target="docwin" href="../Mongoid.html">Mongoid</a></strong>
+        </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
+            
             <h1><a href="Tree.html">Mongoid::Tree</a></h1>
-            <p>
-            This module extends any Mongoid document with tree functionality.
-            </p>
+            
+            <p>This module extends any <a href="../Mongoid.html">Mongoid</a> document with
+            tree functionality.</p>
+            
             <h2>Usage</h2>
-            <p>
-            Simply include the module in any Mongoid document:
-            </p>
+            
+            <p>Simply include the module in any <a href="../Mongoid.html">Mongoid</a>
+            document:</p>
+            
             <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;end</pre>
+            
             <h3>Using the tree structure</h3>
-            <p>
-            Each document references many children. You can access them using the
-            <tt><a href="Tree.html#M000006">children</a></tt> method.
-            </p>
+            
+            <p>Each document references many children. You can access them using the
+            <tt><a href="Tree.html#method-i-children">children</a></tt> method.</p>
+            
             <pre>node = Node.create&#x000A;node.children.create&#x000A;node.children.count # =&gt; 1</pre>
-            <p>
-            Every document references one parent (unless it&#8217;s a root document).
-            </p>
+            
+            <p>Every document references one parent (unless it’s a root document).</p>
+            
             <pre>node = Node.create&#x000A;node.parent # =&gt; nil&#x000A;node.children.create&#x000A;node.children.first.parent # =&gt; node</pre>
+            
             <h3>Destroying</h3>
-            <p>
-            <a href="Tree.html">Mongoid::Tree</a> does not handle destroying of nodes
+            
+            <p><a href="Tree.html">Mongoid::Tree</a> does not handle destroying of nodes
             by default. However it provides several strategies that help you to deal
             with children of deleted documents. You can simply add them as
-            <tt>before_destroy</tt> callbacks.
-            </p>
-            <p>
-            Available strategies are:
-            </p>
-            <ul>
-            <li>:<a href="Tree.html#M000026">nullify_children</a> &#8212; Sets the
-            children&#8217;s parent_id to null
+            <tt>before_destroy</tt> callbacks.</p>
             
-            </li>
-            <li>:<a href="Tree.html#M000027">move_children_to_parent</a> &#8212; Moves the
-            children to the current document&#8217;s parent
+            <p>Available strategies are:</p>
+            <ul><li>
+            <p>:<a href="Tree.html#method-i-nullify_children">nullify_children</a> – Sets
+            the children’s parent_id to null</p>
+            </li><li>
+            <p>:<a
+            href="Tree.html#method-i-move_children_to_parent">move_children_to_parent</a>
+            – Moves the children to the current document’s parent</p>
+            </li><li>
+            <p>:<a href="Tree.html#method-i-destroy_children">destroy_children</a> –
+            Destroys all children by calling their #destroy method (invokes callbacks)</p>
+            </li><li>
+            <p>:<a href="Tree.html#method-i-delete_descendants">delete_descendants</a> –
+            Deletes all descendants using a database query (doesn’t invoke callbacks)</p>
+            </li></ul>
             
-            </li>
-            <li>:<a href="Tree.html#M000029">destroy_children</a> &#8212; Destroys all
-            children by calling their destroy method (invokes callbacks)
+            <p>Example:</p>
             
-            </li>
-            <li>:<a href="Tree.html#M000028">delete_descendants</a> &#8212; Deletes all
-            descendants using a database query (doesn&#8217;t invoke callbacks)
+            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  before_destroy :nullify_children&#x000A;end</pre>
             
-            </li>
-            </ul>
-            <p>
-            Example:
-            </p>
-            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  before_destroy :nullify_children&#x000A;end</pre>
             <h3>Callbacks</h3>
-            <p>
-            <a href="Tree.html">Mongoid::Tree</a> offers callbacks for its rearranging
+            
+            <p><a href="Tree.html">Mongoid::Tree</a> offers callbacks for its rearranging
             process. This enables you to rebuild certain fields when the document was
             moved in the tree. Rearranging happens before the document is validated.
             This gives you a chance to validate your additional changes done in your
             callbacks. See ActiveModel::Callbacks and ActiveSupport::Callbacks for
-            further details on callbacks.
-            </p>
-            <p>
-            Example:
-            </p>
-            <pre>class Page&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  after_rearrange :rebuild_path&#x000A;&#x000A;  field :slug&#x000A;  field :path&#x000A;&#x000A;  private&#x000A;&#x000A;  def rebuild_path&#x000A;    self.path = self.ancestors_and_self.collect(&amp;:slug).join('/')&#x000A;  end&#x000A;end</pre>
+            further details on callbacks.</p>
+            
+            <p>Example:</p>
+            
+            <pre>class Page&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  after_rearrange :rebuild_path&#x000A;&#x000A;  field :slug&#x000A;  field :path&#x000A;&#x000A;  private&#x000A;&#x000A;  def rebuild_path&#x000A;    self.path = self.ancestors_and_self.collect(&amp;:slug).join('/')&#x000A;  end&#x000A;end</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
-            <h3>public class</h3>
+            <h3>Public Class</h3>
             <ol>
-              <li><a href="#M000005">after_rearrange</a></li>
-              <li><a href="#M000004">before_rearrange</a></li>
-              <li><a href="#M000003">leaves</a></li>
-              <li><a href="#M000001">root</a></li>
-              <li><a href="#M000002">roots</a></li>
+              <li><a target="docwin" href="#method-c-root">root</a></li>
+              <li><a target="docwin" href="#method-c-roots">roots</a></li>
+              <li><a target="docwin" href="#method-c-leaves">leaves</a></li>
+              <li><a target="docwin" href="#method-c-before_rearrange">before_rearrange</a></li>
+              <li><a target="docwin" href="#method-c-after_rearrange">after_rearrange</a></li>
             </ol>
-            <h3>public instance</h3>
+            <h3>Public Instance</h3>
             <ol>
-              <li><a href="#M000016">ancestor_of?</a></li>
-              <li><a href="#M000014">ancestors</a></li>
-              <li><a href="#M000015">ancestors_and_self</a></li>
-              <li><a href="#M000006">children</a></li>
-              <li><a href="#M000028">delete_descendants</a></li>
-              <li><a href="#M000012">depth</a></li>
-              <li><a href="#M000019">descendant_of?</a></li>
-              <li><a href="#M000017">descendants</a></li>
-              <li><a href="#M000018">descendants_and_self</a></li>
-              <li><a href="#M000029">destroy_children</a></li>
-              <li><a href="#M000011">leaf?</a></li>
-              <li><a href="#M000023">leaves</a></li>
-              <li><a href="#M000027">move_children_to_parent</a></li>
-              <li><a href="#M000026">nullify_children</a></li>
-              <li><a href="#M000007">parent</a></li>
-              <li><a href="#M000008">parent= document</a></li>
-              <li><a href="#M000009">parent_ids</a></li>
-              <li><a href="#M000024">rearrange_children!</a></li>
-              <li><a href="#M000025">rearrange_children?</a></li>
-              <li><a href="#M000013">root</a></li>
-              <li><a href="#M000010">root?</a></li>
-              <li><a href="#M000022">sibling_of?</a></li>
-              <li><a href="#M000020">siblings</a></li>
-              <li><a href="#M000021">siblings_and_self</a></li>
+              <li><a target="docwin" href="#method-i-children">children</a></li>
+              <li><a target="docwin" href="#method-i-parent">parent</a></li>
+              <li><a target="docwin" href="#method-i-parent-3D">parent=</a></li>
+              <li><a target="docwin" href="#method-i-parent_ids">parent_ids</a></li>
+              <li><a target="docwin" href="#method-i-root-3F">root?</a></li>
+              <li><a target="docwin" href="#method-i-leaf-3F">leaf?</a></li>
+              <li><a target="docwin" href="#method-i-depth">depth</a></li>
+              <li><a target="docwin" href="#method-i-root">root</a></li>
+              <li><a target="docwin" href="#method-i-ancestors">ancestors</a></li>
+              <li><a target="docwin" href="#method-i-ancestors_and_self">ancestors_and_self</a></li>
+              <li><a target="docwin" href="#method-i-ancestor_of-3F">ancestor_of?</a></li>
+              <li><a target="docwin" href="#method-i-descendants">descendants</a></li>
+              <li><a target="docwin" href="#method-i-descendants_and_self">descendants_and_self</a></li>
+              <li><a target="docwin" href="#method-i-descendant_of-3F">descendant_of?</a></li>
+              <li><a target="docwin" href="#method-i-siblings">siblings</a></li>
+              <li><a target="docwin" href="#method-i-siblings_and_self">siblings_and_self</a></li>
+              <li><a target="docwin" href="#method-i-sibling_of-3F">sibling_of?</a></li>
+              <li><a target="docwin" href="#method-i-leaves">leaves</a></li>
+              <li><a target="docwin" href="#method-i-rearrange_children-21">rearrange_children!</a></li>
+              <li><a target="docwin" href="#method-i-rearrange_children-3F">rearrange_children?</a></li>
+              <li><a target="docwin" href="#method-i-nullify_children">nullify_children</a></li>
+              <li><a target="docwin" href="#method-i-move_children_to_parent">move_children_to_parent</a></li>
+              <li><a target="docwin" href="#method-i-delete_descendants">delete_descendants</a></li>
+              <li><a target="docwin" href="#method-i-destroy_children">destroy_children</a></li>
             </ol>
+          </div>
+          <div id='context'>
           </div>
           <div id='section'>
             <div id='class-list'>
               <h2>Classes and Modules</h2>
-              Module <a href="Tree/Ordering.html" class="link">Mongoid::Tree::Ordering</a><br />
-              Module <a href="Tree/Traversal.html" class="link">Mongoid::Tree::Traversal</a><br />
+              <ol><li>Ordering</li><li>Traversal</li></ol>
             </div>
             <div id='methods'>
-              <h2>Public class methods</h2>
-              <div class='method public-class' id='method-M000005'>
-                <a name='M000005'></a>
-                <div class='synopsis'>
-                  <span class='name'>after_rearrange</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Sets a callback that is called after the document is rearranged (Generated
-                  by ActiveSupport)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 153</span>&#x000A;    </pre>
-                </div>
-              </div>
-              <div class='method public-class' id='method-M000004'>
-                <a name='M000004'></a>
-                <div class='synopsis'>
-                  <span class='name'>before_rearrange</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Sets a callback that is called before the document is rearranged (Generated
-                  by ActiveSupport)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 148</span>&#x000A;    </pre>
-                </div>
-              </div>
-              <div class='method public-class' id='method-M000003'>
-                <a name='M000003'></a>
-                <div class='synopsis'>
-                  <span class='name'>leaves</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns all leaves (be careful, currently involves two queries)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 125</span>&#x000A;    </pre>
-                </div>
-              </div>
-              <div class='method public-class' id='method-M000001'>
-                <a name='M000001'></a>
+              <h2>Public Class methods</h2>
+              <div class='method public-class' id='method-method-c-root'>
+                <a name='method-c-root'></a>
                 <div class='synopsis'>
                   <span class='name'>root</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns the first root document
-                  </p>
+                  
+                  <p>Returns the first root document</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-root-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 117</span>&#x000A;    </pre>
+                  <pre id='method-c-root-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 109</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-class' id='method-M000002'>
-                <a name='M000002'></a>
+              <div class='method public-class' id='method-method-c-roots'>
+                <a name='method-c-roots'></a>
                 <div class='synopsis'>
                   <span class='name'>roots</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns all root documents
-                  </p>
+                  
+                  <p>Returns all root documents</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-roots-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 121</span>&#x000A;    </pre>
+                  <pre id='method-c-roots-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 113</span>&#x000A;    </pre>
                 </div>
               </div>
-              <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000016'>
-                <a name='M000016'></a>
-                <div class='synopsis'>
-                  <span class='name'>ancestor_of?</span>
-                  <span class='arguments'>(other)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Is this document an ancestor of the other document?
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 214</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestor_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000014'>
-                <a name='M000014'></a>
-                <div class='synopsis'>
-                  <span class='name'>ancestors</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns this document&#8217;s ancestors
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 202</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">parent_ids</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000015'>
-                <a name='M000015'></a>
-                <div class='synopsis'>
-                  <span class='name'>ancestors_and_self</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns this document&#8217;s ancestors and itself
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 208</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors_and_self</span>&#x000A;      <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">self</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000006'>
-                <a name='M000006'></a>
-                <div class='synopsis'>
-                  <span class='name'>children</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns a list of the document&#8217;s children. It&#8217;s a
-                  <tt>references_many</tt> association. (Generated by Mongoid)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 158</span>&#x000A;    </pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000028'>
-                <a name='M000028'></a>
-                <div class='synopsis'>
-                  <span class='name'>delete_descendants</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Deletes all descendants using the database (doesn&#8217;t invoke callbacks)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000028-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 289</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_descendants</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">delete_all</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span> })&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000012'>
-                <a name='M000012'></a>
-                <div class='synopsis'>
-                  <span class='name'>depth</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns the depth of this document (number of ancestors)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 190</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">depth</span>&#x000A;      <span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">count</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000019'>
-                <a name='M000019'></a>
-                <div class='synopsis'>
-                  <span class='name'>descendant_of?</span>
-                  <span class='arguments'>(other)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Is this document a descendant of the other document?
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 232</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendant_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000017'>
-                <a name='M000017'></a>
-                <div class='synopsis'>
-                  <span class='name'>descendants</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns this document&#8217;s descendants
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 220</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000018'>
-                <a name='M000018'></a>
-                <div class='synopsis'>
-                  <span class='name'>descendants_and_self</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns this document&#8217;s descendants and itself
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 226</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendants_and_self</span>&#x000A;      [<span class="ruby-keyword kw">self</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">descendants</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000029'>
-                <a name='M000029'></a>
-                <div class='synopsis'>
-                  <span class='name'>destroy_children</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Destroys all children by calling their destroy method (does invoke
-                  callbacks)
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 295</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_children</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">destroy_all</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000011'>
-                <a name='M000011'></a>
-                <div class='synopsis'>
-                  <span class='name'>leaf?</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Is this document a leaf node (has no children)?
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 184</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaf?</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000023'>
-                <a name='M000023'></a>
+              <div class='method public-class' id='method-method-c-leaves'>
+                <a name='method-c-leaves'></a>
                 <div class='synopsis'>
                   <span class='name'>leaves</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns all leaves of this document (be careful, currently involves two
-                  queries)
-                  </p>
+                  
+                  <p>Returns all leaves (be careful, currently involves two queries)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-leaves-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 256</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">leaves</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:_id</span>.<span class="ruby-identifier">nin</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">only</span>(<span class="ruby-identifier">:parent_id</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:parent_id</span>)).<span class="ruby-identifier">and</span>(<span class="ruby-identifier">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-c-leaves-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 117</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000027'>
-                <a name='M000027'></a>
+              <div class='method public-class' id='method-method-c-before_rearrange'>
+                <a name='method-c-before_rearrange'></a>
                 <div class='synopsis'>
-                  <span class='name'>move_children_to_parent</span>
-                  <span class='arguments'>()</span>
+                  <span class='name'>before_rearrange</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Moves all children to this document&#8217;s parent
-                  </p>
+                  
+                  <p>Sets a callback that is called before the document is rearranged (Generated
+                  by ActiveSupport)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-before_rearrange-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000027-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 280</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_children_to_parent</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">parent_id</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_id</span>&#x000A;        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">save</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-c-before_rearrange-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 140</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000026'>
-                <a name='M000026'></a>
+              <div class='method public-class' id='method-method-c-after_rearrange'>
+                <a name='method-c-after_rearrange'></a>
                 <div class='synopsis'>
-                  <span class='name'>nullify_children</span>
-                  <span class='arguments'>()</span>
+                  <span class='name'>after_rearrange</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Nullifies all children&#8217;s parent_id
-                  </p>
+                  
+                  <p>Sets a callback that is called after the document is rearranged (Generated
+                  by ActiveSupport)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-after_rearrange-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000026-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 274</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nullify_children</span>&#x000A;      <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>; <span class="ruby-identifier">c</span>.<span class="ruby-identifier">save</span> }&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-c-after_rearrange-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 145</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000007'>
-                <a name='M000007'></a>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-children'>
+                <a name='method-i-children'></a>
+                <div class='synopsis'>
+                  <span class='name'>children</span>
+                  <span class='arguments'></span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns a list of the document’s children. It’s a <tt>references_many</tt>
+                  association. (Generated by <a href="../Mongoid.html">Mongoid</a>)</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-children-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-children-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 150</span>&#x000A;    </pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-parent'>
+                <a name='method-i-parent'></a>
                 <div class='synopsis'>
                   <span class='name'>parent</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns the document&#8217;s parent (unless it&#8217;s a root document).
-                  It&#8217;s a <tt>referenced_in</tt> association. (Generated by Mongoid)
-                  </p>
+                  
+                  <p>Returns the document’s parent (unless it’s a root document).  It’s a
+                  <tt>referenced_in</tt> association. (Generated by <a
+                  href="../Mongoid.html">Mongoid</a>)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-parent-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 163</span>&#x000A;    </pre>
+                  <pre id='method-i-parent-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 155</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000008'>
-                <a name='M000008'></a>
+              <div class='method public-instance' id='method-method-i-parent-3D'>
+                <a name='method-i-parent-3D'></a>
                 <div class='synopsis'>
-                  <span class='name'>parent= document<br /></span>
+                  <span class='name'>
+                    <div>parent= document</div>
+                  </span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Sets this documents parent document. (Generated by Mongoid)
-                  </p>
+                  
+                  <p>Sets this documents parent document. (Generated by <a
+                  href="../Mongoid.html">Mongoid</a>)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-parent-3D-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 171</span>&#x000A;    </pre>
+                  <pre id='method-i-parent-3D-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 163</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000009'>
-                <a name='M000009'></a>
+              <div class='method public-instance' id='method-method-i-parent_ids'>
+                <a name='method-i-parent_ids'></a>
                 <div class='synopsis'>
                   <span class='name'>parent_ids</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns a list of the document&#8217;s <a
-                  href="Tree.html#M000009">parent_ids</a>, starting with the root node.
-                  (Generated by Mongoid)
-                  </p>
+                  
+                  <p>Returns a list of the document’s <a
+                  href="Tree.html#method-i-parent_ids">parent_ids</a>, starting with the root
+                  node. (Generated by <a href="../Mongoid.html">Mongoid</a>)</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-parent_ids-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 176</span>&#x000A;    </pre>
+                  <pre id='method-i-parent_ids-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 168</span>&#x000A;    </pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000024'>
-                <a name='M000024'></a>
-                <div class='synopsis'>
-                  <span class='name'>rearrange_children!</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Forces rearranging of all children after next save
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 262</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children!</span>&#x000A;      <span class="ruby-ivar">@rearrange_children</span> = <span class="ruby-keyword kw">true</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000025'>
-                <a name='M000025'></a>
-                <div class='synopsis'>
-                  <span class='name'>rearrange_children?</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Will the children be rearranged after next save?
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000025-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 268</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rearrange_children?</span>&#x000A;      <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@rearrange_children</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000013'>
-                <a name='M000013'></a>
-                <div class='synopsis'>
-                  <span class='name'>root</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Returns this document&#8217;s root node
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 196</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">first</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-M000010'>
-                <a name='M000010'></a>
+              <div class='method public-instance' id='method-method-i-root-3F'>
+                <a name='method-i-root-3F'></a>
                 <div class='synopsis'>
                   <span class='name'>root?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Is this document a root node (has no parent)?
-                  </p>
+                  
+                  <p>Is this document a root node (has no parent)?</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-root-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 178</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root?</span>&#x000A;      <span class="ruby-identifier">parent_id</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-i-root-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 170</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">root?</span>&#x000A;  <span class="ruby-identifier">parent_id</span>.<span class="ruby-identifier">nil?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000022'>
-                <a name='M000022'></a>
+              <div class='method public-instance' id='method-method-i-leaf-3F'>
+                <a name='method-i-leaf-3F'></a>
                 <div class='synopsis'>
-                  <span class='name'>sibling_of?</span>
+                  <span class='name'>leaf?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Is this document a leaf node (has no children)?</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-leaf-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-leaf-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 176</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">leaf?</span>&#x000A;  <span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-depth'>
+                <a name='method-i-depth'></a>
+                <div class='synopsis'>
+                  <span class='name'>depth</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns the depth of this document (number of ancestors)</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-depth-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-depth-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 182</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">depth</span>&#x000A;  <span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">count</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-root'>
+                <a name='method-i-root'></a>
+                <div class='synopsis'>
+                  <span class='name'>root</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns this document’s root node</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-root-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-root-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 188</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">root</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">present?</span>&#x000A;    <span class="ruby-keyword">return</span> <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">first</span>)&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">root?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">self</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">root</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-ancestors'>
+                <a name='method-i-ancestors'></a>
+                <div class='synopsis'>
+                  <span class='name'>ancestors</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns a chainable criteria for this document’s ancestors</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-ancestors-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-ancestors-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 198</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ancestors</span>&#x000A;  <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:_id</span>.<span class="ruby-identifier">in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">parent_ids</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-ancestors_and_self'>
+                <a name='method-i-ancestors_and_self'></a>
+                <div class='synopsis'>
+                  <span class='name'>ancestors_and_self</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns an array of this document’s ancestors and itself</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-ancestors_and_self-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-ancestors_and_self-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 204</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ancestors_and_self</span>&#x000A;  <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword">self</span>]&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-ancestor_of-3F'>
+                <a name='method-i-ancestor_of-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>ancestor_of?</span>
                   <span class='arguments'>(other)</span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Is this document a sibling of the other document?
-                  </p>
+                  
+                  <p>Is this document an ancestor of the other document?</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-ancestor_of-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 250</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sibling_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_id</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-i-ancestor_of-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 210</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ancestor_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000020'>
-                <a name='M000020'></a>
+              <div class='method public-instance' id='method-method-i-descendants'>
+                <a name='method-i-descendants'></a>
+                <div class='synopsis'>
+                  <span class='name'>descendants</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns a chainable criteria for this document’s descendants</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-descendants-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-descendants-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 216</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">descendants</span>&#x000A;  <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-descendants_and_self'>
+                <a name='method-i-descendants_and_self'></a>
+                <div class='synopsis'>
+                  <span class='name'>descendants_and_self</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns and array of this document’s descendants and itself</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-descendants_and_self-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-descendants_and_self-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 222</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">descendants_and_self</span>&#x000A;  [<span class="ruby-keyword">self</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">descendants</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-descendant_of-3F'>
+                <a name='method-i-descendant_of-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>descendant_of?</span>
+                  <span class='arguments'>(other)</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Is this document a descendant of the other document?</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-descendant_of-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-descendant_of-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 228</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">descendant_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-siblings'>
+                <a name='method-i-siblings'></a>
                 <div class='synopsis'>
                   <span class='name'>siblings</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns this document&#8217;s siblings
-                  </p>
+                  
+                  <p>Returns this document’s siblings</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-siblings-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 238</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings</span>&#x000A;      <span class="ruby-identifier">siblings_and_self</span>.<span class="ruby-identifier">excludes</span>(<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-i-siblings-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 234</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">siblings</span>&#x000A;  <span class="ruby-identifier">siblings_and_self</span>.<span class="ruby-identifier">excludes</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
-              <div class='method public-instance' id='method-M000021'>
-                <a name='M000021'></a>
+              <div class='method public-instance' id='method-method-i-siblings_and_self'>
+                <a name='method-i-siblings_and_self'></a>
                 <div class='synopsis'>
                   <span class='name'>siblings_and_self</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Returns this document&#8217;s siblings and itself
-                  </p>
+                  
+                  <p>Returns this document’s siblings and itself</p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-siblings_and_self-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/mongoid/tree.rb, line 244</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">siblings_and_self</span>&#x000A;      <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">:parent_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent_id</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-i-siblings_and_self-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 240</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">siblings_and_self</span>&#x000A;  <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:parent_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent_id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-sibling_of-3F'>
+                <a name='method-i-sibling_of-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>sibling_of?</span>
+                  <span class='arguments'>(other)</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Is this document a sibling of the other document?</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-sibling_of-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-sibling_of-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 246</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">sibling_of?</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">parent_id</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-leaves'>
+                <a name='method-i-leaves'></a>
+                <div class='synopsis'>
+                  <span class='name'>leaves</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Returns all leaves of this document (be careful, currently involves two
+                  queries)</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-leaves-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-leaves-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 252</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">leaves</span>&#x000A;  <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:_id</span>.<span class="ruby-identifier">nin</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">only</span>(<span class="ruby-value">:parent_id</span>).<span class="ruby-identifier">collect</span>(&amp;<span class="ruby-value">:parent_id</span>)).<span class="ruby-identifier">and</span>(<span class="ruby-value">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-rearrange_children-21'>
+                <a name='method-i-rearrange_children-21'></a>
+                <div class='synopsis'>
+                  <span class='name'>rearrange_children!</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Forces rearranging of all children after next save</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-rearrange_children-21-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-rearrange_children-21-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 258</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">rearrange_children!</span>&#x000A;  <span class="ruby-ivar">@rearrange_children</span> = <span class="ruby-keyword">true</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-rearrange_children-3F'>
+                <a name='method-i-rearrange_children-3F'></a>
+                <div class='synopsis'>
+                  <span class='name'>rearrange_children?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Will the children be rearranged after next save?</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-rearrange_children-3F-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-rearrange_children-3F-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 264</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">rearrange_children?</span>&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@rearrange_children</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-nullify_children'>
+                <a name='method-i-nullify_children'></a>
+                <div class='synopsis'>
+                  <span class='name'>nullify_children</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Nullifies all children’s parent_id</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-nullify_children-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-nullify_children-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 270</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">nullify_children</span>&#x000A;  <span class="ruby-identifier">children</span>.<span class="ruby-identifier">nullify_all</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-move_children_to_parent'>
+                <a name='method-i-move_children_to_parent'></a>
+                <div class='synopsis'>
+                  <span class='name'>move_children_to_parent</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Moves all children to this document’s parent</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-move_children_to_parent-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-move_children_to_parent-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 276</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">move_children_to_parent</span>&#x000A;  <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">c</span>.<span class="ruby-identifier">parent_id</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent_id</span>&#x000A;    <span class="ruby-identifier">c</span>.<span class="ruby-identifier">save</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-delete_descendants'>
+                <a name='method-i-delete_descendants'></a>
+                <div class='synopsis'>
+                  <span class='name'>delete_descendants</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Deletes all descendants using the database (doesn’t invoke callbacks)</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-delete_descendants-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-delete_descendants-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 285</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_descendants</span>&#x000A;  <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">delete_all</span>(<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:parent_ids</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span> })&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-destroy_children'>
+                <a name='method-i-destroy_children'></a>
+                <div class='synopsis'>
+                  <span class='name'>destroy_children</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Destroys all children by calling their #destroy method (does invoke
+                  callbacks)</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-destroy_children-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-destroy_children-source'><span class="ruby-comment"># File lib/mongoid/tree.rb, line 291</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy_children</span>&#x000A;  <span class="ruby-identifier">children</span>.<span class="ruby-identifier">destroy_all</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
@@ -695,7 +674,7 @@
       <div id='footer-push'></div>
     </div>
     <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
     </div>
   </body>
 </html>

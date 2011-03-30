@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: README.rdoc [mongoid-tree 0.5.0]</title>
+    <title>README.rdoc</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -31,161 +31,168 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Dec 20 09:41:16 +0100 2010</span>
+          <span class='datetime'>2011-03-30 14:31:27 +0200</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1>mongoid-tree</h1>
-            <p>
-            A tree structure for Mongoid documents using the materialized path pattern
-            </p>
-            <h2>Requirements</h2>
-            <ul>
-            <li>mongoid (>= 2.0.0.beta.20)
             
-            </li>
-            </ul>
+            <h1>mongoid-tree</h1>
+            
+            <p>A tree structure for <a href="../classes/Mongoid.html">Mongoid</a>
+            documents using the materialized path pattern</p>
+            
+            <h2>Requirements</h2>
+            <ul><li>
+            <p>mongoid (~&gt; 2.0.0)</p>
+            </li></ul>
+            
             <h2>Install</h2>
-            <p>
-            To install mongoid_tree, simply add it to your Gemfile:
-            </p>
+            
+            <p>To install mongoid_tree, simply add it to your Gemfile:</p>
+            
             <pre>gem 'mongoid-tree', :require =&gt; 'mongoid/tree'</pre>
-            <p>
-            In order to get the latest development version of mongoid-tree:
-            </p>
+            
+            <p>In order to get the latest development version of mongoid-tree:</p>
+            
             <pre>gem 'mongoid-tree', :git =&gt; 'git://github.com/benedikt/mongoid-tree', :require =&gt; 'mongoid/tree'</pre>
-            <p>
-            You might want to remove the <tt>:require =&gt; 'mongoid/tree'</tt> option
-            and explicitly <tt>require 'mongoid/tree'</tt> where needed and finally run
-            </p>
+            
+            <p>You might want to remove the <tt>:require =&gt; 'mongoid/tree'</tt> option
+            and explicitly <tt>require 'mongoid/tree'</tt> where needed and finally run</p>
+            
             <pre>bundle install</pre>
+            
             <h2>Usage</h2>
-            <p>
-            Read the API documentation at <a
+            
+            <p>Read the API documentation at <a
             href="http://benedikt.github.com/mongoid-tree">benedikt.github.com/mongoid-tree</a>
             and take a look at the <a
-            href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> module
-            </p>
+            href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> module</p>
+            
             <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;end</pre>
+            
             <h3>Utility methods</h3>
-            <p>
-            There are several utility methods that help getting to other related
-            documents in the tree:
-            </p>
-            <pre>Node.root&#x000A;Node.roots&#x000A;Node.leaves&#x000A;&#x000A;node.root&#x000A;node.parent&#x000A;node.children&#x000A;node.ancestors&#x000A;node.ancestors_and_self&#x000A;node.descendants&#x000A;node.descendants_and_self&#x000A;node.siblings&#x000A;node.siblings_and_self&#x000A;node.leaves</pre>
-            <p>
-            In addition it&#8217;s possible to check certain aspects of the
-            document&#8217;s position in the tree:
-            </p>
+            
+            <p>There are several utility methods that help getting to other related
+            documents in the tree:</p>
+            
+            <pre>Node.root&#x000A;Node.roots&#x000A;Node.leaves&#x000A;node.root&#x000A;node.parent&#x000A;node.children&#x000A;node.ancestors&#x000A;node.ancestors_and_self&#x000A;node.descendants&#x000A;node.descendants_and_self&#x000A;node.siblings&#x000A;node.siblings_and_self&#x000A;node.leaves</pre>
+            
+            <p>In addition it’s possible to check certain aspects of the document’s
+            position in the tree:</p>
+            
             <pre>node.root?&#x000A;node.leaf?&#x000A;node.depth&#x000A;node.ancestor_of?(other)&#x000A;node.descendant_of?(other)&#x000A;node.sibling_of?(other)</pre>
-            <p>
-            See <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for more
-            information on these methods.
-            </p>
+            
+            <p>See <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for more
+            information on these methods.</p>
+            
             <h3>Ordering</h3>
-            <p>
-            <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> doesn&#8217;t
-            order children by default. To enable ordering of tree nodes include the <a
+            
+            <p><a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> doesn't order
+            children by default. To enable ordering of tree nodes include the <a
             href="../classes/Mongoid/Tree/Ordering.html">Mongoid::Tree::Ordering</a>
             module. This will add a <tt>position</tt> field to your document and
-            provide additional utility methods:
-            </p>
-            <pre>node.lower_siblings&#x000A;node.higher_siblings&#x000A;node.first_sibling_in_list&#x000A;node.last_sibling_in_list&#x000A;&#x000A;node.move_up&#x000A;node.move_down&#x000A;node.move_to_top&#x000A;node.move_to_bottom&#x000A;node.move_above(other)&#x000A;node.move_below(other)&#x000A;&#x000A;node.at_top?&#x000A;node.at_bottom?</pre>
-            <p>
-            Example:
-            </p>
+            provide additional utility methods:</p>
+            
+            <pre>node.lower_siblings&#x000A;node.higher_siblings&#x000A;node.first_sibling_in_list&#x000A;node.last_sibling_in_list&#x000A;node.move_up&#x000A;node.move_down&#x000A;node.move_to_top&#x000A;node.move_to_bottom&#x000A;node.move_above(other)&#x000A;node.move_below(other)&#x000A;&#x000A;node.at_top?&#x000A;node.at_bottom?</pre>
+            
+            <p>Example:</p>
+            
             <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  include Mongoid::Tree::Ordering&#x000A;end</pre>
-            <p>
-            See <a
+            
+            <p>See <a
             href="../classes/Mongoid/Tree/Ordering.html">Mongoid::Tree::Ordering</a>
-            for more information on these methods.
-            </p>
+            for more information on these methods.</p>
+            
             <h3>Traversal</h3>
-            <p>
-            It&#8217;s possible to traverse the tree using different traversal methods
-            using the <a
+            
+            <p>It’s possible to traverse the tree using different traversal methods using
+            the <a
             href="../classes/Mongoid/Tree/Traversal.html">Mongoid::Tree::Traversal</a>
-            module.
-            </p>
-            <p>
-            Example:
-            </p>
-            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  include Mongoid::Tree::Traversal&#x000A;end&#x000A;&#x000A;node.traverse(:breadth_first) do |n|&#x000A;  # Do something with Node n&#x000A;end</pre>
+            module.</p>
+            
+            <p>Example:</p>
+            
+            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  include Mongoid::Tree::Traversal&#x000A;end&#x000A;node.traverse(:breadth_first) do |n|&#x000A;  # Do something with Node n&#x000A;end</pre>
+            
             <h3>Destroying</h3>
-            <p>
-            <a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> does not handle
+            
+            <p><a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> does not handle
             destroying of nodes by default. However it provides several strategies that
             help you to deal with children of deleted documents. You can simply add
-            them as <tt>before_destroy</tt> callbacks.
-            </p>
-            <p>
-            Available strategies are:
-            </p>
-            <ul>
-            <li>:nullify_children &#8212; Sets the children&#8217;s parent_id to null
+            them as <tt>before_destroy</tt> callbacks.</p>
             
-            </li>
-            <li>:move_children_to_parent &#8212; Moves the children to the current
-            document&#8217;s parent
+            <p>Available strategies are:</p>
+            <ul><li>
+            <p>:nullify_children – Sets the children’s parent_id to null</p>
+            </li><li>
+            <p>:move_children_to_parent – Moves the children to the current document’s
+            parent</p>
+            </li><li>
+            <p>:destroy_children – Destroys all children by calling their #destroy method
+            (invokes callbacks)</p>
+            </li><li>
+            <p>:delete_descendants – Deletes all descendants using a database query
+            (doesn’t invoke callbacks)</p>
+            </li></ul>
             
-            </li>
-            <li>:destroy_children &#8212; Destroys all children by calling their destroy
-            method (invokes callbacks)
+            <p>Example:</p>
             
-            </li>
-            <li>:delete_descendants &#8212; Deletes all descendants using a database query
-            (doesn&#8217;t invoke callbacks)
+            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  before_destroy :nullify_children&#x000A;end</pre>
             
-            </li>
-            </ul>
-            <p>
-            Example:
-            </p>
-            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  before_destroy :nullify_children&#x000A;end</pre>
             <h3>Callbacks</h3>
-            <p>
-            There are two callbacks that are called before and after the rearranging
+            
+            <p>There are two callbacks that are called before and after the rearranging
             process. This enables you to do additional computations after the documents
             position in the tree is updated. See <a
-            href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for details.
-            </p>
-            <p>
-            Example:
-            </p>
-            <pre>class Page&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;&#x000A;  after_rearrange :rebuild_path&#x000A;&#x000A;  field :slug&#x000A;  field :path&#x000A;&#x000A;  private&#x000A;&#x000A;  def rebuild_path&#x000A;    self.path = self.ancestors_and_self.collect(&amp;:slug).join('/')&#x000A;  end&#x000A;end</pre>
+            href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> for details.</p>
+            
+            <p>Example:</p>
+            
+            <pre>class Page&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  after_rearrange :rebuild_path&#x000A;&#x000A;  field :slug&#x000A;  field :path&#x000A;&#x000A;  private&#x000A;&#x000A;  def rebuild_path&#x000A;    self.path = self.ancestors_and_self.collect(&amp;:slug).join('/')&#x000A;  end&#x000A;end</pre>
+            
+            <h3>Validations</h3>
+            
+            <p><a href="../classes/Mongoid/Tree.html">Mongoid::Tree</a> currently does not
+            validate the document's children or parent associations by default. To
+            explicitly enable validation for children and parent documents it's
+            required to add a <tt>validates_associated</tt> validation.</p>
+            
+            <p>Example</p>
+            
+            <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  validates_associated :parent, :children&#x000A;end</pre>
+            
             <h2>Known issues</h2>
-            <p>
-            See <a
-            href="https://github.com/benedikt/mongoid-tree/issues">github.com/benedikt/mongoid-tree/issues</a>
-            </p>
+            
+            <p>See <a
+            href="https://github.com/benedikt/mongoid-tree/issues">github.com/benedikt/mongoid-tree/issues</a></p>
+            
             <h2>Repository</h2>
-            <p>
-            See <a
+            
+            <p>See <a
             href="https://github.com/benedikt/mongoid-tree">github.com/benedikt/mongoid-tree</a>
-            and feel free to fork it!
-            </p>
+            and feel free to fork it!</p>
+            
             <h2>Contributors</h2>
-            <p>
-            See a list of all contributors at <a
+            
+            <p>See a list of all contributors at <a
             href="https://github.com/benedikt/mongoid-tree/contributors.">github.com/benedikt/mongoid-tree/contributors.</a>
-            Thanks a lot everyone!
-            </p>
+            Thanks a lot everyone!</p>
+            
             <h2>Copyright</h2>
-            <p>
-            Copyright &#169; 2010 Benedikt Deicke. See <a
-            href="LICENSE.html">LICENSE</a> for details.
-            </p>
+            
+            <p>Copyright © 2010-2011 Benedikt Deicke. See <a
+            href="LICENSE.html">LICENSE</a> for details.</p>
           </div>
-          <div id='section'>
+          <div id='context'>
           </div>
         </div>
       </div>
       <div id='footer-push'></div>
     </div>
     <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
     </div>
   </body>
 </html>

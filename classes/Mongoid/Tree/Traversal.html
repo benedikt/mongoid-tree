@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>: Mongoid::Tree::Traversal [mongoid-tree 0.5.0]</title>
+    <title>Mongoid::Tree::Traversal</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -26,130 +26,129 @@
     <div class='class' id='wrapper'>
       <div class='header'>
         <div class='name'>
-          <span class='type'>Module</span>
+          <span class='type'>module</span>
           Mongoid::Tree::Traversal
         </div>
         <ol class='paths'>
           <li>
-            <a href="../../../files/lib/mongoid/tree/traversal_rb.html">lib/mongoid/tree/traversal.rb</a>
+            <a target="docwin" href="../../../files/lib/mongoid/tree/traversal_rb.html">lib/mongoid/tree/traversal.rb</a>
           </li>
         </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a target="docwin" href="../Tree.html">Tree</a></strong>
+        </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
+            
             <h1><a href="Traversal.html">Mongoid::Tree::Traversal</a></h1>
-            <p>
-            <a href="Traversal.html">Mongoid::Tree::Traversal</a> provides a <a
-            href="Traversal.html#M000030">traverse</a> method to walk through the tree.
-            It supports these traversal methods:
-            </p>
-            <ul>
-            <li>depth_first
             
-            </li>
-            <li>breadth_first
+            <p><a href="Traversal.html">Mongoid::Tree::Traversal</a> provides a <a
+            href="Traversal.html#method-i-traverse">traverse</a> method to walk through
+            the tree. It supports these traversal methods:</p>
+            <ul><li>
+            <p>depth_first</p>
+            </li><li>
+            <p>breadth_first</p>
+            </li></ul>
             
-            </li>
-            </ul>
             <h2>Depth First <a href="Traversal.html">Traversal</a></h2>
-            <p>
-            See <a
+            
+            <p>See <a
             href="http://en.wikipedia.org/wiki/Depth-first_search">en.wikipedia.org/wiki/Depth-first_search</a>
-            for a proper description.
-            </p>
-            <p>
-            Given a tree like:
-            </p>
+            for a proper description.</p>
+            
+            <p>Given a tree like:</p>
+            
             <pre>node1:&#x000A; - node2:&#x000A;   - node3&#x000A; - node4:&#x000A;   - node5&#x000A;   - node6&#x000A; - node7</pre>
-            <p>
-            Traversing the tree using depth first traversal would visit each node in
-            this order:
-            </p>
+            
+            <p>Traversing the tree using depth first traversal would visit each node in
+            this order:</p>
+            
             <pre>node1, node2, node3, node4, node5, node6, node7</pre>
+            
             <h2>Breadth First <a href="Traversal.html">Traversal</a></h2>
-            <p>
-            See <a
+            
+            <p>See <a
             href="http://en.wikipedia.org/wiki/Breadth-first_search">en.wikipedia.org/wiki/Breadth-first_search</a>
-            for a proper description.
-            </p>
-            <p>
-            Given a tree like:
-            </p>
+            for a proper description.</p>
+            
+            <p>Given a tree like:</p>
+            
             <pre>node1:&#x000A;  - node2:&#x000A;    - node5&#x000A;  - node3:&#x000A;    - node6&#x000A;    - node7&#x000A;  - node4</pre>
-            <p>
-            Traversing the tree using breadth first traversal would visit each node in
-            this order:
-            </p>
+            
+            <p>Traversing the tree using breadth first traversal would visit each node in
+            this order:</p>
+            
             <pre>node1, node2, node3, node4, node5, node6, node7</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
-            <h3>public class</h3>
+            <h3>Public Class</h3>
             <ol>
-              <li><a href="#M000030">traverse</a></li>
+              <li><a target="docwin" href="#method-c-traverse">traverse</a></li>
             </ol>
-            <h3>public instance</h3>
+            <h3>Public Instance</h3>
             <ol>
-              <li><a href="#M000031">traverse</a></li>
+              <li><a target="docwin" href="#method-i-traverse">traverse</a></li>
             </ol>
+          </div>
+          <div id='context'>
           </div>
           <div id='section'>
             <div id='methods'>
-              <h2>Public class methods</h2>
-              <div class='method public-class' id='method-M000030'>
-                <a name='M000030'></a>
+              <h2>Public Class methods</h2>
+              <div class='method public-class' id='method-method-c-traverse'>
+                <a name='method-c-traverse'></a>
                 <div class='synopsis'>
                   <span class='name'>traverse</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'></span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Traverses the entire tree, one root at a time, using the given traversal
-                  method (Default is :depth_first).
-                  </p>
-                  <p>
-                  See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
-                  traversal methods.
-                  </p>
-                  <p>
-                  Example:
-                  </p>
-                  <pre># Say we have the following tree, and want to print its hierarchy:&#x000A;#   root_1&#x000A;#     child_1_a&#x000A;#   root_2&#x000A;#     child_2_a&#x000A;#       child_2_a_1&#x000A;&#x000A;Node.traverse(:depth_first) do |node|&#x000A;  indentation = '  ' * node.depth&#x000A;&#x000A;  puts &quot;#{indentation}#{node.name}&quot;&#x000A;end</pre>
+                  
+                  <p>Traverses the entire tree, one root at a time, using the given traversal
+                  method (Default is :depth_first).</p>
+                  
+                  <p>See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
+                  traversal methods.</p>
+                  
+                  <p>Example:</p>
+                  
+                  <pre># Say we have the following tree, and want to print its hierarchy:&#x000A;#   root_1&#x000A;#     child_1_a&#x000A;#   root_2&#x000A;#     child_2_a&#x000A;#       child_2_a_1&#x000A;Node.traverse(:depth_first) do |node|&#x000A;  indentation = '  ' * node.depth&#x000A;&#x000A;  puts &quot;#{indentation}#{node.name}&quot;&#x000A;end</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-traverse-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000030-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 74</span>&#x000A;      </pre>
+                  <pre id='method-c-traverse-source'><span class="ruby-comment"># File lib/mongoid/tree/traversal.rb, line 74</span>&#x000A;      </pre>
                 </div>
               </div>
-              <h2>Public instance methods</h2>
-              <div class='method public-instance' id='method-M000031'>
-                <a name='M000031'></a>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-traverse'>
+                <a name='method-i-traverse'></a>
                 <div class='synopsis'>
                   <span class='name'>traverse</span>
-                  <span class='arguments'>(type = :depth_first, &amp;block)</span>
+                  <span class='arguments'>(type = :depth_first, &block)</span>
                 </div>
                 <div class='description'>
-                  <p>
-                  Traverses the tree using the given traversal method (Default is
-                  :depth_first) and passes each document node to the block.
-                  </p>
-                  <p>
-                  See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
-                  traversal methods.
-                  </p>
-                  <p>
-                  Example:
-                  </p>
+                  
+                  <p>Traverses the tree using the given traversal method (Default is
+                  :depth_first) and passes each document node to the block.</p>
+                  
+                  <p>See <a href="Traversal.html">Mongoid::Tree::Traversal</a> for available
+                  traversal methods.</p>
+                  
+                  <p>Example:</p>
+                  
                   <pre>results = []&#x000A;root.traverse(:depth_first) do |node|&#x000A;  results &lt;&lt; node&#x000A;end</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-traverse-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/mongoid/tree/traversal.rb, line 97</span>&#x000A;      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-identifier">:depth_first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;No block given&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;      <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='method-i-traverse-source'><span class="ruby-comment"># File lib/mongoid/tree/traversal.rb, line 97</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">traverse</span>(<span class="ruby-identifier">type</span> = <span class="ruby-value">:depth_first</span>, &amp;<span class="ruby-identifier">block</span>)&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;No block given&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>&#x000A;  <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{type}_traversal&quot;</span>, &amp;<span class="ruby-identifier">block</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
@@ -159,7 +158,7 @@
       <div id='footer-push'></div>
     </div>
     <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
     </div>
   </body>
 </html>

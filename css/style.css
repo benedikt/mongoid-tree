@@ -19,7 +19,7 @@ body {
   height: 43px; }
 
 div.header, #footer {
-  background: #eee; }
+  background: #eeeeee; }
 
 #footer {
   border-top: 1px solid silver;
@@ -50,7 +50,7 @@ a {
   a:hover {
     background: #336699;
     text-decoration: none;
-    color: #eef; }
+    color: #eeeeff; }
 
 #diagram img {
   border: 0; }
@@ -58,7 +58,7 @@ a {
 #description a, .method .description a, .header a {
   color: #336699; }
   #description a:hover, .method .description a:hover, .header a:hover {
-    color: #eee; }
+    color: #eeeeee; }
 #description h1 a, #description h2 a, #description h3 a, #description h4 a, #description h5 a, #description h6 a, .method .description h1 a, .method .description h2 a, .method .description h3 a, .method .description h4 a, .method .description h5 a, .method .description h6 a, .header h1 a, .header h2 a, .header h3 a, .header h4 a, .header h5 a, .header h6 a {
   color: #0b3e71; }
 
@@ -80,7 +80,7 @@ table {
   font-size: 1em;
   border-collapse: collapse; }
   table td, table th {
-    padding: .4em .8em; }
+    padding: 0.4em 0.8em; }
   table thead {
     background-color: #e8e8e8; }
     table thead th {
@@ -97,35 +97,35 @@ table {
     content: " ..."; }
   #index a.show:hover, div.header a.show:hover {
     color: black;
-    background: #ffe; }
+    background: #ffffee; }
 
 #index {
   font: 85%/1.2 Arial, Helvetica, sans-serif; }
   #index a {
     text-decoration: none; }
   #index h1 {
-    padding: .2em .5em .1em;
-    background: #ccc;
+    padding: 0.2em 0.5em 0.1em;
+    background: #cccccc;
     font: small-caps 1.2em Georgia, serif;
-    color: #333;
+    color: #333333;
     border-bottom: 1px solid gray; }
   #index form {
     margin: 0;
     padding: 0; }
     #index form input {
-      margin: .4em 3px 0 .4em;
+      margin: 0.4em 3px 0 0.4em;
       width: 80%; }
     #index form #search.untouched {
       color: #777777; }
     #index form .clear_button {
       -moz-border-radius: 7px;
       -webkit-border-radius: 7px;
-      background: #AAA;
+      background: #aaaaaa;
       color: white;
       padding: 0 5px 1px 5px;
       cursor: pointer; }
   #index ol {
-    padding: .4em .5em; }
+    padding: 0.4em 0.5em; }
     #index ol li {
       white-space: nowrap; }
   #index #index-entries li a {
@@ -147,14 +147,14 @@ table {
     #index #index-entries.methods li a .module_name, #index #search-results.methods li a .module_name {
       color: #666666; }
     #index #index-entries.methods li a:hover .module_name, #index #search-results.methods li a:hover .module_name {
-      color: #ddd; }
+      color: #dddddd; }
 
 #attribute-list .context-item-name {
   font-weight: bold; }
 
 div.header {
   font-size: 80%;
-  padding: .5em 2%;
+  padding: 0.5em 2%;
   font-family: Arial, Helvetica, sans-serif;
   border-bottom: 1px solid silver; }
   div.header .name {
@@ -171,7 +171,7 @@ div.header {
   div.header .last-update .datetime {
     color: #484848; }
   div.header .parent {
-    margin-top: .3em; }
+    margin-top: 0.3em; }
     div.header .parent strong {
       font-weight: normal;
       color: #484848; }
@@ -185,9 +185,9 @@ div.header {
     font: 14px Monaco, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace; }
   #content pre {
     color: black;
-    background: #eee;
+    background: #eeeeee;
     border: 1px solid silver;
-    padding: .5em .8em;
+    padding: 0.5em 0.8em;
     overflow: auto; }
   #content p code, #content p tt, #content li code, #content li tt, #content dl code, #content dl tt {
     font: 14px Monaco, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
@@ -199,35 +199,35 @@ div.header {
   #content #text {
     position: relative; }
   #content #description p {
-    margin-top: .5em; }
+    margin-top: 0.5em; }
   #content #description h1, #content #description h2, #content #description h3, #content #description h4, #content #description h5, #content #description h6 {
     font-family: Georgia, serif; }
   #content #description h1 {
     font-size: 2.2em;
-    margin-bottom: .2em;
+    margin-bottom: 0.2em;
     border-bottom: 3px double #d8d8d8;
-    padding-bottom: .1em; }
+    padding-bottom: 0.1em; }
   #content #description h2 {
     font-size: 1.8em;
     color: #0e3062;
-    margin: .8em 0 .3em 0; }
+    margin: 0.8em 0 0.3em 0; }
   #content #description h3 {
     font-size: 1.6em;
-    margin: .8em 0 .3em 0;
+    margin: 0.8em 0 0.3em 0;
     color: #666666; }
   #content #description h4 {
     font-size: 1.4em;
-    margin: .8em 0 .3em 0; }
+    margin: 0.8em 0 0.3em 0; }
   #content #description h5 {
     font-size: 1.2em;
-    margin: .8em 0 .3em 0;
+    margin: 0.8em 0 0.3em 0;
     color: #0e3062; }
   #content #description h6 {
-    font-size: 1.0em;
-    margin: .8em 0 .3em 0;
+    font-size: 1em;
+    margin: 0.8em 0 0.3em 0;
     color: #666666; }
   #content #description ul, #content #description ol, #content .method .description ul, #content .method .description ol {
-    margin: .8em 0;
+    margin: 0.8em 0;
     padding-left: 1.5em; }
   #content #description ol, #content .method .description ol {
     list-style: decimal; }
@@ -239,9 +239,9 @@ div.header {
   top: 0px;
   right: -33%;
   width: 28%;
-  background: #eee;
+  background: #eeeeee;
   border: 1px solid silver;
-  padding: .4em 1%;
+  padding: 0.4em 1%;
   overflow: hidden; }
   #method-list h2 {
     font-size: 1.3em; }
@@ -249,10 +249,10 @@ div.header {
     font-variant: small-caps;
     text-transform: capitalize;
     font-family: Georgia, serif;
-    color: #666;
+    color: #666666;
     font-size: 1.1em; }
   #method-list ol {
-    padding: 0 0 .5em .5em; }
+    padding: 0 0 0.5em 0.5em; }
 
 #context {
   border-top: 1px dashed silver;
@@ -261,17 +261,17 @@ div.header {
 
 #context h2, #section h2 {
   font: small-caps 1.2em Georgia, serif;
-  color: #444;
-  margin: 1em 0 .2em 0; }
+  color: #444444;
+  margin: 1em 0 0.2em 0; }
 
 #methods .method {
   border: 1px solid silver;
-  margin-top: .5em;
-  background: #eee; }
+  margin-top: 0.5em;
+  background: #eeeeee; }
   #methods .method .synopsis {
     color: black;
     background: silver;
-    padding: .2em 1em; }
+    padding: 0.2em 1em; }
     #methods .method .synopsis .name {
       font-weight: bold; }
     #methods .method .synopsis a {
@@ -281,14 +281,14 @@ div.header {
     #methods .method .description pre {
       background: #f8f8f8; }
   #methods .method .source {
-    margin: .5em 0; }
+    margin: 0.5em 0; }
   #methods .method .source-toggle {
     font-size: 85%;
     margin-left: 1em; }
 #methods .public-class {
   background: #ffffe4; }
 #methods .public-instance .synopsis {
-  color: #eee;
+  color: #eeeeee;
   background: #336699; }
 
 #content .method .source pre {
@@ -296,13 +296,13 @@ div.header {
   color: #ffdead;
   margin: 1em;
   padding: 0.5em;
-  border: 1px dashed #999;
+  border: 1px dashed #999999;
   overflow: auto; }
   #content .method .source pre .ruby-constant {
     color: #7fffd4;
     background: transparent; }
   #content .method .source pre .ruby-keyword {
-    color: #00ffff;
+    color: aqua;
     background: transparent; }
   #content .method .source pre .ruby-ivar {
     color: #eedd82;
