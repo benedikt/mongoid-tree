@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.summary       = 'A tree structure for Mongoid documents'
   s.description   = 'A tree structure for Mongoid documents using the materialized path pattern'
 
-  s.has_rdoc      = true
   s.rdoc_options  = ['--main', 'README.rdoc', '--charset=UTF-8']
   s.extra_rdoc_files = ['README.rdoc', 'LICENSE']
 
