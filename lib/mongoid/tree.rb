@@ -99,7 +99,7 @@ module Mongoid # :nodoc:
 
       define_model_callbacks :rearrange, :only => [:before, :after]
 
-      class_eval "def base_class; #{self.name}; end"
+      class_eval "def base_class; ::#{self.name}; end"
     end
 
     ##

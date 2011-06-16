@@ -1,4 +1,4 @@
-= mongoid-tree
+= mongoid-tree http://travis-ci.org/benedikt/mongoid-tree.png
 
 A tree structure for Mongoid documents using the materialized path pattern
 
