@@ -2,7 +2,6 @@
 
 A tree structure for Mongoid documents using the materialized path pattern
 
-
 == Requirements
 
 * mongoid (~> 2.0.0)
@@ -166,6 +165,11 @@ Example
 
     validates_associated :parent, :children
   end
+
+
+== Build Status
+
+mongoid-tree is on {Travis}[http://travis-ci.org/benedikt/mongoid-tree] running the specs on Ruby 1.8.7, Ruby 1.9.2 and Ruby Enterprise Edition.
 
 
 == Known issues
