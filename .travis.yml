@@ -1,4 +1,8 @@
 rvm:
-  - 1.8.7
+  - ruby-head
   - 1.9.2
+  - 1.8.7
   - ree
+  - jruby
+  - rbx
+  - rbx-2.0.0pre
