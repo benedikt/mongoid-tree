@@ -31,21 +31,21 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2011-03-30 14:31:27 +0200</span>
+          <span class='datetime'>2011-07-12 16:36:32 +0200</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
             
-            <h1>mongoid-tree</h1>
+            <h1>mongoid-tree <img src="http://travis-ci.org/benedikt/mongoid-tree.png" /></h1>
             
             <p>A tree structure for <a href="../classes/Mongoid.html">Mongoid</a>
             documents using the materialized path pattern</p>
             
             <h2>Requirements</h2>
             <ul><li>
-            <p>mongoid (~&gt; 2.0.0)</p>
+            <p>mongoid (~&gt; 2.0)</p>
             </li></ul>
             
             <h2>Install</h2>
@@ -162,6 +162,12 @@
             <p>Example</p>
             
             <pre>class Node&#x000A;  include Mongoid::Document&#x000A;  include Mongoid::Tree&#x000A;  validates_associated :parent, :children&#x000A;end</pre>
+            
+            <h2>Build Status</h2>
+            
+            <p>mongoid-tree is on <a
+            href="http://travis-ci.org/benedikt/mongoid-tree">Travis</a> running the
+            specs on Ruby 1.8.7, Ruby 1.9.2 and Ruby Enterprise Edition.</p>
             
             <h2>Known issues</h2>
             
