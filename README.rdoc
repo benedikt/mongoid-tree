@@ -4,7 +4,7 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 == Requirements
 
-* mongoid (~> 2.0.0)
+* mongoid (~> 2.0)
 
 
 == Install
