@@ -26,3 +26,14 @@ class OrderedNode
 
   attr_accessible :name
 end
+
+
+class CountNode
+  include Mongoid::Document
+  include Mongoid::Tree
+  include Mongoid::Tree::Count
+
+  field :name
+
+  attr_accessible :name
+end
