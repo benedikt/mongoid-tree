@@ -25,3 +25,8 @@ desc "Push the .gem file to rubygems.org"
 task :release => :build do
   system "gem push #{spec.name}-#{spec.version}.gem"
 end
+
+desc "Open an irb session"
+task :console do
+  sh "irb -rubygems -I lib -r ./spec/spec_helper.rb"
+end
