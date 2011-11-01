@@ -268,7 +268,10 @@ module Mongoid # :nodoc:
     ##
     # Nullifies all children's parent_id
     def nullify_children
-      children.nullify_all
+      children.each do |c|
+        c.parent = c.parent_id = nil
+        c.save
+      end
     end
 
     ##
