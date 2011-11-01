@@ -164,6 +164,20 @@ describe Mongoid::Tree::Ordering do
         node(:third_root).first_sibling_in_list.should == node(:first_root)
       end
     end
+
+    describe 'ancestors' do
+      it "#ancestors should be returned in the correct order" do
+        setup_tree <<-ENDTREE
+          - root:
+            - level_1_a
+            - level_1_b:
+              - level_2_a:
+                - leaf
+        ENDTREE
+
+        node(:leaf).ancestors.to_a.should == [node(:root), node(:level_1_b), node(:level_2_a)]
+      end
+    end
   end
 
   describe 'moving nodes around' do
