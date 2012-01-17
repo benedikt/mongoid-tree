@@ -119,7 +119,7 @@ module Mongoid # :nodoc:
     module ClassMethods # :nodoc:
 
       def root
-        first(:conditions => { :parent_id => nil })
+        where({ :parent_id => nil }).first
       end
 
       def roots
