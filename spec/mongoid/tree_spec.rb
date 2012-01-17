@@ -45,7 +45,7 @@ describe Mongoid::Tree do
     it "should save its unsaved children" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
       root.children << child
-      child.should_receive(:save)
+      child.should_receive(:save).at_most(2).times
       root.save
     end
   end
