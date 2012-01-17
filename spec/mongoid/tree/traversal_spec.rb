@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Mongoid::Tree::Traversal do
 
-  subject { Node }
+  subject { OrderedNode }
 
   describe '#traverse' do
 
@@ -70,8 +70,6 @@ describe Mongoid::Tree::Traversal do
     end
 
     describe 'with reordered nodes' do
-
-      subject { OrderedNode }
 
       before do
         setup_tree <<-ENDTREE
