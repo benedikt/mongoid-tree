@@ -76,9 +76,9 @@ module Mongoid # :nodoc:
       # They're extended into the base class automatically.
       module ClassMethods # :nodoc:
         def traverse(type = :depth_first, &block)
-          raise ArgumentError, "No block given" unless block_given?
-          roots.each { |root| root.traverse(type, &block) }
-          nil
+          res = []
+          roots.each { |root| res.concat root.traverse(type, &block) }
+          res
         end
       end
 
@@ -95,8 +95,10 @@ module Mongoid # :nodoc:
       #     results << node
       #   end
       def traverse(type = :depth_first, &block)
-        raise ArgumentError, "No block given" unless block_given?
+        res = []
+        block ||= lambda { |node| res << node }
         send("#{type}_traversal", &block)
+        res
       end
 
       private
