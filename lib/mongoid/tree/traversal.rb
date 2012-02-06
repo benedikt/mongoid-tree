@@ -94,6 +94,9 @@ module Mongoid # :nodoc:
       #   root.traverse(:depth_first) do |node|
       #     results << node
       #   end
+      #
+      #   root.traverse(:depth_first).map(&:name)
+      #
       def traverse(type = :depth_first, &block)
         res = []
         block ||= lambda { |node| res << node }
