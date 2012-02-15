@@ -76,9 +76,7 @@ module Mongoid # :nodoc:
       # They're extended into the base class automatically.
       module ClassMethods # :nodoc:
         def traverse(type = :depth_first, &block)
-          res = []
-          roots.each { |root| res.concat root.traverse(type, &block) }
-          res
+          roots.map { |root| root.traverse(type, &block) }.flatten
         end
       end
 
@@ -98,17 +96,16 @@ module Mongoid # :nodoc:
       #   root.traverse(:depth_first).map(&:name)
       #
       def traverse(type = :depth_first, &block)
-        res = []
-        block ||= lambda { |node| res << node }
+        block ||= lambda { |node| node }
         send("#{type}_traversal", &block)
-        res
       end
 
       private
 
       def depth_first_traversal(&block)
-        block.call(self)
-        self.children.each { |c| c.send(:depth_first_traversal, &block) }
+        res = [block.call(self)]
+        self.children.each { |c| res << c.send(:depth_first_traversal, &block) }
+        res.flatten
       end
 
       def breadth_first_traversal(&block)
