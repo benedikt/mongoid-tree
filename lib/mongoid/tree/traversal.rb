@@ -109,12 +109,14 @@ module Mongoid # :nodoc:
       end
 
       def breadth_first_traversal(&block)
+        result = []
         queue = [self]
         while queue.any? do
           node = queue.shift
-          block.call(node)
+          result << block.call(node)
           queue += node.children
         end
+        result
       end
     end
   end
