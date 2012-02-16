@@ -22,47 +22,55 @@ describe Mongoid::Tree::Traversal do
       subject.should_receive(:depth_first_traversal)
       subject.traverse {}
     end
-
   end
 
   describe 'depth first traversal' do
 
-    it "should traverse correctly" do
-      setup_tree <<-ENDTREE
-        node1:
-          - node2:
-            - node3
-          - node4:
-            - node5
-            - node6
-          - node7
-      ENDTREE
+    describe 'with unmodified tree' do
+      before do
+        setup_tree <<-ENDTREE
+          node1:
+            - node2:
+              - node3
+            - node4:
+              - node5
+              - node6
+            - node7
+        ENDTREE
+      end
 
-      result = []
-      node(:node1).traverse(:depth_first) { |node| result << node }
-      result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      it "should traverse correctly" do
+        result = []
+        node(:node1).traverse(:depth_first) { |node| result << node }
+        result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      end
+
+      it "should return and array containing the results of the block for each node" do
+        result = node(:node1).traverse(:depth_first) { |n| n.name.to_sym }
+        result.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      end
     end
 
-    it "should traverse correctly on merged trees" do
+    describe 'with merged trees' do
+      before do
+        setup_tree <<-ENDTREE
+          - node4:
+            - node5
+            - node6:
+              - node7
 
-      setup_tree <<-ENDTREE
-        - node4:
-          - node5
-          - node6:
-            - node7
+          - node1:
+            - node2:
+              - node3
+        ENDTREE
 
-        - node1:
-          - node2:
-            - node3
-      ENDTREE
+        node(:node1).children << node(:node4)
+      end
 
-
-      node(:node1).children << node(:node4)
-
-
-      result = []
-      node(:node1).traverse(:depth_first) { |node| result << node }
-      result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      it "should traverse correctly" do
+        result = node(:node1).traverse(:depth_first) { |n| n.name.to_sym }
+        result.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+      end
     end
 
     describe 'with reordered nodes' do
@@ -79,6 +87,7 @@ describe Mongoid::Tree::Traversal do
               - node5
             - node7
         ENDTREE
+
         node(:node5).move_above(node(:node6))
       end
 
@@ -99,8 +108,8 @@ describe Mongoid::Tree::Traversal do
 
   describe 'breadth first traversal' do
 
-    it "should traverse correctly" do
-      tree = setup_tree <<-ENDTREE
+    before do
+      setup_tree <<-ENDTREE
         node1:
           - node2:
             - node5
@@ -109,10 +118,17 @@ describe Mongoid::Tree::Traversal do
             - node7
           - node4
       ENDTREE
+    end
 
+    it "should traverse correctly" do
       result = []
       node(:node1).traverse(:breadth_first) { |n| result << n }
       result.collect { |n| n.name.to_sym }.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
+    end
+
+    it "should return and array containing the results of the block for each node" do
+      result = node(:node1).traverse(:breadth_first) { |n| n.name.to_sym }
+      result.should == [:node1, :node2, :node3, :node4, :node5, :node6, :node7]
     end
 
   end
