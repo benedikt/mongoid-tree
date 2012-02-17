@@ -1,4 +1,4 @@
-= mongoid-tree {<img src="https://secure.travis-ci.org/benedikt/mongoid-tree.png" />}[http://travis-ci.org/benedikt/mongoid-tree]
+= mongoid-tree {<img src="https://secure.travis-ci.org/benedikt/mongoid-tree.png" />}[http://travis-ci.org/benedikt/mongoid-tree] {<img src="https://gemnasium.com/benedikt/mongoid-tree.png" />}[http://gemnasium.com/benedikt/mongoid-tree]
 
 A tree structure for Mongoid documents using the materialized path pattern
 
@@ -169,7 +169,7 @@ Example
 
 == Build Status
 
-mongoid-tree is on {Travis}[http://travis-ci.org/benedikt/mongoid-tree] running the specs on Ruby 1.8.7, Ruby 1.9.2 and Ruby Enterprise Edition.
+mongoid-tree is on {Travis}[http://travis-ci.org/benedikt/mongoid-tree] running the specs on Ruby 1.8.7, Ruby 1.9.2, Ruby 1.9.3, JRuby, Rubinius and Ruby Enterprise Edition.
 
 
 == Known issues
@@ -187,6 +187,15 @@ See https://github.com/benedikt/mongoid-tree and feel free to fork it!
 See a list of all contributors at https://github.com/benedikt/mongoid-tree/contributors. Thanks a lot everyone!
 
 
+== Support
+
+If you like mongoid-tree and want to support the development, I would appreciate a small donation:
+
+{<img src='http://www.pledgie.com/campaigns/12137.png?skin_name=chrome' />}[http://www.pledgie.com/campaigns/12137]
+
+{<img src="https://api.flattr.com/button/flattr-badge-large.png" />}[https://flattr.com/submit/auto?user_id=benediktdeicke&url=https://github.com/benedikt/mongoid-tree&title=mongoid-tree&language=&tags=github&category=software]
+
+
 == Copyright
 
-Copyright (c) 2010-2011 Benedikt Deicke. See LICENSE for details.
+Copyright (c) 2010-2012 Benedikt Deicke. See LICENSE for details.
