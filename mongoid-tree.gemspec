@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'mongoid-tree'
-  s.version       = '0.6.2'
+  s.version       = '0.7.0'
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Benedikt Deicke']
   s.email         = ['benedikt@synatic.net']
@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('mongoid', ['~> 3.0', '>= 2.4'])
   s.add_development_dependency('rake', ['>= 0.8.7'])
   s.add_development_dependency('rspec', ['~> 2.3'])
+  s.add_development_dependency('rdoc', ['~> 2.4'])
   s.add_development_dependency('autotest', ['>= 4.3.2'])
-  s.add_development_dependency('hanna-nouveau', ['>= 0.2.2'])
 end
