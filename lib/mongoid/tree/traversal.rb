@@ -1,4 +1,4 @@
-module Mongoid # :nodoc:
+module Mongoid
   module Tree
     ##
     # = Mongoid::Tree::Traversal
@@ -48,33 +48,32 @@ module Mongoid # :nodoc:
     module Traversal
       extend ActiveSupport::Concern
 
-      ##
-      # :singleton-method: traverse
-      # Traverses the entire tree, one root at a time, using the given traversal
-      # method (Default is :depth_first).
-      #
-      # See Mongoid::Tree::Traversal for available traversal methods.
-      #
-      # Example:
-      #
-      #   # Say we have the following tree, and want to print its hierarchy:
-      #   #   root_1
-      #   #     child_1_a
-      #   #   root_2
-      #   #     child_2_a
-      #   #       child_2_a_1
-      #
-      #   Node.traverse(:depth_first) do |node|
-      #     indentation = '  ' * node.depth
-      #
-      #     puts "#{indentation}#{node.name}"
-      #   end
-      #
 
       ##
-      # The methods in this module are class-level methods documented above.
-      # They're extended into the base class automatically.
-      module ClassMethods # :nodoc:
+      # This module implements class methods that will be available 
+      # on the document that includes Mongoid::Tree::Traversal
+      module ClassMethods
+        ##
+        # Traverses the entire tree, one root at a time, using the given traversal
+        # method (Default is :depth_first).
+        # 
+        # See Mongoid::Tree::Traversal for available traversal methods.
+        #
+        # @example
+        #
+        #   # Say we have the following tree, and want to print its hierarchy:
+        #   #   root_1
+        #   #     child_1_a
+        #   #   root_2
+        #   #     child_2_a
+        #   #       child_2_a_1
+        #
+        #   Node.traverse(:depth_first) do |node|
+        #     indentation = '  ' * node.depth
+        #
+        #     puts "#{indentation}#{node.name}"
+        #   end
+        #
         def traverse(type = :depth_first, &block)
           roots.collect { |root| root.traverse(type, &block) }.flatten
         end
@@ -86,7 +85,7 @@ module Mongoid # :nodoc:
       #
       # See Mongoid::Tree::Traversal for available traversal methods.
       #
-      # Example:
+      # @example
       #
       #   results = []
       #   root.traverse(:depth_first) do |node|
