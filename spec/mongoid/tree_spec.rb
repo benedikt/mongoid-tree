@@ -378,5 +378,17 @@ describe Mongoid::Tree do
 
     end
 
+    describe 'cascading to embedded documents' do
+
+      it 'should not raise a NoMethodError' do
+        pending('GitHub Issue #25') do
+          node = NodeWithEmbeddedDocument.new
+          document = node.build_embedded_document
+          expect { node.save }.to_not raise_error NoMethodError
+        end
+      end
+
+    end
+
   end
 end

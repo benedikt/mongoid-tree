@@ -26,3 +26,11 @@ class OrderedNode
 
   attr_accessible :name
 end
+
+class NodeWithEmbeddedDocument < Node
+  embeds_one :embedded_document, :cascade_callbacks => true
+end
+
+class EmbeddedDocument
+  include Mongoid::Document
+end
