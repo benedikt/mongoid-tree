@@ -66,15 +66,15 @@ describe Mongoid::Tree do
     it "should set the child's parent_id when added to parent's children" do
       root = Node.create; child = Node.create
       root.children << child
-      child.parent.should == root
-      child.parent_id.should == root.id
+      child.parent.should eq(root)
+      child.parent_id.should eq(root.id)
     end
 
     it "should set the child's parent_id parent is set on child" do
       root = Node.create; child = Node.create
       child.parent = root
-      child.parent.should == root
-      child.parent_id.should == root.id
+      child.parent.should eq(root)
+      child.parent_id.should eq(root.id)
     end
 
     it "should rebuild its parent_ids" do
@@ -245,9 +245,9 @@ describe Mongoid::Tree do
 
     describe '#depth' do
       it "should return the depth of this document" do
-        node(:root).depth.should == 0
-        node(:child).depth.should == 1
-        node(:subchild).depth.should == 2
+        node(:root).depth.should eq(0)
+        node(:child).depth.should eq(1)
+        node(:subchild).depth.should eq(2)
       end
     end
 
@@ -317,7 +317,7 @@ describe Mongoid::Tree do
       end
 
       it "#siblings_and_self should return the documents siblings and itself" do
-        node(:child).siblings_and_self.is_a?(Mongoid::Criteria).should == true
+        node(:child).siblings_and_self.should be_kind_of(Mongoid::Criteria)
         node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
       end
 
@@ -374,6 +374,18 @@ describe Mongoid::Tree do
         node.should_receive(:rearrange).ordered
         node.should_receive(:callback).ordered
         node.save
+      end
+
+    end
+
+    describe 'cascading to embedded documents' do
+
+      it 'should not raise a NoMethodError' do
+        pending('GitHub Issue #25') do
+          node = NodeWithEmbeddedDocument.new
+          document = node.build_embedded_document
+          expect { node.save }.to_not raise_error NoMethodError
+        end
       end
 
     end

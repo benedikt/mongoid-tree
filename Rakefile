@@ -1,5 +1,5 @@
 require 'rspec/core/rake_task'
-require 'rdoc/task'
+require 'yard'
 
 spec = Gem::Specification.load("mongoid-tree.gemspec")
 
@@ -7,13 +7,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-RDoc::Task.new do |rdoc|
-  rdoc.rdoc_dir = 'doc'
-  rdoc.title = "#{spec.name} #{spec.version}"
-  rdoc.options += spec.rdoc_options
-  rdoc.rdoc_files.include(spec.extra_rdoc_files)
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+YARD::Rake::YardocTask.new(:doc)
 
 desc "Build the .gem file"
 task :build do
