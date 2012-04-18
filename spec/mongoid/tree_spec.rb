@@ -271,11 +271,11 @@ describe Mongoid::Tree do
 
     describe 'ancestors' do
       it "#ancestors should return the documents ancestors" do
-        node(:subchild).ancestors.to_a.should == [node(:root), node(:child)]
+        node(:subchild).ancestors.to_a.should =~ [node(:root), node(:child)]
       end
 
       it "#ancestors_and_self should return the documents ancestors and itself" do
-        node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
+        node(:subchild).ancestors_and_self.to_a.should =~ [node(:root), node(:child), node(:subchild)]
       end
 
       describe '#ancestor_of?' do
@@ -294,7 +294,8 @@ describe Mongoid::Tree do
         node(:root).descendants.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
       end
 
-      it "#descendants_and_self should return the documents descendants and itself" do
+      it "#descendants_and_self should return the documents descendants and itself" do      
+
         node(:root).descendants_and_self.to_a.should =~ [node(:root), node(:child), node(:other_child), node(:subchild)]
       end
 
