@@ -88,7 +88,7 @@ module Mongoid
       belongs_to :parent, :class_name => self.name, :inverse_of => :children, :index => true, :validate => false
 
       field :parent_ids, :type => Array, :default => []
-      index :parent_ids
+      index :parent_ids => 1
 
       set_callback :save, :after, :rearrange_children, :if => :rearrange_children?
       set_callback :validation, :before do
