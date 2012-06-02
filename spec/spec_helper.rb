@@ -7,7 +7,7 @@ require 'mongoid/tree'
 require 'rspec'
 
 Mongoid.configure do |config|
-  config.connect_to('mongoid_test')
+  config.connect_to('mongoid_tree_test')
 end
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
