@@ -14,7 +14,5 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.after :each do
-    Mongoid.master.collections.reject { |c| c.name =~ /^system\./ }.each(&:drop)
-  end
+  config.after(:each) { Mongoid.purge! }
 end
