@@ -52,14 +52,14 @@ module Mongoid
       # Returns siblings below the current document.
       # Siblings with a position greater than this documents's position.
       def lower_siblings
-        self.siblings.where(:position.gt => self.position)
+        self.siblings.gt(:position => self.position)
       end
 
       ##
       # Returns siblings above the current document.
       # Siblings with a position lower than this documents's position.
       def higher_siblings
-        self.siblings.where(:position.lt => self.position)
+        self.siblings.lt(:position => self.position)
       end
 
       ##
@@ -128,13 +128,13 @@ module Mongoid
 
         if position > other.position
           new_position = other.position
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
+          other.lower_siblings.lt(:position => self.position).each { |s| s.inc(:position, 1) }
           other.inc(:position, 1)
           self.position = new_position
           save!
         else
           new_position = other.position - 1
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
+          other.higher_siblings.gt(:position => self.position).each { |s| s.inc(:position, -1) }
           self.position = new_position
           save!
         end
@@ -152,12 +152,12 @@ module Mongoid
 
         if position > other.position
           new_position = other.position + 1
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
+          other.lower_siblings.lt(:position => self.position).each { |s| s.inc(:position, 1) }
           self.position = new_position
           save!
         else
           new_position = other.position
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
+          other.higher_siblings.gt(:position => self.position).each { |s| s.inc(:position, -1) }
           other.inc(:position, -1)
           self.position = new_position
           save!
@@ -172,7 +172,7 @@ module Mongoid
 
       def reposition_former_siblings
         former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
-                                     and(:position.gt => (attribute_was('position') || 0)).
+                                     gt(:position => (attribute_was('position') || 0)).
                                      excludes(:id => self.id)
         former_siblings.each { |s| s.inc(:position,  -1) }
       end
