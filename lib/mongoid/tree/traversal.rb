@@ -48,6 +48,10 @@ module Mongoid
     module Traversal
       extend ActiveSupport::Concern
 
+      included do
+        include Mongoid::Tree::Ordering
+      end
+
 
       ##
       # This module implements class methods that will be available 
