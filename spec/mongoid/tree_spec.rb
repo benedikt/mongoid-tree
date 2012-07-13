@@ -7,16 +7,16 @@ describe Mongoid::Tree do
   it "should reference many children as inverse of parent with index" do
     a = Node.reflect_on_association(:children)
     a.should be
-    a.macro.should eql(:references_many)
+    a.macro.should eql(:has_many)
     a.class_name.should eql('Node')
     a.foreign_key.should eql('parent_id')
-    Node.index_options.should have_key('parent_id')
+    Node.index_options.should have_key({ 'parent_id' => 1 })
   end
 
   it "should be referenced in one parent as inverse of children" do
     a = Node.reflect_on_association(:parent)
     a.should be
-    a.macro.should eql(:referenced_in)
+    a.macro.should eql(:belongs_to)
     a.class_name.should eql('Node')
     a.inverse_of.should eql(:children)
   end
@@ -26,7 +26,7 @@ describe Mongoid::Tree do
     f.should be
     f.options[:type].should eql(Array)
     f.options[:default].should eql([])
-    Node.index_options.should have_key(:parent_ids)
+    Node.index_options.should have_key({ :parent_ids => 1 })
   end
 
   describe 'when new' do
