@@ -8,10 +8,7 @@ Gem::Specification.new do |s|
   s.summary       = 'A tree structure for Mongoid documents'
   s.description   = 'A tree structure for Mongoid documents using the materialized path pattern'
 
-  s.rdoc_options  = ['--main', 'README.rdoc', '--charset=UTF-8']
-  s.extra_rdoc_files = ['README.rdoc', 'LICENSE']
-
-  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.rdoc Rakefile Gemfile .rspec)
+  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.md Rakefile Gemfile .rspec)
 
   s.add_runtime_dependency('mongoid', ['<= 4.0', '>= 3.0'])
   s.add_development_dependency('rake', ['>= 0.9.2'])
