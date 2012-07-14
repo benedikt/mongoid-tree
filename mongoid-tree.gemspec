@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.rdoc Rakefile Gemfile .rspec)
 
-  s.add_runtime_dependency('mongoid', ['<= 4.0', '>= 2.4'])
+  s.add_runtime_dependency('mongoid', ['<= 4.0', '>= 3.0'])
   s.add_development_dependency('rake', ['>= 0.9.2'])
   s.add_development_dependency('rspec', ['~> 2.8'])
   s.add_development_dependency('yard', ['~> 0.8'])
