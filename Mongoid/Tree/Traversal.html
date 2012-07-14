@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Mongoid::Tree::Traversal
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Mongoid.html" title="Mongoid (module)">Mongoid</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Tree.html" title="Mongoid::Tree (module)">Tree</a></span></span>
+     &raquo; 
+    <span class="title">Traversal</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Mongoid::Tree::Traversal
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1">ActiveSupport::Concern</dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/mongoid/tree/traversal.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h1>Mongoid::Tree::Traversal</h1>
+
+<p>Mongoid::Tree::Traversal provides a #traverse method to walk through the
+tree. It supports these traversal methods:</p>
+<ul><li>
+<p>depth_first</p>
+</li><li>
+<p>breadth_first</p>
+</li></ul>
+
+<h2>Depth First Traversal</h2>
+
+<p>See <a
+href="http://en.wikipedia.org/wiki/Depth-first_search">en.wikipedia.org/wiki/Depth-first_search</a>
+for a proper description.</p>
+
+<p>Given a tree like:</p>
+
+<pre class="code ruby"><code>node1:
+ - node2:
+   - node3
+ - node4:
+   - node5
+   - node6
+ - node7</code></pre>
+
+<p>Traversing the tree using depth first traversal would visit each node in
+this order:</p>
+
+<pre class="code ruby"><code>node1, node2, node3, node4, node5, node6, node7</code></pre>
+
+<h2>Breadth First Traversal</h2>
+
+<p>See <a
+href="http://en.wikipedia.org/wiki/Breadth-first_search">en.wikipedia.org/wiki/Breadth-first_search</a>
+for a proper description.</p>
+
+<p>Given a tree like:</p>
+
+<pre class="code ruby"><code>node1:
+  - node2:
+    - node5
+  - node3:
+    - node6
+    - node7
+  - node4</code></pre>
+
+<p>Traversing the tree using breadth first traversal would visit each node in
+this order:</p>
+
+<pre class="code ruby"><code>node1, node2, node3, node4, node5, node6, node7</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Traversal/ClassMethods.html" title="Mongoid::Tree::Traversal::ClassMethods (module)">ClassMethods</a></span>
+    
+  
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#traverse-instance_method" title="#traverse (instance method)">- (Object) <strong>traverse</strong>(type = :depth_first, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Traverses the tree using the given traversal method (Default is
+:depth_first) and passes each document node to the block.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="traverse-instance_method">
+  
+    - (<tt>Object</tt>) <strong>traverse</strong>(type = :depth_first, &amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Traverses the tree using the given traversal method (Default is
+:depth_first) and passes each document node to the block.</p>
+
+<p>See Mongoid::Tree::Traversal for available traversal methods.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code">
+<span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_node'>node</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/traversal.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:depth_first</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_block'>block</span> <span class='op'>||=</span> <span class='id identifier rubyid_lambda'>lambda</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='rbrace'>}</span><span class='tstring_content'>_traversal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Jul 14 11:59:48 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

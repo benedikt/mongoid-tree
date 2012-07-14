@@ -1,0 +1,3 @@
+lib/mongoid/tree.rb 2b1637504120cdb10f2a9e138cdcda364f84693b
+lib/mongoid/tree/ordering.rb 6f5aeeb0f95d2b634b37a1d16f4491c006a75ca3
+lib/mongoid/tree/traversal.rb f8696171f9051984d701f738ea7e8d583dee7eb4
