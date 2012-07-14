@@ -28,39 +28,44 @@ You might want to remove the `:require => 'mongoid/tree'` option and explicitly 
 
 Read the API documentation at http://benedikt.github.com/mongoid-tree and take a look at the `Mongoid::Tree` module
 
-    class Node
-      include Mongoid::Document
-      include Mongoid::Tree
-    end
-
+```ruby
+class Node
+  include Mongoid::Document
+  include Mongoid::Tree
+end
+```
 
 ### Utility methods
 
 There are several utility methods that help getting to other related documents in the tree:
 
-    Node.root
-    Node.roots
-    Node.leaves
-  
-    node.root
-    node.parent
-    node.children
-    node.ancestors
-    node.ancestors_and_self
-    node.descendants
-    node.descendants_and_self
-    node.siblings
-    node.siblings_and_self
-    node.leaves
+```ruby
+Node.root
+Node.roots
+Node.leaves
+
+node.root
+node.parent
+node.children
+node.ancestors
+node.ancestors_and_self
+node.descendants
+node.descendants_and_self
+node.siblings
+node.siblings_and_self
+node.leaves
+```
 
 In addition it's possible to check certain aspects of the document's position in the tree:
 
-    node.root?
-    node.leaf?
-    node.depth
-    node.ancestor_of?(other)
-    node.descendant_of?(other)
-    node.sibling_of?(other)
+```ruby
+node.root?
+node.leaf?
+node.depth
+node.ancestor_of?(other)
+node.descendant_of?(other)
+node.sibling_of?(other)
+```
 
 See `Mongoid::Tree` for more information on these methods.
 
@@ -69,28 +74,32 @@ See `Mongoid::Tree` for more information on these methods.
 
 `Mongoid::Tree` doesn't order children by default. To enable ordering of tree nodes include the `Mongoid::Tree::Ordering` module. This will add a `position` field to your document and provide additional utility methods:
 
-    node.lower_siblings
-    node.higher_siblings
-    node.first_sibling_in_list
-    node.last_sibling_in_list
-  
-    node.move_up
-    node.move_down
-    node.move_to_top
-    node.move_to_bottom
-    node.move_above(other)
-    node.move_below(other)
-  
-    node.at_top?
-    node.at_bottom?
+```ruby
+node.lower_siblings
+node.higher_siblings
+node.first_sibling_in_list
+node.last_sibling_in_list
+
+node.move_up
+node.move_down
+node.move_to_top
+node.move_to_bottom
+node.move_above(other)
+node.move_below(other)
+
+node.at_top?
+node.at_bottom?
+```
 
 Example:
 
-    class Node
-      include Mongoid::Document
-      include Mongoid::Tree
-      include Mongoid::Tree::Ordering
-    end
+```ruby
+class Node
+  include Mongoid::Document
+  include Mongoid::Tree
+  include Mongoid::Tree::Ordering
+end
+```
 
 See `Mongoid::Tree::Ordering` for more information on these methods.
 
@@ -100,16 +109,17 @@ It's possible to traverse the tree using different traversal methods using the `
 
 Example:
 
-    class Node
-      include Mongoid::Document
-      include Mongoid::Tree
-      include Mongoid::Tree::Traversal
-    end
-  
-    node.traverse(:breadth_first) do |n|
-      # Do something with Node n
-    end
+```ruby
+class Node
+  include Mongoid::Document
+  include Mongoid::Tree
+  include Mongoid::Tree::Traversal
+end
 
+node.traverse(:breadth_first) do |n|
+  # Do something with Node n
+end
+```
 
 ### Destroying
 
@@ -124,12 +134,14 @@ Available strategies are:
 
 Example:
 
-    class Node
-      include Mongoid::Document
-      include Mongoid::Tree
-  
-      before_destroy :nullify_children
-    end
+```ruby
+class Node
+  include Mongoid::Document
+  include Mongoid::Tree
+
+  before_destroy :nullify_children
+end
+```
 
 
 ### Callbacks
@@ -138,22 +150,23 @@ There are two callbacks that are called before and after the rearranging process
 
 Example:
   
-    class Page
-      include Mongoid::Document
-      include Mongoid::Tree
-  
-      after_rearrange :rebuild_path
-  
-      field :slug
-      field :path
-  
-      private
-  
-      def rebuild_path
-        self.path = self.ancestors_and_self.collect(&:slug).join('/')
-      end
-    end
+```ruby 
+class Page
+  include Mongoid::Document
+  include Mongoid::Tree
 
+  after_rearrange :rebuild_path
+
+  field :slug
+  field :path
+
+  private
+
+  def rebuild_path
+    self.path = self.ancestors_and_self.collect(&:slug).join('/')
+  end
+end
+```
 
 ### Validations
 
@@ -161,13 +174,14 @@ Example:
 
 Example:
 
-    class Node
-      include Mongoid::Document
-      include Mongoid::Tree
-  
-      validates_associated :parent, :children
-    end
+```ruby
+class Node
+  include Mongoid::Document
+  include Mongoid::Tree
 
+  validates_associated :parent, :children
+end
+```
 
 ## Build Status
 
