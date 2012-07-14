@@ -171,7 +171,7 @@ Example:
 
 ## Build Status
 
-mongoid-tree is on [Travis CI](http://travis-ci.org/benedikt/mongoid-tree) running the specs on Ruby Head, Ruby 1.9.2, Ruby 1.9.3, JRuby (1.9 mode), and Rubinius (1.9 mode).
+mongoid-tree is on [Travis CI](http://travis-ci.org/benedikt/mongoid-tree) running the specs on Ruby Head, Ruby 1.9.3, JRuby (1.9 mode), and Rubinius (1.9 mode).
 
 ## Known issues
 
