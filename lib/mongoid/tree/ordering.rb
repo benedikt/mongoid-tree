@@ -44,6 +44,8 @@ module Mongoid
 
       ##
       # Returns a chainable criteria for this document's ancestors
+      #
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
       def ancestors
         base_class.unscoped.where(:_id.in => parent_ids)
       end
@@ -51,6 +53,8 @@ module Mongoid
       ##
       # Returns siblings below the current document.
       # Siblings with a position greater than this documents's position.
+      #
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents lower_siblings
       def lower_siblings
         self.siblings.where(:position.gt => self.position)
       end
@@ -58,36 +62,48 @@ module Mongoid
       ##
       # Returns siblings above the current document.
       # Siblings with a position lower than this documents's position.
+      #
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents higher_siblings
       def higher_siblings
         self.siblings.where(:position.lt => self.position)
       end
 
       ##
       # Returns the lowest sibling (could be self)
+      #
+      # @return [Mongoid::Document] The lowest sibling
       def last_sibling_in_list
         siblings_and_self.last
       end
 
       ##
       # Returns the highest sibling (could be self)
+      #
+      # @return [Mongoid::Document] The highest sibling
       def first_sibling_in_list
         siblings_and_self.first
       end
 
       ##
       # Is this the highest sibling?
+      #
+      # @return [Boolean] Whether the document is the highest sibling
       def at_top?
         higher_siblings.empty?
       end
 
       ##
       # Is this the lowest sibling?
+      #
+      # @return [Boolean] Whether the document is the lowest sibling
       def at_bottom?
         lower_siblings.empty?
       end
 
       ##
       # Move this node above all its siblings
+      #
+      # @return [undefined]
       def move_to_top
         return true if at_top?
         move_above(first_sibling_in_list)
@@ -95,6 +111,8 @@ module Mongoid
 
       ##
       # Move this node below all its siblings
+      #
+      # @return [undefined]
       def move_to_bottom
         return true if at_bottom?
         move_below(last_sibling_in_list)
@@ -102,6 +120,8 @@ module Mongoid
 
       ##
       # Move this node one position up
+      #
+      # @return [undefined]
       def move_up
         return if at_top?
         siblings.where(:position => self.position - 1).first.inc(:position, 1)
@@ -110,6 +130,8 @@ module Mongoid
 
       ##
       # Move this node one position down
+      #
+      # @return [undefined]
       def move_down
         return if at_bottom?
         siblings.where(:position => self.position + 1).first.inc(:position, -1)
@@ -120,6 +142,10 @@ module Mongoid
       # Move this node above the specified node
       #
       # This method changes the node's parent if nescessary.
+      #
+      # @param [Mongoid::Tree] other document to move this document above
+      #
+      # @return [undefined]
       def move_above(other)
         unless sibling_of?(other)
           self.parent_id = other.parent_id
@@ -144,6 +170,10 @@ module Mongoid
       # Move this node below the specified node
       #
       # This method changes the node's parent if nescessary.
+      #
+      # @param [Mongoid::Tree] other document to move this document below
+      #
+      # @return [undefined]
       def move_below(other)
         unless sibling_of?(other)
           self.parent_id = other.parent_id
