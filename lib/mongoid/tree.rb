@@ -78,6 +78,7 @@ module Mongoid
   #
   module Tree
     extend ActiveSupport::Concern
+    include Mongoid::Siblings
 
     autoload :Ordering, 'mongoid/tree/ordering'
     autoload :Traversal, 'mongoid/tree/traversal'
@@ -98,6 +99,8 @@ module Mongoid
       validate :position_in_tree
 
       define_model_callbacks :rearrange, :only => [:before, :after]
+      
+      self.default_sibling_scope = :parent
 
       class_eval "def base_class; ::#{self.name}; end"
     end
@@ -272,7 +275,7 @@ module Mongoid
     #
     # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
     def ancestors
-      base_class.where(:_id.in => parent_ids)
+      base_class.unscoped.where(:_id.in => parent_ids)
     end
 
     ##
@@ -317,32 +320,6 @@ module Mongoid
     # @return [Boolean] The document is a descendant of the other document
     def descendant_of?(other)
       self.parent_ids.include?(other.id)
-    end
-
-    ##
-    # Returns this document's siblings
-    #
-    # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's siblings
-    def siblings
-      siblings_and_self.excludes(:id => self.id)
-    end
-
-    ##
-    # Returns this document's siblings and itself
-    #
-    # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's siblings and itself
-    def siblings_and_self
-      base_class.where(:parent_id => self.parent_id)
-    end
-
-    ##
-    # Is this document a sibling of the other document?
-    #
-    # @param [Mongoid::Tree] other document to check against
-    #
-    # @return [Boolean] The document is a sibling of the other document
-    def sibling_of?(other)
-      self.parent_id == other.parent_id
     end
 
     ##

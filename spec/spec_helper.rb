@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'mongoid'
+require 'mongoid/siblings'
 require 'mongoid/tree'
 
 require 'rspec'
