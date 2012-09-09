@@ -3,6 +3,7 @@ require 'bundler/setup'
 
 require 'mongoid'
 require 'mongoid/siblings'
+require 'mongoid/ordering'
 require 'mongoid/tree'
 
 require 'rspec'
