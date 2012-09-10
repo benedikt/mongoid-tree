@@ -101,7 +101,7 @@ class Node
 end
 ```
 
-See `Mongoid::Tree::Ordering` for more information on these methods.
+This used to be part of mongoid-tree itself, but was recently extracted into the [mongoid-ordering](https://github.com/DouweM/mongoid-ordering) gem. You can go there for more information on these methods and the way ordering works.
 
 ### Traversal
 

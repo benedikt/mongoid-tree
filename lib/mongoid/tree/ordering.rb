@@ -1,3 +1,5 @@
+require 'mongoid/ordering'
+
 module Mongoid
   module Tree
     ##
@@ -31,195 +33,15 @@ module Mongoid
     #    node.at_bottom?
     module Ordering
       extend ActiveSupport::Concern
+      include Mongoid::Ordering
 
       included do
-        field :position, :type => Integer
+        alias_method :first_sibling_in_list, :highest_sibling
+        alias_method :last_sibling_in_list, :lowest_sibling
 
-        default_scope asc(:position)
-
-        before_save :assign_default_position
-        before_save :reposition_former_siblings, :if => :sibling_reposition_required?
-        after_destroy :move_lower_siblings_up
+        ordered :scope => :parent
       end
 
-      ##
-      # Returns a chainable criteria for this document's ancestors
-      #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
-      def ancestors
-        base_class.unscoped.where(:_id.in => parent_ids)
-      end
-
-      ##
-      # Returns siblings below the current document.
-      # Siblings with a position greater than this documents's position.
-      #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents lower_siblings
-      def lower_siblings
-        self.siblings.where(:position.gt => self.position)
-      end
-
-      ##
-      # Returns siblings above the current document.
-      # Siblings with a position lower than this documents's position.
-      #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents higher_siblings
-      def higher_siblings
-        self.siblings.where(:position.lt => self.position)
-      end
-
-      ##
-      # Returns the lowest sibling (could be self)
-      #
-      # @return [Mongoid::Document] The lowest sibling
-      def last_sibling_in_list
-        siblings_and_self.last
-      end
-
-      ##
-      # Returns the highest sibling (could be self)
-      #
-      # @return [Mongoid::Document] The highest sibling
-      def first_sibling_in_list
-        siblings_and_self.first
-      end
-
-      ##
-      # Is this the highest sibling?
-      #
-      # @return [Boolean] Whether the document is the highest sibling
-      def at_top?
-        higher_siblings.empty?
-      end
-
-      ##
-      # Is this the lowest sibling?
-      #
-      # @return [Boolean] Whether the document is the lowest sibling
-      def at_bottom?
-        lower_siblings.empty?
-      end
-
-      ##
-      # Move this node above all its siblings
-      #
-      # @return [undefined]
-      def move_to_top
-        return true if at_top?
-        move_above(first_sibling_in_list)
-      end
-
-      ##
-      # Move this node below all its siblings
-      #
-      # @return [undefined]
-      def move_to_bottom
-        return true if at_bottom?
-        move_below(last_sibling_in_list)
-      end
-
-      ##
-      # Move this node one position up
-      #
-      # @return [undefined]
-      def move_up
-        return if at_top?
-        siblings.where(:position => self.position - 1).first.inc(:position, 1)
-        inc(:position, -1)
-      end
-
-      ##
-      # Move this node one position down
-      #
-      # @return [undefined]
-      def move_down
-        return if at_bottom?
-        siblings.where(:position => self.position + 1).first.inc(:position, -1)
-        inc(:position, 1)
-      end
-
-      ##
-      # Move this node above the specified node
-      #
-      # This method changes the node's parent if nescessary.
-      #
-      # @param [Mongoid::Tree] other document to move this document above
-      #
-      # @return [undefined]
-      def move_above(other)
-        unless sibling_of?(other)
-          self.parent_id = other.parent_id
-          save!
-        end
-
-        if position > other.position
-          new_position = other.position
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
-          other.inc(:position, 1)
-          self.position = new_position
-          save!
-        else
-          new_position = other.position - 1
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
-          self.position = new_position
-          save!
-        end
-      end
-
-      ##
-      # Move this node below the specified node
-      #
-      # This method changes the node's parent if nescessary.
-      #
-      # @param [Mongoid::Tree] other document to move this document below
-      #
-      # @return [undefined]
-      def move_below(other)
-        unless sibling_of?(other)
-          self.parent_id = other.parent_id
-          save!
-        end
-
-        if position > other.position
-          new_position = other.position + 1
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
-          self.position = new_position
-          save!
-        else
-          new_position = other.position
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
-          other.inc(:position, -1)
-          self.position = new_position
-          save!
-        end
-      end
-
-    private
-
-      def move_lower_siblings_up
-        lower_siblings.each { |s| s.inc(:position, -1) }
-      end
-
-      def reposition_former_siblings
-        former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
-                                     and(:position.gt => (attribute_was('position') || 0)).
-                                     excludes(:id => self.id)
-        former_siblings.each { |s| s.inc(:position,  -1) }
-      end
-
-      def sibling_reposition_required?
-        parent_id_changed? && persisted?
-      end
-
-      def assign_default_position
-        return unless self.position.nil? || self.parent_id_changed?
-
-        if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
-          self.position = 0
-        else
-          self.position = self.siblings.max(:position).to_i + 1
-        end
-      end
     end
   end
 end
