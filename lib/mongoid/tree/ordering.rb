@@ -1,3 +1,5 @@
+require 'mongoid/ordering'
+
 module Mongoid
   module Tree
     ##

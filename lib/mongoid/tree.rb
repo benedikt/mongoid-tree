@@ -1,3 +1,5 @@
+require 'mongoid/siblings'
+
 module Mongoid
   ##
   # = Mongoid::Tree
