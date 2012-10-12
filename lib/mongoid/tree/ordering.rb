@@ -217,7 +217,7 @@ module Mongoid
         if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
           self.position = 0
         else
-          self.position = self.siblings.max(:position).to_i + 1
+          self.position = self.siblings.order_by(:position.desc).first.position.to_i + 1
         end
       end
     end
