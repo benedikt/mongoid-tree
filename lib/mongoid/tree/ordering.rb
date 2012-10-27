@@ -69,6 +69,16 @@ module Mongoid
       end
 
       ##
+      # Returns siblings between the current document and the other document
+      # Siblings with a position between this document's position and the other document's position.
+      #
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents between this and the other document
+      def siblings_between(other)
+        range = [self.position, other.position].sort
+        self.siblings.where(:position.gt => range.first, :position.lt => range.last)
+      end
+
+      ##
       # Returns the lowest sibling (could be self)
       #
       # @return [Mongoid::Document] The lowest sibling
@@ -147,11 +157,11 @@ module Mongoid
 
         if position > other.position
           new_position = other.position
-          other.lower_siblings.where(:position.lt => self.position).inc(:position, 1)
+          self.siblings_between(other).inc(:position, 1)
           other.inc(:position, 1)
         else
           new_position = other.position - 1
-          other.higher_siblings.where(:position.gt => self.position).inc(:position, -1)
+          self.siblings_between(other).inc(:position, -1)
         end
 
         self.position = new_position
@@ -171,10 +181,10 @@ module Mongoid
 
         if position > other.position
           new_position = other.position + 1
-          other.lower_siblings.where(:position.lt => self.position).inc(:position, 1)
+          self.siblings_between(other).inc(:position, 1)
         else
           new_position = other.position
-          other.higher_siblings.where(:position.gt => self.position).inc(:position, -1)
+          self.siblings_between(other).inc(:position, -1)
           other.inc(:position, -1)
         end
 
