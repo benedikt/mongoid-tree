@@ -123,9 +123,7 @@ module Mongoid
       #
       # @return [undefined]
       def move_up
-        return if at_top?
-        siblings.where(:position => self.position - 1).first.inc(:position, 1)
-        inc(:position, -1)
+        switch_with(-1) unless at_top?
       end
 
       ##
@@ -133,9 +131,7 @@ module Mongoid
       #
       # @return [undefined]
       def move_down
-        return if at_bottom?
-        siblings.where(:position => self.position + 1).first.inc(:position, -1)
-        inc(:position, 1)
+        switch_with(1) unless at_bottom?
       end
 
       ##
@@ -195,6 +191,11 @@ module Mongoid
       end
 
     private
+
+      def switch_with(offset)
+        siblings.where(:position => self.position + offset).first.inc(:position, -offset)
+        inc(:position, offset)
+      end
 
       def move_lower_siblings_up
         lower_siblings.each { |s| s.inc(:position, -1) }
