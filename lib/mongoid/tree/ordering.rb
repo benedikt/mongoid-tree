@@ -147,11 +147,11 @@ module Mongoid
 
         if position > other.position
           new_position = other.position
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
+          other.lower_siblings.where(:position.lt => self.position).inc(:position, 1)
           other.inc(:position, 1)
         else
           new_position = other.position - 1
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
+          other.higher_siblings.where(:position.gt => self.position).inc(:position, -1)
         end
 
         self.position = new_position
@@ -171,10 +171,10 @@ module Mongoid
 
         if position > other.position
           new_position = other.position + 1
-          other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
+          other.lower_siblings.where(:position.lt => self.position).inc(:position, 1)
         else
           new_position = other.position
-          other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
+          other.higher_siblings.where(:position.gt => self.position).inc(:position, -1)
           other.inc(:position, -1)
         end
 
@@ -196,14 +196,14 @@ module Mongoid
       end
 
       def move_lower_siblings_up
-        lower_siblings.each { |s| s.inc(:position, -1) }
+        lower_siblings.inc(:position, -1)
       end
 
       def reposition_former_siblings
         former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
                                      and(:position.gt => (attribute_was('position') || 0)).
                                      excludes(:id => self.id)
-        former_siblings.each { |s| s.inc(:position,  -1) }
+        former_siblings.inc(:position,  -1)
       end
 
       def sibling_reposition_required?
