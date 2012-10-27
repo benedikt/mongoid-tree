@@ -37,7 +37,7 @@ module Mongoid
 
         default_scope asc(:position)
 
-        before_save :assign_default_position
+        before_save :assign_default_position, :if => :assign_default_position?
         before_save :reposition_former_siblings, :if => :sibling_reposition_required?
         after_destroy :move_lower_siblings_up
       end
@@ -213,13 +213,15 @@ module Mongoid
       end
 
       def assign_default_position
-        return unless self.position.nil? || self.parent_id_changed?
-
-        if self.siblings.empty? || self.siblings.collect(&:position).compact.empty?
-          self.position = 0
+        self.position = if self.siblings.where(:position.ne => nil).any?
+          self.last_sibling_in_list.position + 1
         else
-          self.position = self.siblings.order_by(:position.desc).first.position.to_i + 1
+          0
         end
+      end
+
+      def assign_default_position?
+        self.position.nil? || self.parent_id_changed?
       end
     end
   end
