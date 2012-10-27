@@ -143,23 +143,19 @@ module Mongoid
       #
       # @return [undefined]
       def move_above(other)
-        unless sibling_of?(other)
-          self.parent_id = other.parent_id
-          save!
-        end
+        ensure_to_be_sibling_of(other)
 
         if position > other.position
           new_position = other.position
           other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
           other.inc(:position, 1)
-          self.position = new_position
-          save!
         else
           new_position = other.position - 1
           other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
-          self.position = new_position
-          save!
         end
+
+        self.position = new_position
+        save!
       end
 
       ##
@@ -171,23 +167,19 @@ module Mongoid
       #
       # @return [undefined]
       def move_below(other)
-        unless sibling_of?(other)
-          self.parent_id = other.parent_id
-          save!
-        end
+        ensure_to_be_sibling_of(other)
 
         if position > other.position
           new_position = other.position + 1
           other.lower_siblings.where(:position.lt => self.position).each { |s| s.inc(:position, 1) }
-          self.position = new_position
-          save!
         else
           new_position = other.position
           other.higher_siblings.where(:position.gt => self.position).each { |s| s.inc(:position, -1) }
           other.inc(:position, -1)
-          self.position = new_position
-          save!
         end
+
+        self.position = new_position
+        save!
       end
 
     private
@@ -195,6 +187,12 @@ module Mongoid
       def switch_with_sibling_at_offset(offset)
         siblings.where(:position => self.position + offset).first.inc(:position, -offset)
         inc(:position, offset)
+      end
+
+      def ensure_to_be_sibling_of(other)
+        return if sibling_of?(other)
+        self.parent_id = other.parent_id
+        save!
       end
 
       def move_lower_siblings_up
