@@ -45,25 +45,25 @@ module Mongoid
       ##
       # Returns a chainable criteria for this document's ancestors
       #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's ancestors
       def ancestors
         base_class.unscoped.where(:_id.in => parent_ids)
       end
 
       ##
       # Returns siblings below the current document.
-      # Siblings with a position greater than this documents's position.
+      # Siblings with a position greater than this document's position.
       #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents lower_siblings
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's lower siblings
       def lower_siblings
         self.siblings.where(:position.gt => self.position)
       end
 
       ##
       # Returns siblings above the current document.
-      # Siblings with a position lower than this documents's position.
+      # Siblings with a position lower than this document's position.
       #
-      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents higher_siblings
+      # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's higher siblings
       def higher_siblings
         self.siblings.where(:position.lt => self.position)
       end
