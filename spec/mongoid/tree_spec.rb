@@ -278,6 +278,25 @@ describe Mongoid::Tree do
         node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
       end
 
+      it "#ancestors should be returned in the correct order even after rearranging" do
+        root = Node.create(name: "root")
+        a = Node.create(name: "a")
+        b = Node.create(name: "b")
+        leaf = Node.create(name: "leaf")
+
+        leaf.parent = b; leaf.save
+        b.parent = a; b.save
+        a.parent = root; a.save
+
+        leaf.ancestors.to_a.should == [root, a, b]
+
+        leaf.parent = a; leaf.save
+        a.parent = b; a.save
+        b.parent = root; b.save
+
+        leaf.ancestors.to_a.should == [root, b, a]
+      end
+
       describe '#ancestor_of?' do
         it "should return true for ancestors" do
           node(:child).should be_ancestor_of(node(:subchild))

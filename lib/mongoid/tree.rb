@@ -90,6 +90,10 @@ module Mongoid
       field :parent_ids, :type => Array, :default => []
       index :parent_ids => 1
 
+      field :depth, type: Integer, default: 0
+
+      set_callback :save, :before, :persist_depth
+
       set_callback :save, :after, :rearrange_children, :if => :rearrange_children?
       set_callback :validation, :before do
         run_callbacks(:rearrange) { rearrange }
@@ -272,7 +276,7 @@ module Mongoid
     #
     # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
     def ancestors
-      base_class.where(:_id.in => parent_ids)
+      base_class.where(:_id.in => parent_ids).order_by(:depth => 1)
     end
 
     ##
@@ -432,6 +436,10 @@ module Mongoid
 
     def position_in_tree
       errors.add(:parent_id, :invalid) if self.parent_ids.include?(self.id)
+    end
+
+    def persist_depth
+      self.depth = self.parent_ids.count
     end
   end
 end
