@@ -177,6 +177,25 @@ describe Mongoid::Tree::Ordering do
 
         node(:leaf).ancestors.to_a.should == [node(:root), node(:level_1_b), node(:level_2_a)]
       end
+
+      it "#ancestors should be returned in the correct order even after rearranging" do
+        root = OrderedNode.create(name: "root")
+        a = OrderedNode.create(name: "a")
+        b = OrderedNode.create(name: "b")
+        leaf = OrderedNode.create(name: "leaf")
+
+        leaf.parent = b; leaf.save
+        b.parent = a; b.save
+        a.parent = root; a.save
+
+        leaf.ancestors.to_a.should == [root, a, b]
+
+        leaf.parent = a; leaf.save
+        a.parent = b; a.save
+        b.parent = root; b.save
+
+        leaf.ancestors.to_a.should == [root, b, a]
+      end
     end
   end
 
