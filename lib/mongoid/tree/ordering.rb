@@ -47,7 +47,7 @@ module Mongoid
       #
       # @return [Mongoid::Criteria] Mongoid criteria to retrieve the document's ancestors
       def ancestors
-        base_class.unscoped.where(:_id.in => parent_ids)
+        base_class.unscoped { super }
       end
 
       ##
