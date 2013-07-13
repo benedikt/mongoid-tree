@@ -270,8 +270,24 @@ describe Mongoid::Tree do
     end
 
     describe 'ancestors' do
-      it "#ancestors should return the documents ancestors" do
-        node(:subchild).ancestors.to_a.should == [node(:root), node(:child)]
+      describe '#ancestors' do
+        it "should return the documents ancestors" do
+          node(:subchild).ancestors.to_a.should == [node(:root), node(:child)]
+        end
+
+        it "should return the ancestors in correct order even after rearranging" do
+          setup_tree <<-ENDTREE
+            - root:
+              - child:
+                - subchild
+          ENDTREE
+
+          child = node(:child); child.parent = nil; child.save!
+          root = node(:root); root.parent = node(:child); root.save!
+          subchild = node(:subchild); subchild.parent = root; subchild.save!
+
+          subchild.ancestors.to_a.should == [child, root]
+        end
       end
 
       it "#ancestors_and_self should return the documents ancestors and itself" do
