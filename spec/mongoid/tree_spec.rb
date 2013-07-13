@@ -290,8 +290,10 @@ describe Mongoid::Tree do
         end
       end
 
-      it "#ancestors_and_self should return the documents ancestors and itself" do
-        node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
+      describe '#ancestors_and_self' do
+        it "should return the documents ancestors and itself" do
+          node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
+        end
       end
 
       describe '#ancestor_of?' do
@@ -306,12 +308,16 @@ describe Mongoid::Tree do
     end
 
     describe 'descendants' do
-      it "#descendants should return the documents descendants" do
-        node(:root).descendants.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+      describe '#descendants' do
+        it "should return the documents descendants" do
+          node(:root).descendants.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+        end
       end
 
-      it "#descendants_and_self should return the documents descendants and itself" do
-        node(:root).descendants_and_self.to_a.should =~ [node(:root), node(:child), node(:other_child), node(:subchild)]
+      describe '#descendants_and_self' do
+        it "should return the documents descendants and itself" do
+          node(:root).descendants_and_self.to_a.should =~ [node(:root), node(:child), node(:other_child), node(:subchild)]
+        end
       end
 
       describe '#descendant_of?' do
@@ -328,13 +334,17 @@ describe Mongoid::Tree do
     end
 
     describe 'siblings' do
-      it "#siblings should return the documents siblings" do
-        node(:child).siblings.to_a.should == [node(:other_child)]
+      describe '#siblings' do
+        it "should return the documents siblings" do
+          node(:child).siblings.to_a.should == [node(:other_child)]
+        end
       end
 
-      it "#siblings_and_self should return the documents siblings and itself" do
-        node(:child).siblings_and_self.should be_kind_of(Mongoid::Criteria)
-        node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
+      describe '#siblings_and_self' do
+        it "should return the documents siblings and itself" do
+          node(:child).siblings_and_self.should be_kind_of(Mongoid::Criteria)
+          node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
+        end
       end
 
       describe '#sibling_of?' do

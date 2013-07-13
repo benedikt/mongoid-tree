@@ -144,20 +144,20 @@ describe Mongoid::Tree::Traversal do
       Node.stub(:roots).and_return [@root1, @root2]
     end
 
-    it 'grabs each root' do
+    it 'should grab each root' do
       Node.should_receive(:roots).and_return []
 
       Node.traverse.should == []
     end
 
-    it 'defaults the "type" arg to :depth_first' do
+    it 'should default the "type" arg to :depth_first' do
       @root1.should_receive(:traverse).with(:depth_first).and_return([])
       @root2.should_receive(:traverse).with(:depth_first).and_return([])
 
       Node.traverse.should == []
     end
 
-    it 'traverses each root' do
+    it 'should traverse each root' do
       @root1.should_receive(:traverse).and_return([1, 2])
       @root2.should_receive(:traverse).and_return([3, 4])
 
@@ -166,7 +166,7 @@ describe Mongoid::Tree::Traversal do
 
     describe 'when the "type" arg is :breadth_first' do
 
-      it 'traverses breadth-first' do
+      it 'should traverse breadth-first' do
         @root1.should_receive(:traverse).with(:breadth_first).and_return([])
         @root2.should_receive(:traverse).with(:breadth_first).and_return([])
 

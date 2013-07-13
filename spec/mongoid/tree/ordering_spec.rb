@@ -165,8 +165,8 @@ describe Mongoid::Tree::Ordering do
       end
     end
 
-    describe 'ancestors' do
-      it "#ancestors should be returned in the correct order" do
+    describe '#ancestors' do
+      it "should be returned in the correct order" do
         setup_tree <<-ENDTREE
           - root:
             - level_1_a
