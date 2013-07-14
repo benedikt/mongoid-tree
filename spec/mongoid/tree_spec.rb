@@ -7,25 +7,25 @@ describe Mongoid::Tree do
   it "should reference many children as inverse of parent with index" do
     a = Node.reflect_on_association(:children)
     a.should be
-    a.macro.should eql(:has_many)
-    a.class_name.should eql('Node')
-    a.foreign_key.should eql('parent_id')
+    a.macro.should eq(:has_many)
+    a.class_name.should eq('Node')
+    a.foreign_key.should eq('parent_id')
     Node.index_options.should have_key(:parent_id => 1)
   end
 
   it "should be referenced in one parent as inverse of children" do
     a = Node.reflect_on_association(:parent)
     a.should be
-    a.macro.should eql(:belongs_to)
-    a.class_name.should eql('Node')
-    a.inverse_of.should eql(:children)
+    a.macro.should eq(:belongs_to)
+    a.class_name.should eq('Node')
+    a.inverse_of.should eq(:children)
   end
 
   it "should store parent_ids as Array with [] as default with index" do
     f = Node.fields['parent_ids']
     f.should be
-    f.options[:type].should eql(Array)
-    f.options[:default].should eql([])
+    f.options[:type].should eq(Array)
+    f.options[:default].should eq([])
     Node.index_options.should have_key(:parent_ids => 1)
   end
 
@@ -80,28 +80,28 @@ describe Mongoid::Tree do
     it "should rebuild its parent_ids" do
       root = Node.create; child = Node.create
       root.children << child
-      child.parent_ids.should == [root.id]
+      child.parent_ids.should eq([root.id])
     end
 
     it "should rebuild its children's parent_ids when its own parent_ids changed" do
       other_root = node(:other_root); child = node(:child); subchild = node(:subchild);
       other_root.children << child
       subchild.reload # To get the updated version
-      subchild.parent_ids.should == [other_root.id, child.id]
+      subchild.parent_ids.should eq([other_root.id, child.id])
     end
 
     it "should correctly rebuild its descendants' parent_ids when moved into an other subtree" do
       subchild = node(:subchild); subsubchild = node(:subsubchild); other_child = node(:other_child)
       other_child.children << subchild
       subsubchild.reload
-      subsubchild.parent_ids.should == [node(:other_root).id, other_child.id, subchild.id]
+      subsubchild.parent_ids.should eq([node(:other_root).id, other_child.id, subchild.id])
     end
 
     it "should rebuild its children's parent_ids when its own parent_id is removed" do
       c = node(:child)
       c.parent_id = nil
       c.save
-      node(:subchild).parent_ids.should == [node(:child).id]
+      node(:subchild).parent_ids.should eq([node(:child).id])
     end
 
     it "should not rebuild its children's parent_ids when it's not required" do
@@ -139,7 +139,7 @@ describe Mongoid::Tree do
     it "should allow to store any subclass within the tree" do
       subclassed = SubclassedNode.create!(:name => 'subclassed_subchild')
       node(:child).children << subclassed
-      subclassed.root.should == node(:root)
+      subclassed.root.should eq(node(:root))
     end
 
   end
@@ -204,13 +204,13 @@ describe Mongoid::Tree do
 
     describe '.root' do
       it "should return the first root document" do
-        Node.root.should == node(:root)
+        Node.root.should eq(node(:root))
       end
     end
 
     describe '.roots' do
       it "should return all root documents" do
-        Node.roots.to_a.should == [node(:root), node(:other_root)]
+        Node.roots.to_a.should eq([node(:root), node(:other_root)])
       end
     end
 
@@ -253,7 +253,7 @@ describe Mongoid::Tree do
 
     describe '#root' do
       it "should return the root for this document" do
-        node(:subchild).root.should == node(:root)
+        node(:subchild).root.should eq(node(:root))
       end
 
       it "should return itself when there is no root" do
@@ -272,7 +272,7 @@ describe Mongoid::Tree do
     describe 'ancestors' do
       describe '#ancestors' do
         it "should return the documents ancestors" do
-          node(:subchild).ancestors.to_a.should == [node(:root), node(:child)]
+          node(:subchild).ancestors.to_a.should eq([node(:root), node(:child)])
         end
 
         it "should return the ancestors in correct order even after rearranging" do
@@ -286,13 +286,13 @@ describe Mongoid::Tree do
           root = node(:root); root.parent = node(:child); root.save!
           subchild = node(:subchild); subchild.parent = root; subchild.save!
 
-          subchild.ancestors.to_a.should == [child, root]
+          subchild.ancestors.to_a.should eq([child, root])
         end
       end
 
       describe '#ancestors_and_self' do
         it "should return the documents ancestors and itself" do
-          node(:subchild).ancestors_and_self.to_a.should == [node(:root), node(:child), node(:subchild)]
+          node(:subchild).ancestors_and_self.to_a.should eq([node(:root), node(:child), node(:subchild)])
         end
       end
 
@@ -336,14 +336,14 @@ describe Mongoid::Tree do
     describe 'siblings' do
       describe '#siblings' do
         it "should return the documents siblings" do
-          node(:child).siblings.to_a.should == [node(:other_child)]
+          node(:child).siblings.to_a.should eq([node(:other_child)])
         end
       end
 
       describe '#siblings_and_self' do
         it "should return the documents siblings and itself" do
           node(:child).siblings_and_self.should be_kind_of(Mongoid::Criteria)
-          node(:child).siblings_and_self.to_a.should == [node(:child), node(:other_child)]
+          node(:child).siblings_and_self.to_a.should eq([node(:child), node(:other_child)])
         end
       end
 
