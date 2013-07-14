@@ -6,9 +6,9 @@ describe Mongoid::Tree::Ordering do
 
   it "should store position as an Integer with a default of nil" do
     f = OrderedNode.fields['position']
-    f.should_not be_nil
-    f.options[:type].should eq(Integer)
-    f.options[:default].should_not be
+    expect(f).not_to be_nil
+    expect(f.options[:type]).to eq(Integer)
+    expect(f.options[:default]).not_to be
   end
 
   describe 'when saved' do
@@ -25,48 +25,48 @@ describe Mongoid::Tree::Ordering do
     end
 
     it "should assign a default position of 0 to each node without a sibling" do
-      node(:child).position.should eq(0)
-      node(:subchild).position.should eq(0)
-      node(:subsubchild).position.should eq(0)
+      expect(node(:child).position).to eq(0)
+      expect(node(:subchild).position).to eq(0)
+      expect(node(:subsubchild).position).to eq(0)
     end
 
     it "should place siblings at the end of the list by default" do
-      node(:root).position.should eq(0)
-      node(:other_root).position.should eq(1)
-      node(:other_child).position.should eq(0)
-      node(:another_child).position.should eq(1)
+      expect(node(:root).position).to eq(0)
+      expect(node(:other_root).position).to eq(1)
+      expect(node(:other_child).position).to eq(0)
+      expect(node(:another_child).position).to eq(1)
     end
 
     it "should move a node to the end of a list when it is moved to a new parent" do
       other_root = node(:other_root)
       child = node(:child)
-      child.position.should eq(0)
+      expect(child.position).to eq(0)
       other_root.children << child
       child.reload
-      child.position.should eq(2)
+      expect(child.position).to eq(2)
     end
 
     it "should correctly reposition siblings when one of them is removed" do
       node(:other_child).destroy
-      node(:another_child).position.should eq(0)
+      expect(node(:another_child).position).to eq(0)
     end
 
     it "should correctly reposition siblings when one of them is added to another parent" do
       node(:root).children << node(:other_child)
-      node(:another_child).position.should eq(0)
+      expect(node(:another_child).position).to eq(0)
     end
 
     it "should correctly reposition siblings when the parent is changed" do
       other_child = node(:other_child)
       other_child.parent = node(:root)
       other_child.save!
-      node(:another_child).position.should eq(0)
+      expect(node(:another_child).position).to eq(0)
     end
 
     it "should not reposition siblings when it's not yet saved" do
       new_node = OrderedNode.new(:name => 'new')
       new_node.parent = node(:root)
-      new_node.should_not_receive(:reposition_former_siblings)
+      expect(new_node).not_to receive(:reposition_former_siblings)
       new_node.save
     end
   end
@@ -85,8 +85,8 @@ describe Mongoid::Tree::Ordering do
     describe ':move_children_to_parent' do
       it "should set its childen's parent_id to the documents parent_id" do
         node(:child).move_children_to_parent
-        node(:child).should be_leaf
-        node(:root).children.to_a.should eq([node(:child), node(:other_child), node(:subchild)])
+        expect(node(:child)).to be_leaf
+        expect(node(:root).children.to_a).to eq([node(:child), node(:other_child), node(:subchild)])
       end
     end
   end
@@ -105,63 +105,63 @@ describe Mongoid::Tree::Ordering do
     describe '#lower_siblings' do
       it "should return a collection of siblings lower on the list" do
         node(:second_child_of_first_root).reload
-        node(:first_root).lower_siblings.to_a.should eq([node(:second_root), node(:third_root)])
-        node(:second_root).lower_siblings.to_a.should eq([node(:third_root)])
-        node(:third_root).lower_siblings.to_a.should eq([])
-        node(:first_child_of_first_root).lower_siblings.to_a.should eq([node(:second_child_of_first_root)])
-        node(:second_child_of_first_root).lower_siblings.to_a.should eq([])
+        expect(node(:first_root).lower_siblings.to_a).to eq([node(:second_root), node(:third_root)])
+        expect(node(:second_root).lower_siblings.to_a).to eq([node(:third_root)])
+        expect(node(:third_root).lower_siblings.to_a).to eq([])
+        expect(node(:first_child_of_first_root).lower_siblings.to_a).to eq([node(:second_child_of_first_root)])
+        expect(node(:second_child_of_first_root).lower_siblings.to_a).to eq([])
       end
     end
 
     describe '#higher_siblings' do
       it "should return a collection of siblings lower on the list" do
-        node(:first_root).higher_siblings.to_a.should eq([])
-        node(:second_root).higher_siblings.to_a.should eq([node(:first_root)])
-        node(:third_root).higher_siblings.to_a.should eq([node(:first_root), node(:second_root)])
-        node(:first_child_of_first_root).higher_siblings.to_a.should eq([])
-        node(:second_child_of_first_root).higher_siblings.to_a.should eq([node(:first_child_of_first_root)])
+        expect(node(:first_root).higher_siblings.to_a).to eq([])
+        expect(node(:second_root).higher_siblings.to_a).to eq([node(:first_root)])
+        expect(node(:third_root).higher_siblings.to_a).to eq([node(:first_root), node(:second_root)])
+        expect(node(:first_child_of_first_root).higher_siblings.to_a).to eq([])
+        expect(node(:second_child_of_first_root).higher_siblings.to_a).to eq([node(:first_child_of_first_root)])
       end
     end
 
     describe '#at_top?' do
       it "should return true when the node is first in the list" do
-        node(:first_root).should be_at_top
-        node(:first_child_of_first_root).should be_at_top
+        expect(node(:first_root)).to be_at_top
+        expect(node(:first_child_of_first_root)).to be_at_top
       end
 
       it "should return false when the node is not first in the list" do
-        node(:second_root).should_not be_at_top
-        node(:third_root).should_not be_at_top
-        node(:second_child_of_first_root).should_not be_at_top
+        expect(node(:second_root)).not_to be_at_top
+        expect(node(:third_root)).not_to be_at_top
+        expect(node(:second_child_of_first_root)).not_to be_at_top
       end
     end
 
     describe '#at_bottom?' do
       it "should return true when the node is last in the list" do
-        node(:third_root).should be_at_bottom
-        node(:second_child_of_first_root).should be_at_bottom
+        expect(node(:third_root)).to be_at_bottom
+        expect(node(:second_child_of_first_root)).to be_at_bottom
       end
 
       it "should return false when the node is not last in the list" do
-        node(:first_root).should_not be_at_bottom
-        node(:second_root).should_not be_at_bottom
-        node(:first_child_of_first_root).should_not be_at_bottom
+        expect(node(:first_root)).not_to be_at_bottom
+        expect(node(:second_root)).not_to be_at_bottom
+        expect(node(:first_child_of_first_root)).not_to be_at_bottom
       end
     end
 
     describe '#last_sibling_in_list' do
       it "should return the last sibling in the list containing the current sibling" do
-        node(:first_root).last_sibling_in_list.should eq(node(:third_root))
-        node(:second_root).last_sibling_in_list.should eq(node(:third_root))
-        node(:third_root).last_sibling_in_list.should eq(node(:third_root))
+        expect(node(:first_root).last_sibling_in_list).to eq(node(:third_root))
+        expect(node(:second_root).last_sibling_in_list).to eq(node(:third_root))
+        expect(node(:third_root).last_sibling_in_list).to eq(node(:third_root))
       end
     end
 
     describe '#first_sibling_in_list' do
       it "should return the first sibling in the list containing the current sibling" do
-        node(:first_root).first_sibling_in_list.should eq(node(:first_root))
-        node(:second_root).first_sibling_in_list.should eq(node(:first_root))
-        node(:third_root).first_sibling_in_list.should eq(node(:first_root))
+        expect(node(:first_root).first_sibling_in_list).to eq(node(:first_root))
+        expect(node(:second_root).first_sibling_in_list).to eq(node(:first_root))
+        expect(node(:third_root).first_sibling_in_list).to eq(node(:first_root))
       end
     end
 
@@ -175,7 +175,7 @@ describe Mongoid::Tree::Ordering do
                 - leaf
         ENDTREE
 
-        node(:leaf).ancestors.to_a.should eq([node(:root), node(:level_1_b), node(:level_2_a)])
+        expect(node(:leaf).ancestors.to_a).to eq([node(:root), node(:level_1_b), node(:level_2_a)])
       end
 
       it "should return the ancestors in correct order even after rearranging" do
@@ -189,7 +189,7 @@ describe Mongoid::Tree::Ordering do
         root = node(:root); root.parent = node(:child); root.save!
         subchild = node(:subchild); subchild.parent = root; subchild.save!
 
-        subchild.ancestors.to_a.should eq([child, root])
+        expect(subchild.ancestors.to_a).to eq([child, root])
       end
     end
   end
@@ -213,7 +213,7 @@ describe Mongoid::Tree::Ordering do
       it 'should fix positions within the current list when moving an sibling away from its current parent' do
         node_to_move = node(:first_child_of_first_root)
         node_to_move.move_below(node(:first_child_of_second_root))
-        node(:second_child_of_first_root).position.should eq(0)
+        expect(node(:second_child_of_first_root).position).to eq(0)
       end
 
       it 'should work when moving to a different parent' do
@@ -221,8 +221,8 @@ describe Mongoid::Tree::Ordering do
         new_parent = node(:second_root)
         node_to_move.move_below(node(:first_child_of_second_root))
         node_to_move.reload
-        node_to_move.should be_at_bottom
-        node(:first_child_of_second_root).should be_at_top
+        expect(node_to_move).to be_at_bottom
+        expect(node(:first_child_of_second_root)).to be_at_top
       end
 
       it 'should be able to move the first node below the second node' do
@@ -231,8 +231,8 @@ describe Mongoid::Tree::Ordering do
         first_node.move_below(second_node)
         first_node.reload
         second_node.reload
-        second_node.should be_at_top
-        first_node.higher_siblings.to_a.should eq([second_node])
+        expect(second_node).to be_at_top
+        expect(first_node.higher_siblings.to_a).to eq([second_node])
       end
 
       it 'should be able to move the last node below the first node' do
@@ -241,9 +241,9 @@ describe Mongoid::Tree::Ordering do
         last_node.move_below(first_node)
         first_node.reload
         last_node.reload
-        last_node.should_not be_at_bottom
-        node(:second_root).should be_at_bottom
-        last_node.higher_siblings.to_a.should eq([first_node])
+        expect(last_node).not_to be_at_bottom
+        expect(node(:second_root)).to be_at_bottom
+        expect(last_node.higher_siblings.to_a).to eq([first_node])
       end
     end
 
@@ -251,7 +251,7 @@ describe Mongoid::Tree::Ordering do
       it 'should fix positions within the current list when moving an sibling away from its current parent' do
         node_to_move = node(:first_child_of_first_root)
         node_to_move.move_above(node(:first_child_of_second_root))
-        node(:second_child_of_first_root).position.should eq(0)
+        expect(node(:second_child_of_first_root).position).to eq(0)
       end
 
       it 'should work when moving to a different parent' do
@@ -259,8 +259,8 @@ describe Mongoid::Tree::Ordering do
         new_parent = node(:second_root)
         node_to_move.move_above(node(:first_child_of_second_root))
         node_to_move.reload
-        node_to_move.should be_at_top
-        node(:first_child_of_second_root).should be_at_bottom
+        expect(node_to_move).to be_at_top
+        expect(node(:first_child_of_second_root)).to be_at_bottom
       end
 
       it 'should be able to move the last node above the second node' do
@@ -269,8 +269,8 @@ describe Mongoid::Tree::Ordering do
         last_node.move_above(second_node)
         last_node.reload
         second_node.reload
-        second_node.should be_at_bottom
-        last_node.higher_siblings.to_a.should eq([node(:first_root)])
+        expect(second_node).to be_at_bottom
+        expect(last_node.higher_siblings.to_a).to eq([node(:first_root)])
       end
 
       it 'should be able to move the first node above the last node' do
@@ -279,15 +279,15 @@ describe Mongoid::Tree::Ordering do
         first_node.move_above(last_node)
         first_node.reload
         last_node.reload
-        node(:second_root).should be_at_top
-        first_node.higher_siblings.to_a.should eq([node(:second_root)])
+        expect(node(:second_root)).to be_at_top
+        expect(first_node.higher_siblings.to_a).to eq([node(:second_root)])
       end
     end
 
     describe "#move_to_top" do
       it "should return true when attempting to move the first sibling" do
-        node(:first_root).move_to_top.should eq(true)
-        node(:first_child_of_first_root).move_to_top.should eq(true)
+        expect(node(:first_root).move_to_top).to eq(true)
+        expect(node(:first_child_of_first_root).move_to_top).to eq(true)
       end
 
       it "should be able to move the last sibling to the top" do
@@ -295,17 +295,17 @@ describe Mongoid::Tree::Ordering do
         last_node = node(:third_root)
         last_node.move_to_top
         first_node.reload
-        last_node.should be_at_top
-        first_node.should_not be_at_top
-        first_node.higher_siblings.to_a.should eq([last_node])
-        last_node.lower_siblings.to_a.should eq([first_node, node(:second_root)])
+        expect(last_node).to be_at_top
+        expect(first_node).not_to be_at_top
+        expect(first_node.higher_siblings.to_a).to eq([last_node])
+        expect(last_node.lower_siblings.to_a).to eq([first_node, node(:second_root)])
       end
     end
 
     describe "#move_to_bottom" do
       it "should return true when attempting to move the last sibling" do
-        node(:third_root).move_to_bottom.should eq(true)
-        node(:second_child_of_first_root).move_to_bottom.should eq(true)
+        expect(node(:third_root).move_to_bottom).to eq(true)
+        expect(node(:second_child_of_first_root).move_to_bottom).to eq(true)
       end
 
       it "should be able to move the first sibling to the bottom" do
@@ -315,27 +315,27 @@ describe Mongoid::Tree::Ordering do
         first_node.move_to_bottom
         middle_node.reload
         last_node.reload
-        first_node.should_not be_at_top
-        first_node.should be_at_bottom
-        last_node.should_not be_at_bottom
-        last_node.should_not be_at_top
-        middle_node.should be_at_top
-        first_node.lower_siblings.to_a.should eq([])
-        last_node.higher_siblings.to_a.should eq([middle_node])
+        expect(first_node).not_to be_at_top
+        expect(first_node).to be_at_bottom
+        expect(last_node).not_to be_at_bottom
+        expect(last_node).not_to be_at_top
+        expect(middle_node).to be_at_top
+        expect(first_node.lower_siblings.to_a).to eq([])
+        expect(last_node.higher_siblings.to_a).to eq([middle_node])
       end
     end
 
     describe "#move_up" do
       it "should correctly move nodes up" do
         node(:third).move_up
-        node(:third_root).children.should eq([node(:first), node(:third), node(:second)])
+        expect(node(:third_root).children).to eq([node(:first), node(:third), node(:second)])
       end
     end
 
     describe "#move_down" do
       it "should correctly move nodes down" do
         node(:first).move_down
-        node(:third_root).children.should eq([node(:second), node(:first), node(:third)])
+        expect(node(:third_root).children).to eq([node(:second), node(:first), node(:third)])
       end
     end
   end # moving nodes around

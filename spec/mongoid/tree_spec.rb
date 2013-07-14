@@ -6,46 +6,46 @@ describe Mongoid::Tree do
 
   it "should reference many children as inverse of parent with index" do
     a = Node.reflect_on_association(:children)
-    a.should be
-    a.macro.should eq(:has_many)
-    a.class_name.should eq('Node')
-    a.foreign_key.should eq('parent_id')
-    Node.index_options.should have_key(:parent_id => 1)
+    expect(a).to be
+    expect(a.macro).to eq(:has_many)
+    expect(a.class_name).to eq('Node')
+    expect(a.foreign_key).to eq('parent_id')
+    expect(Node.index_options).to have_key(:parent_id => 1)
   end
 
   it "should be referenced in one parent as inverse of children" do
     a = Node.reflect_on_association(:parent)
-    a.should be
-    a.macro.should eq(:belongs_to)
-    a.class_name.should eq('Node')
-    a.inverse_of.should eq(:children)
+    expect(a).to be
+    expect(a.macro).to eq(:belongs_to)
+    expect(a.class_name).to eq('Node')
+    expect(a.inverse_of).to eq(:children)
   end
 
   it "should store parent_ids as Array with [] as default with index" do
     f = Node.fields['parent_ids']
-    f.should be
-    f.options[:type].should eq(Array)
-    f.options[:default].should eq([])
-    Node.index_options.should have_key(:parent_ids => 1)
+    expect(f).to be
+    expect(f.options[:type]).to eq(Array)
+    expect(f.options[:default]).to eq([])
+    expect(Node.index_options).to have_key(:parent_ids => 1)
   end
 
   describe 'when new' do
     it "should not require a saved parent when adding children" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
       expect { root.children << child; root.save! }.to_not raise_error
-      child.should be_persisted
+      expect(child).to be_persisted
     end
 
     it "should not be saved when parent is not saved" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
-      child.should_not_receive(:save)
+      expect(child).not_to receive(:save)
       root.children << child
     end
 
     it "should save its unsaved children" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
       root.children << child
-      child.should_receive(:save)
+      expect(child).to receive(:save)
       root.save
     end
   end
@@ -66,61 +66,61 @@ describe Mongoid::Tree do
     it "should set the child's parent_id when added to parent's children" do
       root = Node.create; child = Node.create
       root.children << child
-      child.parent.should eq(root)
-      child.parent_id.should eq(root.id)
+      expect(child.parent).to eq(root)
+      expect(child.parent_id).to eq(root.id)
     end
 
     it "should set the child's parent_id parent is set on child" do
       root = Node.create; child = Node.create
       child.parent = root
-      child.parent.should eq(root)
-      child.parent_id.should eq(root.id)
+      expect(child.parent).to eq(root)
+      expect(child.parent_id).to eq(root.id)
     end
 
     it "should rebuild its parent_ids" do
       root = Node.create; child = Node.create
       root.children << child
-      child.parent_ids.should eq([root.id])
+      expect(child.parent_ids).to eq([root.id])
     end
 
     it "should rebuild its children's parent_ids when its own parent_ids changed" do
       other_root = node(:other_root); child = node(:child); subchild = node(:subchild);
       other_root.children << child
       subchild.reload # To get the updated version
-      subchild.parent_ids.should eq([other_root.id, child.id])
+      expect(subchild.parent_ids).to eq([other_root.id, child.id])
     end
 
     it "should correctly rebuild its descendants' parent_ids when moved into an other subtree" do
       subchild = node(:subchild); subsubchild = node(:subsubchild); other_child = node(:other_child)
       other_child.children << subchild
       subsubchild.reload
-      subsubchild.parent_ids.should eq([node(:other_root).id, other_child.id, subchild.id])
+      expect(subsubchild.parent_ids).to eq([node(:other_root).id, other_child.id, subchild.id])
     end
 
     it "should rebuild its children's parent_ids when its own parent_id is removed" do
       c = node(:child)
       c.parent_id = nil
       c.save
-      node(:subchild).parent_ids.should eq([node(:child).id])
+      expect(node(:subchild).parent_ids).to eq([node(:child).id])
     end
 
     it "should not rebuild its children's parent_ids when it's not required" do
       root = node(:root)
-      root.should_not_receive(:rearrange_children)
+      expect(root).not_to receive(:rearrange_children)
       root.save
     end
 
     it "should prevent cycles" do
       child = node(:child)
       child.parent = node(:subchild)
-      child.should_not be_valid
-      child.errors[:parent_id].should_not be_nil
+      expect(child).not_to be_valid
+      expect(child.errors[:parent_id]).not_to be_nil
     end
 
     it "should save its children when added" do
       new_child = Node.new(:name => 'new_child')
       node(:root).children << new_child
-      new_child.should be_persisted
+      expect(new_child).to be_persisted
     end
   end
 
@@ -139,7 +139,7 @@ describe Mongoid::Tree do
     it "should allow to store any subclass within the tree" do
       subclassed = SubclassedNode.create!(:name => 'subclassed_subchild')
       node(:child).children << subclassed
-      subclassed.root.should eq(node(:root))
+      expect(subclassed.root).to eq(node(:root))
     end
 
   end
@@ -159,23 +159,23 @@ describe Mongoid::Tree do
     describe ':nullify_children' do
       it "should set its children's parent_id to null" do
         node(:root).nullify_children
-        node(:child).should be_root
-        node(:subchild).reload.should_not be_descendant_of node(:root)
+        expect(node(:child)).to be_root
+        expect(node(:subchild).reload).not_to be_descendant_of node(:root)
       end
     end
 
     describe ':move_children_to_parent' do
       it "should set its childen's parent_id to the documents parent_id" do
         node(:child).move_children_to_parent
-        node(:child).should be_leaf
-        node(:root).children.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+        expect(node(:child)).to be_leaf
+        expect(node(:root).children.to_a).to match_array([node(:child), node(:other_child), node(:subchild)])
       end
     end
 
     describe ':destroy_children' do
       it "should destroy all children" do
         root = node(:root)
-        root.children.should_receive(:destroy_all)
+        expect(root.children).to receive(:destroy_all)
         root.destroy_children
       end
     end
@@ -183,7 +183,7 @@ describe Mongoid::Tree do
     describe ':delete_descendants' do
       it "should delete all descendants" do
         root = node(:root)
-        Node.should_receive(:delete_all).with(:conditions => { :parent_ids => root.id })
+        expect(Node).to receive(:delete_all).with(:conditions => { :parent_ids => root.id })
         root.delete_descendants
       end
     end
@@ -204,75 +204,75 @@ describe Mongoid::Tree do
 
     describe '.root' do
       it "should return the first root document" do
-        Node.root.should eq(node(:root))
+        expect(Node.root).to eq(node(:root))
       end
     end
 
     describe '.roots' do
       it "should return all root documents" do
-        Node.roots.to_a.should eq([node(:root), node(:other_root)])
+        expect(Node.roots.to_a).to eq([node(:root), node(:other_root)])
       end
     end
 
     describe '.leaves' do
       it "should return all leaf documents" do
-        Node.leaves.to_a.should =~ [node(:subchild), node(:other_child), node(:other_root)]
+        expect(Node.leaves.to_a).to match_array([node(:subchild), node(:other_child), node(:other_root)])
       end
     end
 
     describe '#root?' do
       it "should return true for root documents" do
-        node(:root).should be_root
+        expect(node(:root)).to be_root
       end
 
       it "should return false for non-root documents" do
-        node(:child).should_not be_root
+        expect(node(:child)).not_to be_root
       end
     end
 
     describe '#leaf?' do
       it "should return true for leaf documents" do
-        node(:subchild).should be_leaf
-        node(:other_child).should be_leaf
-        Node.new.should be_leaf
+        expect(node(:subchild)).to be_leaf
+        expect(node(:other_child)).to be_leaf
+        expect(Node.new).to be_leaf
       end
 
       it "should return false for non-leaf documents" do
-        node(:child).should_not be_leaf
-        node(:root).should_not be_leaf
+        expect(node(:child)).not_to be_leaf
+        expect(node(:root)).not_to be_leaf
       end
     end
 
     describe '#depth' do
       it "should return the depth of this document" do
-        node(:root).depth.should eq(0)
-        node(:child).depth.should eq(1)
-        node(:subchild).depth.should eq(2)
+        expect(node(:root).depth).to eq(0)
+        expect(node(:child).depth).to eq(1)
+        expect(node(:subchild).depth).to eq(2)
       end
     end
 
     describe '#root' do
       it "should return the root for this document" do
-        node(:subchild).root.should eq(node(:root))
+        expect(node(:subchild).root).to eq(node(:root))
       end
 
       it "should return itself when there is no root" do
         new_node = Node.new
-        new_node.root.should be(new_node)
+        expect(new_node.root).to be(new_node)
       end
 
       it "should return it root when it's not saved yet" do
         root = Node.new(:name => 'root')
         new_node = Node.new(:name => 'child')
         new_node.parent = root
-        new_node.root.should be(root)
+        expect(new_node.root).to be(root)
       end
     end
 
     describe 'ancestors' do
       describe '#ancestors' do
         it "should return the documents ancestors" do
-          node(:subchild).ancestors.to_a.should eq([node(:root), node(:child)])
+          expect(node(:subchild).ancestors.to_a).to eq([node(:root), node(:child)])
         end
 
         it "should return the ancestors in correct order even after rearranging" do
@@ -286,23 +286,23 @@ describe Mongoid::Tree do
           root = node(:root); root.parent = node(:child); root.save!
           subchild = node(:subchild); subchild.parent = root; subchild.save!
 
-          subchild.ancestors.to_a.should eq([child, root])
+          expect(subchild.ancestors.to_a).to eq([child, root])
         end
       end
 
       describe '#ancestors_and_self' do
         it "should return the documents ancestors and itself" do
-          node(:subchild).ancestors_and_self.to_a.should eq([node(:root), node(:child), node(:subchild)])
+          expect(node(:subchild).ancestors_and_self.to_a).to eq([node(:root), node(:child), node(:subchild)])
         end
       end
 
       describe '#ancestor_of?' do
         it "should return true for ancestors" do
-          node(:child).should be_ancestor_of(node(:subchild))
+          expect(node(:child)).to be_ancestor_of(node(:subchild))
         end
 
         it "should return false for non-ancestors" do
-          node(:other_child).should_not be_ancestor_of(node(:subchild))
+          expect(node(:other_child)).not_to be_ancestor_of(node(:subchild))
         end
       end
     end
@@ -310,25 +310,25 @@ describe Mongoid::Tree do
     describe 'descendants' do
       describe '#descendants' do
         it "should return the documents descendants" do
-          node(:root).descendants.to_a.should =~ [node(:child), node(:other_child), node(:subchild)]
+          expect(node(:root).descendants.to_a).to match_array([node(:child), node(:other_child), node(:subchild)])
         end
       end
 
       describe '#descendants_and_self' do
         it "should return the documents descendants and itself" do
-          node(:root).descendants_and_self.to_a.should =~ [node(:root), node(:child), node(:other_child), node(:subchild)]
+          expect(node(:root).descendants_and_self.to_a).to match_array([node(:root), node(:child), node(:other_child), node(:subchild)])
         end
       end
 
       describe '#descendant_of?' do
         it "should return true for descendants" do
           subchild = node(:subchild)
-          subchild.should be_descendant_of(node(:child))
-          subchild.should be_descendant_of(node(:root))
+          expect(subchild).to be_descendant_of(node(:child))
+          expect(subchild).to be_descendant_of(node(:root))
         end
 
         it "should return false for non-descendants" do
-          node(:subchild).should_not be_descendant_of(node(:other_child))
+          expect(node(:subchild)).not_to be_descendant_of(node(:other_child))
         end
       end
     end
@@ -336,31 +336,31 @@ describe Mongoid::Tree do
     describe 'siblings' do
       describe '#siblings' do
         it "should return the documents siblings" do
-          node(:child).siblings.to_a.should eq([node(:other_child)])
+          expect(node(:child).siblings.to_a).to eq([node(:other_child)])
         end
       end
 
       describe '#siblings_and_self' do
         it "should return the documents siblings and itself" do
-          node(:child).siblings_and_self.should be_kind_of(Mongoid::Criteria)
-          node(:child).siblings_and_self.to_a.should eq([node(:child), node(:other_child)])
+          expect(node(:child).siblings_and_self).to be_kind_of(Mongoid::Criteria)
+          expect(node(:child).siblings_and_self.to_a).to eq([node(:child), node(:other_child)])
         end
       end
 
       describe '#sibling_of?' do
         it "should return true for siblings" do
-          node(:child).should be_sibling_of(node(:other_child))
+          expect(node(:child)).to be_sibling_of(node(:other_child))
         end
 
         it "should return false for non-siblings" do
-          node(:root).should_not be_sibling_of(node(:other_child))
+          expect(node(:root)).not_to be_sibling_of(node(:other_child))
         end
       end
     end
 
     describe '#leaves' do
       it "should return this documents leaves" do
-        node(:root).leaves.to_a.should =~ [node(:other_child), node(:subchild)]
+        expect(node(:root).leaves.to_a).to match_array([node(:other_child), node(:subchild)])
       end
     end
 
@@ -373,11 +373,11 @@ describe Mongoid::Tree do
     end
 
     it "should provide a before_rearrange callback" do
-      Node.should respond_to :before_rearrange
+      expect(Node).to respond_to :before_rearrange
     end
 
     it "should provida an after_rearrange callback" do
-      Node.should respond_to :after_rearrange
+      expect(Node).to respond_to :after_rearrange
     end
 
     describe 'before rearrange callback' do
@@ -385,8 +385,8 @@ describe Mongoid::Tree do
       it "should be called before the document is rearranged" do
         Node.before_rearrange :callback
         node = Node.new
-        node.should_receive(:callback).ordered
-        node.should_receive(:rearrange).ordered
+        expect(node).to receive(:callback).ordered
+        expect(node).to receive(:rearrange).ordered
         node.save
       end
 
@@ -397,8 +397,8 @@ describe Mongoid::Tree do
       it "should be called after the document is rearranged" do
         Node.after_rearrange :callback
         node = Node.new
-        node.should_receive(:rearrange).ordered
-        node.should_receive(:callback).ordered
+        expect(node).to receive(:rearrange).ordered
+        expect(node).to receive(:callback).ordered
         node.save
       end
 
