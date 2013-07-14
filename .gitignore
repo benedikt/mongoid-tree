@@ -3,3 +3,4 @@ doc
 *.gem
 Gemfile.lock
 .yardoc/
+tmp/
