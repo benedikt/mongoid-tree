@@ -212,4 +212,4 @@ If you like mongoid-tree and want to support the development, I would appreciate
 
 ## Copyright
 
-Copyright (c) 2010-2012 Benedikt Deicke. See LICENSE for details.
+Copyright (c) 2010-2013 Benedikt Deicke. See LICENSE for details.
