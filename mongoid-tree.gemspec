@@ -8,6 +8,8 @@ Gem::Specification.new do |s|
   s.summary       = 'A tree structure for Mongoid documents'
   s.description   = 'A tree structure for Mongoid documents using the materialized path pattern'
 
+  s.license       = 'MIT'
+
   s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.md Rakefile Gemfile .rspec)
 
   s.add_runtime_dependency('mongoid', ['<= 4.0', '>= 3.0'])
