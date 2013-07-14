@@ -32,7 +32,7 @@ describe Mongoid::Tree do
   describe 'when new' do
     it "should not require a saved parent when adding children" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
-      expect { root.children << child; root.save! }.to_not raise_error(Mongoid::Errors::DocumentNotFound)
+      expect { root.children << child; root.save! }.to_not raise_error
       child.should be_persisted
     end
 
@@ -409,7 +409,7 @@ describe Mongoid::Tree do
       it 'should not raise a NoMethodError' do
         node = NodeWithEmbeddedDocument.new
         document = node.build_embedded_document
-        expect { node.save }.to_not raise_error NoMethodError
+        expect { node.save }.to_not raise_error
       end
 
     end
