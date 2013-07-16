@@ -288,6 +288,11 @@ describe Mongoid::Tree do
 
           expect(subchild.ancestors.to_a).to eq([child, root])
         end
+
+        it 'should return nothing when there are no ancestors' do
+          root = Node.new(:name => 'root')
+          expect(root.ancestors).to be_empty
+        end
       end
 
       describe '#ancestors_and_self' do
