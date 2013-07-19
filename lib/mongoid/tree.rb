@@ -390,7 +390,7 @@ module Mongoid
     # @return [undefined]
     def move_children_to_parent
       children.each do |c|
-        c.parent_id = self.parent_id
+        c.parent = self.parent
         c.save
       end
     end
