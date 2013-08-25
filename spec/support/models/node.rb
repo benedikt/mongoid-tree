@@ -4,8 +4,6 @@ class Node
   include Mongoid::Tree::Traversal
 
   field :name
-
-  attr_accessible :name
 end
 
 class SubclassedNode < Node
@@ -23,8 +21,6 @@ class OrderedNode
   include Mongoid::Tree::Ordering
 
   field :name
-
-  attr_accessible :name
 end
 
 class NodeWithEmbeddedDocument < Node
