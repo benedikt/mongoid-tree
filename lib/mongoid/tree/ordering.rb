@@ -157,11 +157,11 @@ module Mongoid
 
         if position > other.position
           new_position = other.position
-          self.siblings_between(other).inc(:position, 1)
-          other.inc(:position, 1)
+          self.siblings_between(other).inc(:position => 1)
+          other.inc(:position => 1)
         else
           new_position = other.position - 1
-          self.siblings_between(other).inc(:position, -1)
+          self.siblings_between(other).inc(:position => -1)
         end
 
         self.position = new_position
@@ -181,11 +181,11 @@ module Mongoid
 
         if position > other.position
           new_position = other.position + 1
-          self.siblings_between(other).inc(:position, 1)
+          self.siblings_between(other).inc(:position => 1)
         else
           new_position = other.position
-          self.siblings_between(other).inc(:position, -1)
-          other.inc(:position, -1)
+          self.siblings_between(other).inc(:position => -1)
+          other.inc(:position => -1)
         end
 
         self.position = new_position
@@ -195,8 +195,8 @@ module Mongoid
     private
 
       def switch_with_sibling_at_offset(offset)
-        siblings.where(:position => self.position + offset).first.inc(:position, -offset)
-        inc(:position, offset)
+        siblings.where(:position => self.position + offset).first.inc(:position => -offset)
+        inc(:position => offset)
       end
 
       def ensure_to_be_sibling_of(other)
@@ -206,14 +206,14 @@ module Mongoid
       end
 
       def move_lower_siblings_up
-        lower_siblings.inc(:position, -1)
+        lower_siblings.inc(:position => -1)
       end
 
       def reposition_former_siblings
         former_siblings = base_class.where(:parent_id => attribute_was('parent_id')).
                                      and(:position.gt => (attribute_was('position') || 0)).
                                      excludes(:id => self.id)
-        former_siblings.inc(:position,  -1)
+        former_siblings.inc(:position => -1)
       end
 
       def sibling_reposition_required?
