@@ -10,7 +10,7 @@ describe Mongoid::Tree do
     expect(a.macro).to eq(:has_many)
     expect(a.class_name).to eq('Node')
     expect(a.foreign_key).to eq('parent_id')
-    expect(Node.index_options).to have_key(:parent_id => 1)
+    expect(Node.index_specification(:parent_id => 1)).to be
   end
 
   it "should be referenced in one parent as inverse of children" do
@@ -26,7 +26,7 @@ describe Mongoid::Tree do
     expect(f).to be
     expect(f.options[:type]).to eq(Array)
     expect(f.options[:default]).to eq([])
-    expect(Node.index_options).to have_key(:parent_ids => 1)
+    expect(Node.index_specification(:parent_ids => 1)).to be
   end
 
   describe 'when new' do
