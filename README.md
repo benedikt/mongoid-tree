@@ -4,7 +4,7 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 ## Requirements
 
-* mongoid (~> 3.0)
+* mongoid (~> 4.0)
 
 For a mongoid 2.x compatible version, please use mongoid-tree 0.7.x!
 
