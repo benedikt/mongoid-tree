@@ -170,6 +170,11 @@ describe Mongoid::Tree do
         expect(node(:child)).to be_leaf
         expect(node(:root).children.to_a).to match_array([node(:child), node(:other_child), node(:subchild)])
       end
+
+      it "should be able to handle a missing parent" do
+        node(:root).delete
+        expect { node(:child).move_children_to_parent }.to_not raise_error
+      end
     end
 
     describe ':destroy_children' do
@@ -287,6 +292,11 @@ describe Mongoid::Tree do
           subchild = node(:subchild); subchild.parent = root; subchild.save!
 
           expect(subchild.ancestors.to_a).to eq([child, root])
+        end
+
+        it 'should return nothing when there are no ancestors' do
+          root = Node.new(:name => 'root')
+          expect(root.ancestors).to be_empty
         end
       end
 

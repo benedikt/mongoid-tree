@@ -272,7 +272,11 @@ module Mongoid
     #
     # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
     def ancestors
-      base_class.or(parent_ids.map { |id| { :_id => id } })
+      if parent_ids.any?
+        base_class.or(parent_ids.map { |id| { :_id => id } })
+      else
+        base_class.where(:_id.in => [])
+      end
     end
 
     ##
@@ -386,7 +390,7 @@ module Mongoid
     # @return [undefined]
     def move_children_to_parent
       children.each do |c|
-        c.parent_id = self.parent_id
+        c.parent = self.parent
         c.save
       end
     end
