@@ -273,7 +273,9 @@ module Mongoid
     # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
     def ancestors
       if parent_ids.any?
-        base_class.or(parent_ids.map { |id| { :_id => id } })
+        base_class.and({
+          '$or' => parent_ids.map { |id| { :_id => id } }
+        })
       else
         base_class.where(:_id.in => [])
       end

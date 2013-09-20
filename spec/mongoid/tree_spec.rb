@@ -298,6 +298,22 @@ describe Mongoid::Tree do
           root = Node.new(:name => 'root')
           expect(root.ancestors).to be_empty
         end
+
+        it 'should allow chaning of other `or`-criterias' do
+          setup_tree <<-ENDTREE
+            - root:
+              - child:
+                - subchild:
+                  - subsubchild
+          ENDTREE
+
+          filtered_ancestors = node(:subsubchild).ancestors.or(
+              { :name => 'child' },
+              { :name => 'subchild' }
+          )
+
+          expect(filtered_ancestors.to_a).to eq([node(:child), node(:subchild)])
+        end
       end
 
       describe '#ancestors_and_self' do
