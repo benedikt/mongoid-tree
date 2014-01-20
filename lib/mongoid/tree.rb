@@ -92,6 +92,9 @@ module Mongoid
       field :parent_ids, :type => Array, :default => []
       index :parent_ids => 1
 
+      field :depth, :type => Integer
+      index :depth => 1
+
       set_callback :save, :after, :rearrange_children, :if => :rearrange_children?
       set_callback :validation, :before do
         run_callbacks(:rearrange) { rearrange }
@@ -225,6 +228,18 @@ module Mongoid
     #   @return [Array<BSON::ObjectId>] The ids of the document's ancestors
 
     ##
+    # Returns the depth of this document (number of ancestors)
+    #
+    # @example
+    #   Node.root.depth # => 0
+    #   Node.root.children.first.depth # => 1
+    #
+    # @return [Fixnum] Depth of this document
+    def depth
+      super || parent_ids.count
+    end
+
+    ##
     # Is this document a root node (has no parent)?
     #
     # @return [Boolean] Whether the document is a root node
@@ -238,18 +253,6 @@ module Mongoid
     # @return [Boolean] Whether the document is a leaf node
     def leaf?
       children.empty?
-    end
-
-    ##
-    # Returns the depth of this document (number of ancestors)
-    #
-    # @example
-    #   Node.root.depth # => 0
-    #   Node.root.children.first.depth # => 1
-    #
-    # @return [Fixnum] Depth of this document
-    def depth
-      parent_ids.count
     end
 
     ##
@@ -274,13 +277,7 @@ module Mongoid
     #
     # @return [Mongoid::Criteria] Mongoid criteria to retrieve the documents ancestors
     def ancestors
-      if parent_ids.any?
-        base_class.and({
-          '$or' => parent_ids.map { |id| { :_id => id } }
-        })
-      else
-        base_class.where(:_id.in => [])
-      end
+      base_class.where(:_id.in => parent_ids).asc(:depth)
     end
 
     ##
@@ -429,6 +426,8 @@ module Mongoid
       else
         self.parent_ids = []
       end
+
+      self.depth = parent_ids.size
 
       rearrange_children! if self.parent_ids_changed?
     end

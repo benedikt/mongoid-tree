@@ -29,6 +29,13 @@ describe Mongoid::Tree do
     expect(Node.index_options).to have_key(:parent_ids => 1)
   end
 
+  it "should store the depth as Integer with index" do
+    f = Node.fields['depth']
+    expect(f).to be
+    expect(f.options[:type]).to eq(Integer)
+    expect(Node.index_options).to have_key(:depth => 1)
+  end
+
   describe 'when new' do
     it "should not require a saved parent when adding children" do
       root = Node.new(:name => 'root'); child = Node.new(:name => 'child')
@@ -253,6 +260,15 @@ describe Mongoid::Tree do
         expect(node(:root).depth).to eq(0)
         expect(node(:child).depth).to eq(1)
         expect(node(:subchild).depth).to eq(2)
+      end
+
+      it "should be updated when the nodes ancestors change" do
+        node(:child).update_attributes!(:parent => nil)
+
+        puts node(:child).inspect
+
+        expect(node(:child).reload.depth).to eq(0)
+        expect(node(:subchild).depth).to eq(1)
       end
     end
 
