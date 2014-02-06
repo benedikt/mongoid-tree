@@ -8,5 +8,5 @@ gem 'rb-fsevent' if RUBY_PLATFORM =~ /darwin/
 gem 'mongoid', :github => 'mongoid/mongoid'
 
 platforms :rbx do
-  gem 'rubysl', '~> 2.0'
+  gem 'rubysl-rake', '~> 2.0'
 end
