@@ -6,18 +6,18 @@
 <title>
   Module: Mongoid::Tree::Traversal::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../../';
-  framesUrl = "../../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../../frames.html#!Mongoid/Tree/Traversal/ClassMethods.html";
 </script>
 
 
@@ -171,7 +171,7 @@ method (Default is :depth_first).</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code">
+      <pre class="example code"><code>
 <span class='comment'># Say we have the following tree, and want to print its hierarchy:
 </span><span class='comment'>#   root_1
 </span><span class='comment'>#     child_1_a
@@ -180,10 +180,10 @@ method (Default is :depth_first).</p>
 </span><span class='comment'>#       child_2_a_1
 </span>
 <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
-  <span class='id identifier rubyid_indentation'>indentation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>  </span><span class='tstring_end'>'</span></span> <span class='op'>*</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>
+  <span class='id identifier rubyid_indentation'>indentation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>
 
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_indentation'>indentation</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_indentation'>indentation</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></code></pre>
     
   </div>
 
@@ -214,9 +214,9 @@ method (Default is :depth_first).</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:18 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>

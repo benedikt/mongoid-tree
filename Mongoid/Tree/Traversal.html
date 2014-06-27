@@ -6,18 +6,18 @@
 <title>
   Module: Mongoid::Tree::Traversal
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Mongoid/Tree/Traversal.html";
 </script>
 
 
@@ -91,7 +91,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h1>Mongoid::Tree::Traversal</h1>
+<h1 id="label-Mongoid%3A%3ATree%3A%3ATraversal">Mongoid::Tree::Traversal</h1>
 
 <p>Mongoid::Tree::Traversal provides a #traverse method to walk through the
 tree. It supports these traversal methods:</p>
@@ -101,7 +101,7 @@ tree. It supports these traversal methods:</p>
 <p>breadth_first</p>
 </li></ul>
 
-<h2>Depth First Traversal</h2>
+<h2 id="label-Depth+First+Traversal">Depth First Traversal</h2>
 
 <p>See <a
 href="http://en.wikipedia.org/wiki/Depth-first_search">en.wikipedia.org/wiki/Depth-first_search</a>
@@ -109,7 +109,7 @@ for a proper description.</p>
 
 <p>Given a tree like:</p>
 
-<pre class="code ruby"><code>node1:
+<pre class="code ruby"><code class="ruby">node1:
  - node2:
    - node3
  - node4:
@@ -120,9 +120,9 @@ for a proper description.</p>
 <p>Traversing the tree using depth first traversal would visit each node in
 this order:</p>
 
-<pre class="code ruby"><code>node1, node2, node3, node4, node5, node6, node7</code></pre>
+<pre class="code ruby"><code class="ruby">node1, node2, node3, node4, node5, node6, node7</code></pre>
 
-<h2>Breadth First Traversal</h2>
+<h2 id="label-Breadth+First+Traversal">Breadth First Traversal</h2>
 
 <p>See <a
 href="http://en.wikipedia.org/wiki/Breadth-first_search">en.wikipedia.org/wiki/Breadth-first_search</a>
@@ -130,7 +130,7 @@ for a proper description.</p>
 
 <p>Given a tree like:</p>
 
-<pre class="code ruby"><code>node1:
+<pre class="code ruby"><code class="ruby">node1:
   - node2:
     - node5
   - node3:
@@ -141,7 +141,7 @@ for a proper description.</p>
 <p>Traversing the tree using breadth first traversal would visit each node in
 this order:</p>
 
-<pre class="code ruby"><code>node1, node2, node3, node4, node5, node6, node7</code></pre>
+<pre class="code ruby"><code class="ruby">node1, node2, node3, node4, node5, node6, node7</code></pre>
 
 
   </div>
@@ -235,14 +235,14 @@ this order:</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code">
+      <pre class="example code"><code>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
   <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_node'>node</span>
 <span class='kw'>end</span>
 
 <span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span></pre>
+<span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='symbol'>:depth_first</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span></code></pre>
     
   </div>
 
@@ -263,7 +263,7 @@ this order:</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_traverse'>traverse</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:depth_first</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_block'>block</span> <span class='op'>||=</span> <span class='id identifier rubyid_lambda'>lambda</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='rbrace'>}</span><span class='tstring_content'>_traversal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'>_traversal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -275,9 +275,9 @@ this order:</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:18 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>

@@ -6,18 +6,18 @@
 <title>
   Module: Mongoid::Tree
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Mongoid/Tree.html";
 </script>
 
 
@@ -93,65 +93,70 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h1>Mongoid::Tree</h1>
+<h1 id="label-Mongoid%3A%3ATree">Mongoid::Tree</h1>
 
 <p>This module extends any Mongoid document with tree functionality.</p>
 
-<h2>Usage</h2>
+<h2 id="label-Usage">Usage</h2>
 
 <p>Simply include the module in any Mongoid document:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
-<span class='kw'>end</span></code></pre>
+<span class='kw'>end</span>
+</code></pre>
 
-<h3>Using the tree structure</h3>
+<h3 id="label-Using+the+tree+structure">Using the tree structure</h3>
 
 <p>Each document references many children. You can access them using the
-<tt>#children</tt> method.</p>
+<code>#children</code> method.</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
-<span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'># =&gt; 1</span></code></pre>
+<span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'># =&gt; 1
+</span></code></pre>
 
-<p>Every document references one parent (unless it's a root document).</p>
+<p>Every document references one parent (unless it&#39;s a root document).</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='comment'># =&gt; nil
 </span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
-<span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='comment'># =&gt; node</span></code></pre>
+<span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='comment'># =&gt; node
+</span></code></pre>
 
-<h3>Destroying</h3>
+<h3 id="label-Destroying">Destroying</h3>
 
 <p>Mongoid::Tree does not handle destroying of nodes by default. However it
 provides several strategies that help you to deal with children of deleted
-documents. You can simply add them as <tt>before_destroy</tt> callbacks.</p>
+documents. You can simply add them as <code>before_destroy</code>
+callbacks.</p>
 
 <p>Available strategies are:</p>
 <ul><li>
-<p>:nullify_children -- Sets the children's parent_id to null</p>
+<p>:nullify_children – Sets the children&#39;s parent_id to null</p>
 </li><li>
-<p>:move_children_to_parent -- Moves the children to the current document's
+<p>:move_children_to_parent – Moves the children to the current document&#39;s
 parent</p>
 </li><li>
-<p>:destroy_children -- Destroys all children by calling their #destroy method
+<p>:destroy_children – Destroys all children by calling their #destroy method
 (invokes callbacks)</p>
 </li><li>
-<p>:delete_descendants -- Deletes all descendants using a database query
-(doesn't invoke callbacks)</p>
+<p>:delete_descendants – Deletes all descendants using a database query
+(doesn&#39;t invoke callbacks)</p>
 </li></ul>
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
   <span class='id identifier rubyid_before_destroy'>before_destroy</span> <span class='symbol'>:nullify_children</span>
-<span class='kw'>end</span></code></pre>
+<span class='kw'>end</span>
+</code></pre>
 
-<h3>Callbacks</h3>
+<h3 id="label-Callbacks">Callbacks</h3>
 
 <p>Mongoid::Tree offers callbacks for its rearranging process. This enables
 you to rebuild certain fields when the document was moved in the tree.
@@ -162,7 +167,7 @@ callbacks.</p>
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Page</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Page</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -174,9 +179,10 @@ callbacks.</p>
   <span class='id identifier rubyid_private'>private</span>
 
   <span class='kw'>def</span> <span class='id identifier rubyid_rebuild_path'>rebuild_path</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ancestors_and_self'>ancestors_and_self</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:slug</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ancestors_and_self'>ancestors_and_self</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:slug</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-<span class='kw'>end</span></code></pre>
+<span class='kw'>end</span>
+</code></pre>
 
 
   </div>
@@ -308,7 +314,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns a chainable criteria for this document's ancestors.</p>
+<p>Returns a chainable criteria for this document&#39;s ancestors.</p>
 </div></span>
   
 </li>
@@ -332,7 +338,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns an array of this document's ancestors and itself.</p>
+<p>Returns an array of this document&#39;s ancestors and itself.</p>
 </div></span>
   
 </li>
@@ -356,7 +362,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns a list of the document's children.</p>
+<p>Returns a list of the document&#39;s children.</p>
 </div></span>
   
 </li>
@@ -380,7 +386,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Deletes all descendants using the database (doesn't invoke callbacks).</p>
+<p>Deletes all descendants using the database (doesn&#39;t invoke callbacks).</p>
 </div></span>
   
 </li>
@@ -452,7 +458,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns a chainable criteria for this document's descendants.</p>
+<p>Returns a chainable criteria for this document&#39;s descendants.</p>
 </div></span>
   
 </li>
@@ -476,7 +482,7 @@ callbacks.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns and array of this document and it's descendants.</p>
+<p>Returns and array of this document and it&#39;s descendants.</p>
 </div></span>
   
 </li>
@@ -574,7 +580,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Moves all children to this document's parent.</p>
+<p>Moves all children to this document&#39;s parent.</p>
 </div></span>
   
 </li>
@@ -598,7 +604,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Nullifies all children's parent_id.</p>
+<p>Nullifies all children&#39;s parent_id.</p>
 </div></span>
   
 </li>
@@ -622,7 +628,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the document's parent (unless it's a root document).</p>
+<p>Returns the document&#39;s parent (unless it&#39;s a root document).</p>
 </div></span>
   
 </li>
@@ -670,7 +676,8 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns a list of the document's parent_ids, starting with the root node.</p>
+<p>Returns a list of the document&#39;s parent_ids, starting with the root
+node.</p>
 </div></span>
   
 </li>
@@ -742,7 +749,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns this document's root node.</p>
+<p>Returns this document&#39;s root node.</p>
 </div></span>
   
 </li>
@@ -814,7 +821,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns this document's siblings.</p>
+<p>Returns this document&#39;s siblings.</p>
 </div></span>
   
 </li>
@@ -838,7 +845,7 @@ queries).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns this document's siblings and itself.</p>
+<p>Returns this document&#39;s siblings and itself.</p>
 </div></span>
   
 </li>
@@ -885,7 +892,7 @@ queries).</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='kw'>class</span> <span class='const'>Node</span>
+      <pre class="example code"><code><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -896,7 +903,7 @@ queries).</p>
   <span class='kw'>def</span> <span class='id identifier rubyid_do_something'>do_something</span>
     <span class='comment'># ...
 </span>  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>end</span></code></pre>
     
   </div>
 
@@ -923,7 +930,7 @@ queries).</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 174</span>
 
 </pre>
     </td>
@@ -962,7 +969,7 @@ queries).</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='kw'>class</span> <span class='const'>Node</span>
+      <pre class="example code"><code><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -973,7 +980,7 @@ queries).</p>
   <span class='kw'>def</span> <span class='id identifier rubyid_do_something'>do_something</span>
     <span class='comment'># ...
 </span>  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>end</span></code></pre>
     
   </div>
 
@@ -1000,7 +1007,7 @@ queries).</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 150</span>
 
 </pre>
     </td>
@@ -1078,12 +1085,12 @@ queries).</p>
       <pre class="lines">
 
 
-292
-293
-294</pre>
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestor_of?'>ancestor_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -1105,7 +1112,7 @@ queries).</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a chainable criteria for this document's ancestors</p>
+<p>Returns a chainable criteria for this document&#39;s ancestors</p>
 
 
   </div>
@@ -1137,15 +1144,15 @@ queries).</p>
       <pre class="lines">
 
 
-274
-275
-276</pre>
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 274</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestors'>ancestors</span>
-  <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:_id</span><span class='period'>.</span><span class='id identifier rubyid_in'>in</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:_id</span><span class='period'>.</span><span class='id identifier rubyid_in'>in</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='symbol'>:asc</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1164,7 +1171,7 @@ queries).</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns an array of this document's ancestors and itself</p>
+<p>Returns an array of this document&#39;s ancestors and itself</p>
 
 
   </div>
@@ -1183,7 +1190,7 @@ queries).</p>
       
         &mdash;
         <div class='inline'>
-<p>Array of the document's ancestors and itself</p>
+<p>Array of the document&#39;s ancestors and itself</p>
 </div>
       
     </li>
@@ -1196,12 +1203,12 @@ queries).</p>
       <pre class="lines">
 
 
-282
-283
-284</pre>
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 287</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestors_and_self'>ancestors_and_self</span>
   <span class='id identifier rubyid_ancestors'>ancestors</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span>
@@ -1231,8 +1238,8 @@ queries).</p>
   </div>
 
 
-<p>Returns a list of the document's children. It's a <tt>references_many</tt>
-association.</p>
+<p>Returns a list of the document&#39;s children. It&#39;s a
+<code>references_many</code> association.</p>
 
 
   </div>
@@ -1251,7 +1258,7 @@ association.</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the document's children</p>
+<p>Mongoid criteria to retrieve the document&#39;s children</p>
 </div>
       
     </li>
@@ -1267,7 +1274,7 @@ association.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 198</span>
 
 </pre>
     </td>
@@ -1287,7 +1294,7 @@ association.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Deletes all descendants using the database (doesn't invoke callbacks)</p>
+<p>Deletes all descendants using the database (doesn&#39;t invoke callbacks)</p>
 
 
   </div>
@@ -1314,12 +1321,12 @@ association.</p>
       <pre class="lines">
 
 
-398
-399
-400</pre>
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_descendants'>delete_descendants</span>
   <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_delete_all'>delete_all</span><span class='lparen'>(</span><span class='symbol'>:conditions</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='symbol'>:parent_ids</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -1352,8 +1359,8 @@ association.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span> <span class='comment'># =&gt; 0
-</span><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span> <span class='comment'># =&gt; 1</span></pre>
+      <pre class="example code"><code><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span> <span class='comment'># =&gt; 0
+</span><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span> <span class='comment'># =&gt; 1</span></code></pre>
     
   </div>
 
@@ -1382,15 +1389,15 @@ association.</p>
       <pre class="lines">
 
 
-249
-250
-251</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_depth'>depth</span>
-  <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+  <span class='kw'>super</span> <span class='op'>||</span> <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1461,12 +1468,12 @@ association.</p>
       <pre class="lines">
 
 
-318
-319
-320</pre>
+323
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 323</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_descendant_of?'>descendant_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -1488,7 +1495,7 @@ association.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a chainable criteria for this document's descendants</p>
+<p>Returns a chainable criteria for this document&#39;s descendants</p>
 
 
   </div>
@@ -1507,7 +1514,7 @@ association.</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the document's descendants</p>
+<p>Mongoid criteria to retrieve the document&#39;s descendants</p>
 </div>
       
     </li>
@@ -1520,12 +1527,12 @@ association.</p>
       <pre class="lines">
 
 
-300
-301
-302</pre>
+305
+306
+307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_descendants'>descendants</span>
   <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:parent_ids</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -1547,7 +1554,7 @@ association.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns and array of this document and it's descendants</p>
+<p>Returns and array of this document and it&#39;s descendants</p>
 
 
   </div>
@@ -1566,7 +1573,7 @@ association.</p>
       
         &mdash;
         <div class='inline'>
-<p>Array of the document itself and it's descendants</p>
+<p>Array of the document itself and it&#39;s descendants</p>
 </div>
       
     </li>
@@ -1579,12 +1586,12 @@ association.</p>
       <pre class="lines">
 
 
-308
-309
-310</pre>
+313
+314
+315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 313</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_descendants_and_self'>descendants_and_self</span>
   <span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_descendants'>descendants</span>
@@ -1634,12 +1641,12 @@ callbacks)</p>
       <pre class="lines">
 
 
-406
-407
-408</pre>
+411
+412
+413</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 406</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 411</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy_children'>destroy_children</span>
   <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_destroy_all'>destroy_all</span>
@@ -1693,12 +1700,12 @@ callbacks)</p>
       <pre class="lines">
 
 
-237
-238
-239</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_leaf?'>leaf?</span>
   <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1740,7 +1747,7 @@ queries)</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the document's leaves</p>
+<p>Mongoid criteria to retrieve the document&#39;s leaves</p>
 </div>
       
     </li>
@@ -1753,12 +1760,12 @@ queries)</p>
       <pre class="lines">
 
 
-352
-353
-354</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_leaves'>leaves</span>
   <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:_id</span><span class='period'>.</span><span class='id identifier rubyid_nin'>nin</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span><span class='lparen'>(</span><span class='symbol'>:parent_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:parent_id</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_and'>and</span><span class='lparen'>(</span><span class='symbol'>:parent_ids</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -1780,7 +1787,7 @@ queries)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Moves all children to this document's parent</p>
+<p>Moves all children to this document&#39;s parent</p>
 
 
   </div>
@@ -1807,19 +1814,19 @@ queries)</p>
       <pre class="lines">
 
 
-387
-388
-389
-390
-391
-392</pre>
+392
+393
+394
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 392</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_children_to_parent'>move_children_to_parent</span>
   <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
-    <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span>
+    <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
     <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1840,7 +1847,7 @@ queries)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Nullifies all children's parent_id</p>
+<p>Nullifies all children&#39;s parent_id</p>
 
 
   </div>
@@ -1867,15 +1874,15 @@ queries)</p>
       <pre class="lines">
 
 
-376
-377
-378
-379
-380
-381</pre>
+381
+382
+383
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 376</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_nullify_children'>nullify_children</span>
   <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
@@ -1908,8 +1915,8 @@ queries)</p>
   </div>
 
 
-<p>Returns the document's parent (unless it's a root document).  It's a
-<tt>referenced_in</tt> association.</p>
+<p>Returns the document&#39;s parent (unless it&#39;s a root document). 
+It&#39;s a <code>referenced_in</code> association.</p>
 
 
   </div>
@@ -1928,7 +1935,7 @@ queries)</p>
       
         &mdash;
         <div class='inline'>
-<p>The document's parent document</p>
+<p>The document&#39;s parent document</p>
 </div>
       
     </li>
@@ -1944,7 +1951,7 @@ queries)</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 206</span>
 
 </pre>
     </td>
@@ -2004,7 +2011,7 @@ queries)</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 214</span>
 
 </pre>
     </td>
@@ -2032,7 +2039,8 @@ queries)</p>
   </div>
 
 
-<p>Returns a list of the document's parent_ids, starting with the root node.</p>
+<p>Returns a list of the document&#39;s parent_ids, starting with the root
+node.</p>
 
 
   </div>
@@ -2051,7 +2059,7 @@ queries)</p>
       
         &mdash;
         <div class='inline'>
-<p>The ids of the document's ancestors</p>
+<p>The ids of the document&#39;s ancestors</p>
 </div>
       
     </li>
@@ -2067,7 +2075,7 @@ queries)</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 222</span>
 
 </pre>
     </td>
@@ -2114,12 +2122,12 @@ queries)</p>
       <pre class="lines">
 
 
-360
-361
-362</pre>
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 365</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rearrange_children!'>rearrange_children!</span>
   <span class='ivar'>@rearrange_children</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -2173,12 +2181,12 @@ queries)</p>
       <pre class="lines">
 
 
-368
-369
-370</pre>
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 368</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rearrange_children?'>rearrange_children?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='ivar'>@rearrange_children</span>
@@ -2200,8 +2208,8 @@ queries)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns this document's root node. Returns `self` if the current document
-is a root node</p>
+<p>Returns this document&#39;s root node. Returns `self` if the current
+document is a root node</p>
 
 
   </div>
@@ -2212,8 +2220,8 @@ is a root node</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code">node = Node.find(...)
-node.root</pre>
+      <pre class="example code"><code>node = Node.find(...)
+node.root</code></pre>
     
   </div>
 
@@ -2242,16 +2250,16 @@ node.root</pre>
       <pre class="lines">
 
 
-262
-263
-264
-265
-266
 267
-268</pre>
+268
+269
+270
+271
+272
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 267</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root'>root</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -2309,12 +2317,12 @@ node.root</pre>
       <pre class="lines">
 
 
-229
-230
-231</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root?'>root?</span>
   <span class='id identifier rubyid_parent_id'>parent_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2388,12 +2396,12 @@ node.root</pre>
       <pre class="lines">
 
 
-344
-345
-346</pre>
+349
+350
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 349</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sibling_of?'>sibling_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span>
@@ -2415,7 +2423,7 @@ node.root</pre>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns this document's siblings</p>
+<p>Returns this document&#39;s siblings</p>
 
 
   </div>
@@ -2434,7 +2442,7 @@ node.root</pre>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the document's siblings</p>
+<p>Mongoid criteria to retrieve the document&#39;s siblings</p>
 </div>
       
     </li>
@@ -2447,12 +2455,12 @@ node.root</pre>
       <pre class="lines">
 
 
-326
-327
-328</pre>
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_siblings'>siblings</span>
   <span class='id identifier rubyid_siblings_and_self'>siblings_and_self</span><span class='period'>.</span><span class='id identifier rubyid_excludes'>excludes</span><span class='lparen'>(</span><span class='symbol'>:id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -2474,7 +2482,7 @@ node.root</pre>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns this document's siblings and itself</p>
+<p>Returns this document&#39;s siblings and itself</p>
 
 
   </div>
@@ -2493,7 +2501,7 @@ node.root</pre>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the document's siblings and itself</p>
+<p>Mongoid criteria to retrieve the document&#39;s siblings and itself</p>
 </div>
       
     </li>
@@ -2506,12 +2514,12 @@ node.root</pre>
       <pre class="lines">
 
 
-334
-335
-336</pre>
+339
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 339</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_siblings_and_self'>siblings_and_self</span>
   <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:parent_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span><span class='rparen'>)</span>
@@ -2526,9 +2534,9 @@ node.root</pre>
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:17 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>

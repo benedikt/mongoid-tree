@@ -6,18 +6,18 @@
 <title>
   Module: Mongoid::Tree::Ordering
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Mongoid/Tree/Ordering.html";
 </script>
 
 
@@ -91,25 +91,25 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h1>Mongoid::Tree::Ordering</h1>
+<h1 id="label-Mongoid%3A%3ATree%3A%3AOrdering">Mongoid::Tree::Ordering</h1>
 
-<p>Mongoid::Tree doesn't order the tree by default. To enable ordering of
+<p>Mongoid::Tree doesn&#39;t order the tree by default. To enable ordering of
 children include both Mongoid::Tree and Mongoid::Tree::Ordering into your
 document.</p>
 
-<h2>Utility methods</h2>
+<h2 id="label-Utility+methods">Utility methods</h2>
 
 <p>This module adds methods to get related siblings depending on their
 position:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_higher_siblings'>higher_siblings</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_first_sibling_in_list'>first_sibling_in_list</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_last_sibling_in_list'>last_sibling_in_list</span></code></pre>
 
 <p>There are several methods to move nodes around in the list:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_move_up'>move_up</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_move_up'>move_up</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_move_down'>move_down</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_move_to_top'>move_to_top</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_move_to_bottom'>move_to_bottom</span>
@@ -119,7 +119,7 @@ position:</p>
 <p>Additionally there are some methods to check aspects of the document in the
 list of children:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_at_top?'>at_top?</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_at_top?'>at_top?</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_at_bottom?'>at_bottom?</span></code></pre>
 
 
@@ -161,7 +161,7 @@ list of children:</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns a chainable criteria for this document's ancestors.</p>
+<p>Returns a chainable criteria for this document&#39;s ancestors.</p>
 </div></span>
   
 </li>
@@ -455,6 +455,32 @@ list of children:</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#siblings_between-instance_method" title="#siblings_between (instance method)">- (Mongoid::Criteria) <strong>siblings_between</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns siblings between the current document and the other document
+Siblings with a position between this document&#39;s position and the other
+document&#39;s position.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -477,7 +503,7 @@ list of children:</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a chainable criteria for this document's ancestors</p>
+<p>Returns a chainable criteria for this document&#39;s ancestors</p>
 
 
   </div>
@@ -496,7 +522,7 @@ list of children:</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the documents ancestors</p>
+<p>Mongoid criteria to retrieve the document&#39;s ancestors</p>
 </div>
       
     </li>
@@ -517,7 +543,7 @@ list of children:</p>
       <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestors'>ancestors</span>
-  <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_unscoped'>unscoped</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:_id</span><span class='period'>.</span><span class='id identifier rubyid_in'>in</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_parent_ids'>parent_ids</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base_class'>base_class</span><span class='period'>.</span><span class='id identifier rubyid_unscoped'>unscoped</span> <span class='lbrace'>{</span> <span class='kw'>super</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -568,12 +594,12 @@ list of children:</p>
       <pre class="lines">
 
 
-99
-100
-101</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_at_bottom?'>at_bottom?</span>
   <span class='id identifier rubyid_lower_siblings'>lower_siblings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -627,12 +653,12 @@ list of children:</p>
       <pre class="lines">
 
 
-91
-92
-93</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_at_top?'>at_top?</span>
   <span class='id identifier rubyid_higher_siblings'>higher_siblings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -686,12 +712,12 @@ list of children:</p>
       <pre class="lines">
 
 
-83
-84
-85</pre>
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_first_sibling_in_list'>first_sibling_in_list</span>
   <span class='id identifier rubyid_siblings_and_self'>siblings_and_self</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -714,7 +740,7 @@ list of children:</p>
   <div class="discussion">
     
 <p>Returns siblings above the current document. Siblings with a position lower
-than this documents's position.</p>
+than this document&#39;s position.</p>
 
 
   </div>
@@ -733,7 +759,7 @@ than this documents's position.</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the documents higher_siblings</p>
+<p>Mongoid criteria to retrieve the document&#39;s higher siblings</p>
 </div>
       
     </li>
@@ -805,12 +831,12 @@ than this documents's position.</p>
       <pre class="lines">
 
 
-75
-76
-77</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_last_sibling_in_list'>last_sibling_in_list</span>
   <span class='id identifier rubyid_siblings_and_self'>siblings_and_self</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -833,7 +859,7 @@ than this documents's position.</p>
   <div class="discussion">
     
 <p>Returns siblings below the current document. Siblings with a position
-greater than this documents's position.</p>
+greater than this document&#39;s position.</p>
 
 
   </div>
@@ -852,7 +878,7 @@ greater than this documents's position.</p>
       
         &mdash;
         <div class='inline'>
-<p>Mongoid criteria to retrieve the documents lower_siblings</p>
+<p>Mongoid criteria to retrieve the document&#39;s lower siblings</p>
 </div>
       
     </li>
@@ -894,7 +920,7 @@ greater than this documents's position.</p>
     
 <p>Move this node above the specified node</p>
 
-<p>This method changes the node's parent if nescessary.</p>
+<p>This method changes the node&#39;s parent if nescessary.</p>
 
 
   </div>
@@ -941,12 +967,6 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
 155
 156
 157
@@ -959,29 +979,27 @@ greater than this documents's position.</p>
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_above'>move_above</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_sibling_of?'>sibling_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span>
-    <span class='id identifier rubyid_save!'>save!</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_ensure_to_be_sibling_of'>ensure_to_be_sibling_of</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_position'>position</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
     <span class='id identifier rubyid_new_position'>new_position</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_lt'>lt</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
-    <span class='id identifier rubyid_save!'>save!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_siblings_between'>siblings_between</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_new_position'>new_position</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>-</span> <span class='int'>1</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_higher_siblings'>higher_siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_gt'>gt</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
-    <span class='id identifier rubyid_save!'>save!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_siblings_between'>siblings_between</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
+  <span class='id identifier rubyid_save!'>save!</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1002,7 +1020,7 @@ greater than this documents's position.</p>
     
 <p>Move this node below the specified node</p>
 
-<p>This method changes the node's parent if nescessary.</p>
+<p>This method changes the node&#39;s parent if nescessary.</p>
 
 
   </div>
@@ -1049,8 +1067,6 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-177
-178
 179
 180
 181
@@ -1065,31 +1081,25 @@ greater than this documents's position.</p>
 190
 191
 192
-193
-194
-195</pre>
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_below'>move_below</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_sibling_of?'>sibling_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_parent_id'>parent_id</span>
-    <span class='id identifier rubyid_save!'>save!</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_ensure_to_be_sibling_of'>ensure_to_be_sibling_of</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_position'>position</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
     <span class='id identifier rubyid_new_position'>new_position</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>+</span> <span class='int'>1</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_lt'>lt</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
-    <span class='id identifier rubyid_save!'>save!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_siblings_between'>siblings_between</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_new_position'>new_position</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_higher_siblings'>higher_siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_gt'>gt</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
-    <span class='id identifier rubyid_save!'>save!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_siblings_between'>siblings_between</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_new_position'>new_position</span>
+  <span class='id identifier rubyid_save!'>save!</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1135,19 +1145,15 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-135
-136
-137
-138
-139</pre>
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_down'>move_down</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_at_bottom?'>at_bottom?</span>
-  <span class='id identifier rubyid_siblings'>siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_switch_with_sibling_at_offset'>switch_with_sibling_at_offset</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_at_bottom?'>at_bottom?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1193,13 +1199,13 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-116
-117
-118
-119</pre>
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_to_bottom'>move_to_bottom</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_at_bottom?'>at_bottom?</span>
@@ -1249,13 +1255,13 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-107
-108
-109
-110</pre>
+117
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_to_top'>move_to_top</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_at_top?'>at_top?</span>
@@ -1305,19 +1311,79 @@ greater than this documents's position.</p>
       <pre class="lines">
 
 
-125
-126
-127
-128
-129</pre>
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_up'>move_up</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_at_top?'>at_top?</span>
-  <span class='id identifier rubyid_siblings'>siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_inc'>inc</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_switch_with_sibling_at_offset'>switch_with_sibling_at_offset</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_at_top?'>at_top?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="siblings_between-instance_method">
+  
+    - (<tt>Mongoid::Criteria</tt>) <strong>siblings_between</strong>(other) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns siblings between the current document and the other document
+Siblings with a position between this document&#39;s position and the other
+document&#39;s position.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Mongoid::Criteria</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Mongoid criteria to retrieve the documents between this and the other
+document</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree/ordering.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_siblings_between'>siblings_between</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_range'>range</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_siblings'>siblings</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_gt'>gt</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='symbol'>:position</span><span class='period'>.</span><span class='id identifier rubyid_lt'>lt</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1329,9 +1395,9 @@ greater than this documents's position.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:18 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>

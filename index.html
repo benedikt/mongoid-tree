@@ -6,18 +6,18 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  framesUrl = "frames.html#!" + escape(window.location.href);
+  framesUrl = "frames.html#!file.README.html";
 </script>
 
 
@@ -68,33 +68,38 @@
 <h2>Requirements</h2>
 
 <ul>
-<li>mongoid (~&gt; 3.0)</li>
+<li>mongoid (~&gt; 4.0)</li>
 </ul>
 
-<p>For a mongoid 2.x compatible version, please use mongoid-tree 0.7.x!</p>
+<p>For a mongoid 3.x compatible version, please use mongoid-tree 1.0.x,
+for a mongoid 2.x compatible version, please use mongoid-tree 0.7.x.</p>
 
 <h2>Install</h2>
 
 <p>To install mongoid_tree, simply add it to your Gemfile:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mongoid-tree</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mongoid/tree</span><span class='tstring_end'>'</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mongoid-tree</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mongoid/tree</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
 <p>In order to get the latest development version of mongoid-tree:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mongoid-tree</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:git</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>git://github.com/benedikt/mongoid-tree</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mongoid/tree</span><span class='tstring_end'>'</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mongoid-tree</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:git</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>git://github.com/benedikt/mongoid-tree</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<p>You might want to remove the <code>:require =&gt; &#39;mongoid/tree&#39;</code> option and explicitly <code>require &#39;mongoid/tree&#39;</code> where needed and finally run</p>
+<p>You might want to add <code>:require =&gt; nil</code> option and explicitly <code>require &#39;mongoid/tree&#39;</code> where needed and finally run</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
 </code></pre>
+
+<h3>Upgrade from mongoid-tree 1.x</h3>
+
+<p>To fix issues with the ordering of ancestors, mongoid-tree 2.0 introduces a new <code>depth</code> field to the documents that include the <code>Mongoid::Tree</code> module. In case your project uses its own <code>depth</code> field, you can now rely on mongoid-tree to handle this.</p>
 
 <h2>Usage</h2>
 
 <p>Read the API documentation at <a href="http://benedikt.github.com/mongoid-tree">http://benedikt.github.com/mongoid-tree</a> and take a look at the <code>Mongoid::Tree</code> module</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 <span class='kw'>end</span>
@@ -104,7 +109,7 @@
 
 <p>There are several utility methods that help getting to other related documents in the tree:</p>
 
-<pre class="code ruby"><code><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span>
+<pre class="code ruby"><code class="ruby"><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span>
 <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_roots'>roots</span>
 <span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_leaves'>leaves</span>
 
@@ -122,7 +127,7 @@
 
 <p>In addition it&#39;s possible to check certain aspects of the document&#39;s position in the tree:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_root?'>root?</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_root?'>root?</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_leaf?'>leaf?</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_ancestor_of?'>ancestor_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
@@ -136,7 +141,7 @@
 
 <p><code>Mongoid::Tree</code> doesn&#39;t order children by default. To enable ordering of tree nodes include the <code>Mongoid::Tree::Ordering</code> module. This will add a <code>position</code> field to your document and provide additional utility methods:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_lower_siblings'>lower_siblings</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_higher_siblings'>higher_siblings</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_first_sibling_in_list'>first_sibling_in_list</span>
 <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_last_sibling_in_list'>last_sibling_in_list</span>
@@ -154,7 +159,7 @@
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span><span class='op'>::</span><span class='const'>Ordering</span>
@@ -169,7 +174,7 @@
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span><span class='op'>::</span><span class='const'>Traversal</span>
@@ -195,7 +200,7 @@
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -209,7 +214,7 @@
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Page</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Page</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -221,7 +226,7 @@
   <span class='id identifier rubyid_private'>private</span>
 
   <span class='kw'>def</span> <span class='id identifier rubyid_rebuild_path'>rebuild_path</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ancestors_and_self'>ancestors_and_self</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:slug</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ancestors_and_self'>ancestors_and_self</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:slug</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
 </code></pre>
@@ -232,7 +237,7 @@
 
 <p>Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Node</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Node</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
   <span class='id identifier rubyid_include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Tree</span>
 
@@ -266,13 +271,13 @@
 
 <h2>Copyright</h2>
 
-<p>Copyright (c) 2010-2012 Benedikt Deicke. See LICENSE for details.</p>
+<p>Copyright (c) 2010-2013 Benedikt Deicke. See LICENSE for details.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:17 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>

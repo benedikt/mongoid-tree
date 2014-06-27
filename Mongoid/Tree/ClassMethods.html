@@ -6,18 +6,18 @@
 <title>
   Module: Mongoid::Tree::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Mongoid/Tree/ClassMethods.html";
 </script>
 
 
@@ -87,8 +87,8 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>This module implements class methods that will be available  on the
-document that includes Mongoid::Tree</p>
+<p>This module implements class methods that will be available on the document
+that includes Mongoid::Tree</p>
 
 
   </div>
@@ -215,7 +215,7 @@ document that includes Mongoid::Tree</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_leaves'>leaves</span></pre>
+      <pre class="example code"><code><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_leaves'>leaves</span></code></pre>
     
   </div>
 
@@ -244,12 +244,12 @@ document that includes Mongoid::Tree</p>
       <pre class="lines">
 
 
-139
-140
-141</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_leaves'>leaves</span>
   <span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:_id</span><span class='period'>.</span><span class='id identifier rubyid_nin'>nin</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_only'>only</span><span class='lparen'>(</span><span class='symbol'>:parent_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:parent_id</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -282,7 +282,7 @@ document that includes Mongoid::Tree</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span></pre>
+      <pre class="example code"><code><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span></code></pre>
     
   </div>
 
@@ -311,12 +311,12 @@ document that includes Mongoid::Tree</p>
       <pre class="lines">
 
 
-117
-118
-119</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root'>root</span>
   <span class='id identifier rubyid_roots'>roots</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -349,7 +349,7 @@ document that includes Mongoid::Tree</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_roots'>roots</span></pre>
+      <pre class="example code"><code><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_roots'>roots</span></code></pre>
     
   </div>
 
@@ -378,12 +378,12 @@ document that includes Mongoid::Tree</p>
       <pre class="lines">
 
 
-128
-129
-130</pre>
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/mongoid/tree.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_roots'>roots</span>
   <span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:parent_id</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -398,9 +398,9 @@ document that includes Mongoid::Tree</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 14 11:59:48 2012 by
+  Generated on Fri Jun 27 11:10:17 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.7.4 (ruby-2.0.0).
 </div>
 
   </body>
