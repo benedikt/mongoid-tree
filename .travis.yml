@@ -8,7 +8,7 @@ rvm:
   - 2.1.0
   - jruby
   - jruby-head
-  - rbx
+  - rbx-2
 services:
   - mongodb
 matrix:
