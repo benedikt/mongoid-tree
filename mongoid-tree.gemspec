@@ -14,6 +14,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('mongoid', ['<= 5.0', '>= 4.0'])
   s.add_development_dependency('rake', ['>= 0.9.2'])
-  s.add_development_dependency('rspec', ['~> 2.14'])
+  s.add_development_dependency('rspec', ['~> 3.0'])
   s.add_development_dependency('yard', ['~> 0.8'])
 end

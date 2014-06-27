@@ -141,7 +141,7 @@ describe Mongoid::Tree::Traversal do
       @root1 = node(:root1)
       @root2 = node(:root2)
 
-      Node.stub(:roots).and_return [@root1, @root2]
+      allow(Node).to receive(:roots).and_return [@root1, @root2]
     end
 
     it 'should grab each root' do
