@@ -23,6 +23,9 @@ You might want to remove the `:require => 'mongoid/tree'` option and explicitly 
 
     bundle install
 
+### Upgrade from mongoid-tree 1.0.x
+
+To fix issues with the ordering of ancestors, mongoid-tree 1.1 introduces a new depth field to the documents that include the Mongoid::Tree module. In case your project uses its own depth field, you can now rely on mongoid-tree to handle this.
 
 ## Usage
 
