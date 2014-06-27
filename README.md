@@ -6,7 +6,8 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 * mongoid (~> 4.0)
 
-For a mongoid 2.x compatible version, please use mongoid-tree 0.7.x!
+For a mongoid 3.x compatible version, please use mongoid-tree 1.0.x,
+for a mongoid 2.x compatible version, please use mongoid-tree 0.7.x.
 
 
 ## Install
@@ -17,9 +18,9 @@ To install mongoid_tree, simply add it to your Gemfile:
 
 In order to get the latest development version of mongoid-tree:
 
-    gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree', :require => 'mongoid/tree'
+    gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree'
 
-You might want to remove the `:require => 'mongoid/tree'` option and explicitly `require 'mongoid/tree'` where needed and finally run
+You might want to add `:require => nil` option and explicitly `require 'mongoid/tree'` where needed and finally run
 
     bundle install
 
