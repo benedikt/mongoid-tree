@@ -21,15 +21,16 @@ module Mongoid::Tree::TreeMacros
   end
 
 private
+
   def create_tree(object)
     case object
-      when String then return create_node(object)
-      when Array then object.each { |tree| create_tree(tree) }
-      when Hash then
-        name, children = object.first
-        node = create_node(name)
-        children.each { |c| node.children << create_tree(c) }
-        return node
+    when String then return create_node(object)
+    when Array then object.each { |tree| create_tree(tree) }
+    when Hash then
+      name, children = object.first
+      node = create_node(name)
+      children.each { |c| node.children << create_tree(c) }
+      return node
     end
   end
 
