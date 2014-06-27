@@ -264,9 +264,6 @@ describe Mongoid::Tree do
 
       it "should be updated when the nodes ancestors change" do
         node(:child).update_attributes!(:parent => nil)
-
-        puts node(:child).inspect
-
         expect(node(:child).reload.depth).to eq(0)
         expect(node(:subchild).depth).to eq(1)
       end
