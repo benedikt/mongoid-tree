@@ -24,6 +24,9 @@ You might want to add `:require => nil` option and explicitly `require 'mongoid/
 
     bundle install
 
+### Upgrade from mongoid-tree 1.x
+
+To fix issues with the ordering of ancestors, mongoid-tree 2.0 introduces a new `depth` field to the documents that include the `Mongoid::Tree` module. In case your project uses its own `depth` field, you can now rely on mongoid-tree to handle this.
 
 ## Usage
 
