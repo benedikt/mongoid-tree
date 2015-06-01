@@ -21,12 +21,12 @@ describe Mongoid::Tree do
     expect(a.inverse_of).to eq(:children)
   end
 
-  it "should store parent_ids as Array with [] as default with index" do
-    f = Node.fields['parent_ids']
+  it "should store ancestor_ids as Array with [] as default with index" do
+    f = Node.fields['ancestor_ids']
     expect(f).to be
     expect(f.options[:type]).to eq(Array)
     expect(f.options[:default]).to eq([])
-    expect(Node.index_specification(:parent_ids => 1)).to be
+    expect(Node.index_specification(:ancestor_ids => 1)).to be
   end
 
   it "should store the depth as Integer with index" do
@@ -84,34 +84,34 @@ describe Mongoid::Tree do
       expect(child.parent_id).to eq(root.id)
     end
 
-    it "should rebuild its parent_ids" do
+    it "should rebuild its ancestor_ids" do
       root = Node.create; child = Node.create
       root.children << child
-      expect(child.parent_ids).to eq([root.id])
+      expect(child.ancestor_ids).to eq([root.id])
     end
 
-    it "should rebuild its children's parent_ids when its own parent_ids changed" do
+    it "should rebuild its children's ancestor_ids when its own ancestor_ids changed" do
       other_root = node(:other_root); child = node(:child); subchild = node(:subchild);
       other_root.children << child
       subchild.reload # To get the updated version
-      expect(subchild.parent_ids).to eq([other_root.id, child.id])
+      expect(subchild.ancestor_ids).to eq([other_root.id, child.id])
     end
 
-    it "should correctly rebuild its descendants' parent_ids when moved into an other subtree" do
+    it "should correctly rebuild its descendants' ancestor_ids when moved into an other subtree" do
       subchild = node(:subchild); subsubchild = node(:subsubchild); other_child = node(:other_child)
       other_child.children << subchild
       subsubchild.reload
-      expect(subsubchild.parent_ids).to eq([node(:other_root).id, other_child.id, subchild.id])
+      expect(subsubchild.ancestor_ids).to eq([node(:other_root).id, other_child.id, subchild.id])
     end
 
-    it "should rebuild its children's parent_ids when its own parent_id is removed" do
+    it "should rebuild its children's ancestor_ids when its own parent_id is removed" do
       c = node(:child)
       c.parent_id = nil
       c.save
-      expect(node(:subchild).parent_ids).to eq([node(:child).id])
+      expect(node(:subchild).ancestor_ids).to eq([node(:child).id])
     end
 
-    it "should not rebuild its children's parent_ids when it's not required" do
+    it "should not rebuild its children's ancestor_ids when it's not required" do
       root = node(:root)
       expect(root).not_to receive(:rearrange_children)
       root.save
@@ -195,7 +195,7 @@ describe Mongoid::Tree do
     describe ':delete_descendants' do
       it "should delete all descendants" do
         root = node(:root)
-        expect(Node).to receive(:delete_all).with(:conditions => { :parent_ids => root.id })
+        expect(Node).to receive(:delete_all).with(:conditions => { :ancestor_ids => root.id })
         root.delete_descendants
       end
     end
