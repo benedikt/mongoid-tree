@@ -87,7 +87,17 @@ module Mongoid
     included do
       has_many :children, :class_name => self.name, :foreign_key => :parent_id, :inverse_of => :parent, :validate => false
 
-      belongs_to :parent, :class_name => self.name, :inverse_of => :children, :index => true, :validate => false
+      options = {
+        :class_name => self.name,
+        :inverse_of => :children,
+        :index => true,
+        :validate => false,
+        :optional => true
+      }
+
+      options.delete(:optional) if Gem::Version.new(Mongoid::VERSION) < Gem::Version.new('6.0.0.beta')
+
+      belongs_to :parent, options
 
       field :parent_ids, :type => Array, :default => []
       index :parent_ids => 1
