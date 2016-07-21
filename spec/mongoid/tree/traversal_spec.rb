@@ -15,7 +15,7 @@ describe Mongoid::Tree::Traversal do
     end
 
     it "should complain about unsupported traversal methods" do
-      expect { subject.traverse('non_existing') {} }.to raise_error
+      expect { subject.traverse('non_existing') {} }.to raise_error NoMethodError
     end
 
     it "should default to depth_first traversal" do
