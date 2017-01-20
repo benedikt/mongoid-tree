@@ -1,4 +1,4 @@
-# mongoid-tree [![Build Status](https://secure.travis-ci.org/benedikt/mongoid-tree.png?branch=master)](http://travis-ci.org/benedikt/mongoid-tree) [![Dependency Status](https://gemnasium.com/benedikt/mongoid-tree.png)](http://gemnasium.com/benedikt/mongoid-tree)
+# mongoid-tree [![Build Status](https://secure.travis-ci.org/benedikt/mongoid-tree.svg?branch=master)](http://travis-ci.org/benedikt/mongoid-tree) [![Dependency Status](https://gemnasium.com/benedikt/mongoid-tree.svg)](http://gemnasium.com/benedikt/mongoid-tree)
 
 A tree structure for Mongoid documents using the materialized path pattern
 
