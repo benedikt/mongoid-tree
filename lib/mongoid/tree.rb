@@ -92,7 +92,8 @@ module Mongoid
         :inverse_of => :children,
         :index => true,
         :validate => false,
-        :optional => true
+        :optional => true,
+        :counter_cache => true
       }
 
       options.delete(:optional) if Gem::Version.new(Mongoid::VERSION) < Gem::Version.new('6.0.0.beta')
@@ -101,6 +102,7 @@ module Mongoid
 
       field :parent_ids, :type => Array, :default => []
       index :parent_ids => 1
+      field :children_count, type: Integer
 
       field :depth, :type => Integer
       index :depth => 1
