@@ -102,7 +102,7 @@ module Mongoid
 
       field :parent_ids, :type => Array, :default => []
       index :parent_ids => 1
-      field :children_count, type: Integer
+      field :children_count, type: Integer, default: 0
 
       field :depth, :type => Integer
       index :depth => 1
