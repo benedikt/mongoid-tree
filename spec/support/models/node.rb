@@ -30,3 +30,7 @@ end
 class EmbeddedDocument
   include Mongoid::Document
 end
+
+class CounterCachedNode < Node
+  include Mongoid::Tree::CounterCaching
+end
