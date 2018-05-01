@@ -3,6 +3,7 @@ require 'bundler/setup'
 
 require 'mongoid'
 require 'mongoid/tree'
+require 'mongoid-compatibility'
 
 require 'rspec'
 
