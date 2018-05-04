@@ -7,7 +7,11 @@ describe Mongoid::Tree do
   it "should reference many children as inverse of parent with index" do
     a = Node.reflect_on_association(:children)
     expect(a).to be
-    expect(a.macro).to eq(:has_many)
+    if Mongoid::Compatibility::Version.mongoid7?
+      expect(a).to be_kind_of(Mongoid::Association::Referenced::HasMany)
+    else
+      expect(a.macro).to eq(:has_many)
+    end
     expect(a.class_name).to eq('Node')
     expect(a.foreign_key).to eq('parent_id')
     expect(Node.index_specification(:parent_id => 1)).to be
@@ -16,7 +20,11 @@ describe Mongoid::Tree do
   it "should be referenced in one parent as inverse of children" do
     a = Node.reflect_on_association(:parent)
     expect(a).to be
-    expect(a.macro).to eq(:belongs_to)
+    if Mongoid::Compatibility::Version.mongoid7?
+      expect(a).to be_kind_of(Mongoid::Association::Referenced::BelongsTo)
+    else
+      expect(a.macro).to eq(:belongs_to)
+    end
     expect(a.class_name).to eq('Node')
     expect(a.inverse_of).to eq(:children)
   end

@@ -11,3 +11,12 @@ services:
 matrix:
   allow_failures:
     - rvm: ruby-head
+  include:
+    - rvm: 2.3.1
+      env: MONGOID_VERSION=4
+    - rvm: 2.3.1
+      env: MONGOID_VERSION=5
+    - rvm: 2.3.1
+      env: MONGOID_VERSION=6
+    - rvm: 2.3.1
+      env: MONGOID_VERSION=7
