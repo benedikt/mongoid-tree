@@ -324,6 +324,15 @@ module Mongoid
       [self] + descendants
     end
 
+    def subtree(params={})
+      nodes = if params[:sort]
+                [self] + (descendants.sort(&params[:sort]))
+              else
+                descendants_and_self.sort{|x, y| x.parent_ids.map(&:to_s) <=> y.parent_ids.map(&:to_s)}
+              end
+      arrange_to_subtree(nodes)
+    end
+
     ##
     # Is this document a descendant of the other document?
     #
@@ -449,6 +458,22 @@ module Mongoid
 
     def position_in_tree
       errors.add(:parent_id, :invalid) if self.parent_ids.include?(self.id)
+    end
+
+    # adopted and modified from https://github.com/stefankroes/ancestry/blob/master/lib/ancestry/class_methods.rb
+    def arrange_to_subtree(nodes)
+      # Get all nodes ordered by ancestry and start sorting them into an empty hash
+      nodes.inject(ActiveSupport::OrderedHash.new) do |arranged_nodes, node|
+        # Find the insertion point for that node by going through its ancestors
+        node.parent_ids.inject(arranged_nodes) do |insertion_point, parent_id|
+          insertion_point.each do |parent, children|
+            # Change the insertion point to children if node is a descendant of this parent
+            insertion_point = children if parent_id == parent._id
+          end
+          insertion_point
+        end[node] = ActiveSupport::OrderedHash.new
+        arranged_nodes
+      end
     end
   end
 end
