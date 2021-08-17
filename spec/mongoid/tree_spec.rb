@@ -328,9 +328,9 @@ describe Mongoid::Tree do
                   - subsubchild
           ENDTREE
 
-          filtered_ancestors = node(:subsubchild).ancestors.or(
-              { :name => 'child' },
-              { :name => 'subchild' }
+          filtered_ancestors = node(:subsubchild).ancestors.any_of(
+            { :name => 'child' },
+            { :name => 'subchild' }
           )
 
           expect(filtered_ancestors.to_a).to eq([node(:child), node(:subchild)])
