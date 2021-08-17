@@ -431,7 +431,7 @@ module Mongoid
     # @private
     # @return [undefined]
     def rearrange
-      if self.parent_id
+      if parent.present?
         self.parent_ids = parent.parent_ids + [self.parent_id]
       else
         self.parent_ids = []
