@@ -15,7 +15,11 @@ module Mongoid
         metadata = relations['parent']
         metadata.options[:counter_cache] = true
 
-        add_counter_cache_callbacks(metadata)
+        if respond_to?(:add_counter_cache_callbacks)
+          add_counter_cache_callbacks(metadata)
+        else
+          metadata.send(:define_counter_cache_callbacks!)
+        end
       end
     end
   end
