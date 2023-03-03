@@ -1,0 +1,33 @@
+name: Tests
+on: [push]
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        mongoid: [4, 5, 6, 7, 8, HEAD]
+        ruby: [3.2]
+        include:
+          - mongoid: 8
+            ruby: 2.7
+          - mongoid: 8
+            ruby: 3.0
+          - mongoid: 8
+            ruby: 3.1
+          - mongoid: 8
+            ruby: 3.2
+
+    runs-on: ubuntu-latest
+    steps:
+      - id: mongodb
+        name: Start MongoDB
+        uses: mongodb-labs/drivers-evergreen-tools@master
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: RSpec
+        run: bundle exec rake
+        env:
+          MONGODB_URI: "${{ steps.mongodb.outputs.cluster-uri }}"
