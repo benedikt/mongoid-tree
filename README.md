@@ -206,14 +206,6 @@ See [https://github.com/benedikt/mongoid-tree](https://github.com/benedikt/mongo
 See a list of all contributors at [https://github.com/benedikt/mongoid-tree/contributors](https://github.com/benedikt/mongoid-tree/contributors). Thanks a lot everyone!
 
 
-## Support
-
-If you like mongoid-tree and want to support the development, I would appreciate a small donation:
-
-[![Pledgie](http://www.pledgie.com/campaigns/12137.png?skin_name=chrome)](http://www.pledgie.com/campaigns/12137)
-
-[![Flattr](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=benediktdeicke&url=https://github.com/benedikt/mongoid-tree&title=mongoid-tree&language=&tags=github&category=software)
-
 ## Copyright
 
-Copyright (c) 2010-2013 Benedikt Deicke. See LICENSE for details.
+Copyright (c) 2010-2023 Benedikt Deicke. See LICENSE for details.
