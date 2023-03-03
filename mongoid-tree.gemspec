@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'mongoid-tree'
-  s.version       = '2.1.1'
+  s.version       = '2.2.0'
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Benedikt Deicke']
   s.email         = ['benedikt@synatic.net']
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.license       = 'MIT'
 
-  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.md Rakefile Gemfile .rspec)
+  s.files         = Dir.glob('{lib,spec}/**/*') + %w(LICENSE README.md Rakefile Gemfile)
 
   s.add_runtime_dependency('mongoid', ['>= 4.0', '< 9'])
   s.add_development_dependency('mongoid-compatibility')
