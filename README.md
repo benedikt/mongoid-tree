@@ -1,4 +1,4 @@
-# mongoid-tree [![Build Status](https://secure.travis-ci.org/benedikt/mongoid-tree.svg?branch=master)](http://travis-ci.org/benedikt/mongoid-tree) [![Dependency Status](https://gemnasium.com/benedikt/mongoid-tree.svg)](http://gemnasium.com/benedikt/mongoid-tree)
+# mongoid-tree [![Build Status](https://github.com/benedikt/mongoid-tree/workflows/Tests/badge.svg)](https://github.com/benedikt/mongoid-tree)
 
 A tree structure for Mongoid documents using the materialized path pattern
 
@@ -14,13 +14,13 @@ for a mongoid 2.x compatible version, please use mongoid-tree 0.7.x.
 
 To install mongoid_tree, simply add it to your Gemfile:
 
-    gem 'mongoid-tree', :require => 'mongoid/tree'
+    gem 'mongoid-tree', require: 'mongoid/tree'
 
 In order to get the latest development version of mongoid-tree:
 
-    gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree'
+    gem 'mongoid-tree', git: 'git://github.com/benedikt/mongoid-tree', branch: :main
 
-You might want to add `:require => nil` option and explicitly `require 'mongoid/tree'` where needed and finally run
+You might want to add `require: nil` option and explicitly `require 'mongoid/tree'` where needed and finally run
 
     bundle install
 
@@ -30,7 +30,7 @@ To fix issues with the ordering of ancestors, mongoid-tree 2.0 introduces a new 
 
 ## Usage
 
-Read the API documentation at http://benedikt.github.com/mongoid-tree and take a look at the `Mongoid::Tree` module
+Read the API documentation at https://www.rubydoc.info/github/benedikt/mongoid-tree and take a look at the `Mongoid::Tree` module
 
 ```ruby
 class Node
@@ -189,7 +189,7 @@ end
 
 ## Build Status
 
-mongoid-tree is on [Travis CI](http://travis-ci.org/benedikt/mongoid-tree) running the specs on Ruby Head, Ruby 1.9.3, JRuby (1.9 mode), and Rubinius (1.9 mode).
+mongoid-tree is on [GitHub Actions](https://github.com/benedikt/mongoid-tree/actions) running the specs on Ruby 2.7-3.2 and Mongoid 4.x-8.x.
 
 ## Known issues
 
