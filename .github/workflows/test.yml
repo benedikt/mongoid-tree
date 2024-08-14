@@ -5,24 +5,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mongoid: [4, 5, 6, 7, 8, HEAD]
+        mongoid: [4, 5, 6, 7, 8, 9 HEAD]
         ruby: [3.2]
         include:
-          - mongoid: 8
-            ruby: 2.7
-          - mongoid: 8
-            ruby: 3.0
-          - mongoid: 8
+          - mongoid: 9
             ruby: 3.1
-          - mongoid: 8
+          - mongoid: 9
             ruby: 3.2
+          - mongoid: 9
+            ruby: 3.3
 
     runs-on: ubuntu-latest
     steps:
       - id: mongodb
         name: Start MongoDB
         uses: mongodb-labs/drivers-evergreen-tools@master
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}

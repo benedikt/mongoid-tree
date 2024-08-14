@@ -4,7 +4,7 @@ A tree structure for Mongoid documents using the materialized path pattern
 
 ## Requirements
 
-* mongoid (>= 4.0, < 9.0)
+* mongoid (>= 4.0, < 10.0)
 
 For a mongoid 3.x compatible version, please use mongoid-tree 1.0.x,
 for a mongoid 2.x compatible version, please use mongoid-tree 0.7.x.
@@ -189,7 +189,7 @@ end
 
 ## Build Status
 
-mongoid-tree is on [GitHub Actions](https://github.com/benedikt/mongoid-tree/actions) running the specs on Ruby 2.7-3.2 and Mongoid 4.x-8.x.
+mongoid-tree is on [GitHub Actions](https://github.com/benedikt/mongoid-tree/actions) running the specs on Ruby 3.1-3.3 and Mongoid 4.x-9.x.
 
 ## Known issues
 
@@ -208,4 +208,4 @@ See a list of all contributors at [https://github.com/benedikt/mongoid-tree/cont
 
 ## Copyright
 
-Copyright (c) 2010-2023 Benedikt Deicke. See LICENSE for details.
+Copyright (c) 2010-2024 Benedikt Deicke. See LICENSE for details.
