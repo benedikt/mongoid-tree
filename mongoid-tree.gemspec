@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'mongoid-tree'
-  s.version       = '2.2.0'
+  s.version       = '2.3.0'
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Benedikt Deicke']
   s.email         = ['benedikt@synatic.net']
